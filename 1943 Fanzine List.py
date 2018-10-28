@@ -17,7 +17,6 @@ for line in lines:
             print("2: "+str(m.groups()))
         else:
             print("No match: "+line)
-    i=0
 
 i=0
 
