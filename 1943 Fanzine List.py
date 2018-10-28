@@ -26,23 +26,23 @@ def DecodeIssueList(issuesText):
 
     # The strategy is to take the string character by character and whittle stuff down as we interpret it.
     # The intention is that we come back to the start of the look each time we have disposed of a chunk of characters, so that the next character should start a new issue designation
+    # The intention is that we come back to the start of the look each time we have disposed of a chunk of characters, so that the next character should start a new issue designation
     # There are four basic patterns to be seen in Joe's data:
     #   A comma-separated list of issue whole numners
     #   A list of Volumes and numbers (many delimiter patterns!)
     #   A range of whole numbers
     #   A list of year:issue pairs
     #  In all cases we need to be prepared to deal with (and preserve) random text.
-    c_VnnNnn=re.compile(r"""^       # Start at the beginning
+    c_VnnNnn=Regex.compile(r"""^       # Start at the beginning
                 [vV](\d+\s*)        # Look for a V followed by 1 or more digits
                 [#:]\s*             # Then a '#' or a ':' followed by option whitespace
                 ((?:\d+,\s*)*)      # Then a non-capturing group of one or more digits followed by a comma followed by optional whitespace -- this whole thing is a group
                 (\d+[;,]?)(.*)      # Then a last group of digits followed by an optional comma followed by the rest of the line
-                """, re.X)
+                """, Regex.X)
 
-    c_range=re.compile("^(\d+)\s*[\-–]\s*(\d+)$")
+    c_range=Regex.compile("^(\d+)\s*[\-–]\s*(\d+)$")
 
     while len(issuesText) > 0:
-        issueSpecs=None
         isl=[]
         issuesText=issuesText.strip()  # Leading and trailing whitespace is uninteresting
 
@@ -77,7 +77,7 @@ def DecodeIssueList(issuesText):
                             if len(issuesText) > 0 and issuesText[0] == ",":
                                 issuesText=issuesText[1:].strip()     # If there was a trailing comma, delete it.
                     elif issuesText[0] == '(':
-                        m=re.compile("^(\(.*\))(.*)$").match(issuesText)
+                        m=Regex.match("^(\(.*\))(.*)$", issuesText)
                         if m != None and len(m.groups()) == 2:
                             isl[len(isl)-1]=isl[len(isl)-1].SetTrailingGarbage(m.groups()[0])
                             issuesText=m.groups()[1].strip()
@@ -102,7 +102,7 @@ def DecodeIssueList(issuesText):
                 sl=issuesText.split(",")
                 sl=[s.strip() for s in sl]
                 sl=[s.split("[", 1) for s in sl]
-                print(sl)
+                # print(sl)
 
                 # The splits create a nested affair of a list some of the members of which are themselves lists. Flatten it.
                 slist=[""]
@@ -119,14 +119,13 @@ def DecodeIssueList(issuesText):
                     if x[-1:] == "]": return "["+x
                     return x
                 iList=[fix(s) for s in slist]
-                print(iList)
+                # print(iList)
 
                 # The last bit is to remove any trailing characters on a number.
                 jList=[]
                 for i in iList:
-                    print(i)
-                    c=re.compile("^#?(\d+)(.*)$")
-                    m=c.match(i)
+                    # print(i)
+                    m=Regex.match("^#?(\d+)(.*)$", i)
                     if m != None:
                         t=IssueSpec.IssueSpec()
                         t.Set1(int(m.groups()[0]))
@@ -139,11 +138,9 @@ def DecodeIssueList(issuesText):
                 #     isl=[IssueSpec.IssueSpec().SetUninterpretableText(stuff)]
                 issuesText=""
 
-        if len(isl) > 0:
-            issueSpecList.Append(isl)
 
-    print("   "+issueSpecList.Str())
-    return
+    print("   "+"   ".join([i.Str() for i in isl]))
+    return isl
 
 # Read the list of 1943 fanzines and parse them
 # The format of a line is: <name> (<editor> & <editor>) >comma-separated list of issues> {comment 1} {comment 2}
@@ -153,15 +150,16 @@ with open("fanzines of 1943.txt") as f:
     lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
 for line in lines:
-    m=Regex.search("(.*)\((.*)\)(.*){(.*)}$", line)     # First look for line with comments
+    m=Regex.match("(.*)\((.*)\)(.*){(.*)}$", line)     # First look for line with comments
     if m is not None:
         print("1: "+str(m.groups()))
     else:
-        m=Regex.search("(.*)\((.*)\)(.*)$", line)  # Try it without comments
+        m=Regex.match("(.*)\((.*)\)(.*)$", line)  # Try it without comments
         if m is not None:
             print("2: "+str(m.groups()))
         else:
             print("No match: "+line)
 
+    DecodeIssueList(m.groups()[2])
 i=0
 
