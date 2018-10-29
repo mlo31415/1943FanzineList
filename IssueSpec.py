@@ -31,7 +31,7 @@ class IssueSpec:
         self.TrailingGarbage=str
         return self
 
-    def Str(self):
+    def Str(self):  # Convert the IS into a debugging form
         if self.UninterpretableText != None:
             return "IS("+self.UninterpretableText+")"
 
@@ -56,6 +56,28 @@ class IssueSpec:
             s=s+", G='"+self.TrailingGarbage+"'"
         return s+")"
 
+    def Format(self):   # Convert the IS into a pretty string
+        if self.UninterpretableText is not None:
+            return self.UninterpretableText
+
+        tg=""
+        if self.TrailingGarbage is not None:
+            tg=self.TrailingGarbage
+
+        if self.Vol is not None and self.Num is not None:
+            return "V"+str(self.Vol)+"#"+str(self.Num)+tg
+
+        if self.Whole is not None:
+            return str(self.Whole)+tg
+
+        if self.Year is not None:
+            if self.Month is None:
+                return str(self.Year)+tg
+            else:
+                return str(self.Year)+":"+str(self.Month)+tg
+
+        return tg
+
 
 class IssueSpecList:
     def __init__(self):
@@ -74,7 +96,7 @@ class IssueSpecList:
         self.list.extend(isl)
         return self
 
-    def Str(self):
+    def Str(self):      # Print out the ISL for debugging
         s=""
         for i in self.list:
             if len(s) > 0:
@@ -85,6 +107,15 @@ class IssueSpecList:
                 s=s+"Missing ISlist"
         if len(s) == 0:
             s="Empty ISlist"
+        return s
+
+    def Format(self):   # Format the ISL for pretty
+        s=""
+        for i in self.list:
+            if i is not None:
+                if len(s) > 0:
+                    s=s+", "
+                s=s+i.Format()
         return s
 
     def len(self):
