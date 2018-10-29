@@ -38,18 +38,23 @@ def DecodeIssueList(issuesText):
     # Walk the issue spec decoding it as we go.
     while len(issuesText) > 0:
         issuesText=issuesText.strip()  # Leading and trailing whitespace is uninteresting
-
+        if issuesText[0] == ",":
+            issuesText=issuesText[1:].strip()   # If the previous pass just took a piece of a comma-separated list, remove the leading comma and any associated wihtespace
+        # And try again
         issuesText=InterpretIssueSpec(isl, issuesText)
 
     print("   "+isl.Format())
     print("   "+isl.Str())
     return isl
 
+# Interpret some or all of the input text (from islText) as an issue spec list and append the interpreted ISs we find to isl
+# It's permissible to not handle the complete list in oen go, since we are called repeatedly until islText is completely interpreted.
+def InterpretIssueSpec(isl, islText):
 
-def InterpretIssueSpec(isl, issuesText):
+    # OK, now try to decode the spec, update the isl, and return whatever text can't be handled this round
+    # We'll try several alteratives
 
-    # OK, now try to decode the spec and return a list (possibly of length 1) of IssueSpecs
-    # It could be
+    # First:
     #   Vnn#nn
     #   Vnn:nn
     #   Vnn#nn,nn,nn
@@ -57,58 +62,87 @@ def InterpretIssueSpec(isl, issuesText):
     c_VnnNnn=Regex.compile(r"""^    # Start at the beginning
                 [vV](\d+\s*)        # Look for a V followed by 1 or more digits
                 [#:]\s*             # Then a '#' or a ':' followed by option whitespace
-                ((?:\d+,\s*)*)      # Then a non-capturing group of one or more digits followed by a comma followed by optional whitespace -- this whole thing is a group
-                (\d+[;,]?)(.*)      # Then a last group of digits followed by an optional comma followed by the rest of the line
+                ((?:\d+,\s*)*)      # Then a non-capturing group of one or more digits followed by a comma followed by optional whitespace
+                                    # this whole thing is a group that matches many of the non-capturing groups 
+                (\d+[;,]?)(.*)      # Then a last group of digits which must be present followed by an optional comma followed by the rest of the line
                 """, Regex.X)
-    m=c_VnnNnn.match(issuesText)
+    m=c_VnnNnn.match(islText)
     if m != None and len(m.groups()) == 4:
         vol=int(m.groups()[0])
+        # Create iList, which is a list of issues associated with this volume number
         iList=m.groups()[1]+m.groups()[2]
-        issuesText=m.groups()[3]
+        islText=m.groups()[3]
         iList=iList.replace(" ", "").replace(";", ",").split(",")  # Split on either ',' or ':'
         for i in iList:
             if len(i) == 0:
                 continue
             t=IssueSpec.IssueSpec()
             t.SetVN(vol, int(i))
-
+            isl.AppendIS(t)
 
         # Check to see if the last item was followed by a bracketed comment.  If so, add it to the last item.
         if len(iList) > 0:
-            issuesText=issuesText.strip()
-            if len(issuesText) > 0:
-                if issuesText[0] == '[':
-                    m=Regex.compile("^(\[.*\])(.*)$").match(issuesText)
+            islText=islText.strip()
+            if len(islText) > 0:
+                t=isl.List()[-1:]   # Get the last element of the list
+                if islText[0] == '[':
+                    m=Regex.compile("^(\[.*\])(.*)$").match(islText)
                     if m != None and len(m.groups()) == 2:
+                        t=IssueSpec.IssueSpec()
                         t.SetTrailingGarbage(m.groups()[0])
-                        issuesText=m.groups()[1].strip()
-                        if len(issuesText) > 0 and issuesText[0] == ",":
-                            issuesText=issuesText[1:].strip()  # If there was a trailing comma, delete it.
-                elif issuesText[0] == '(':
-                    m=Regex.match("^(\(.*\))(.*)$", issuesText)
+                        islText=m.groups()[1].strip()
+                        if len(islText) > 0 and islText[0] == ",":
+                            islText=islText[1:].strip()  # If there was a trailing comma, delete it.
+                elif islText[0] == '(':
+                    m=Regex.match("^(\(.*\))(.*)$", islText)
                     if m != None and len(m.groups()) == 2:
+                        t=IssueSpec.IssueSpec()
                         t.SetTrailingGarbage(m.groups()[0])
-                        issuesText=m.groups()[1].strip()
-                        if len(issuesText) > 0 and issuesText[0] == ",":
-                            issuesText=issuesText[1:].strip()  # If there was a trailing comma, delete it.
-        isl.AppendIS(t)
-        return issuesText
+                        islText=m.groups()[1].strip()
+                        if len(islText) > 0 and islText[0] == ",":
+                            islText=islText[1:].strip()  # If there was a trailing comma, delete it.
+                isl[-1:]=t
 
-    # Deal with a range of numbers, nnn-nnn
-    m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", issuesText)
+        return islText   # Return the unmatched part of the string
+
+    # Second, deal with a range of numbers, nnn-nnn
+    # Look at two cases, (1) a range all by itself and (2) A range in a list
+    m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.append(IssueSpec.IssueSpec().SetW(k))
-        return ""
+        return ""    # By definition the line is now empty
+    m=Regex.match("^(\d+)\s*[\-–]\s*(\d+),", islText)   # Now a range which is part of a list (Note that we terminate on a comma rather than EOL
+    if m != None and len(m.groups()) == 2:
+        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
+            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+        return m.string[m.lastindex:]   # Return the unmatched part of the string
 
-    # It's not a Vn#n sort of thing, but maybe it's a list of whole numbers
+
+    # Next, consider a list of years or year-month pairs:
+    # yyyy[, yyyy]
+    # yyyy:mm[, yyyy:mm]
+    # The years *must* be 4-digit so we can tell them apart from just-plain-numbers
+    # There are two cases, alone on the line and as part of a comma-separated list
+    m=Regex.match("^(\d{4})$", islText)     # Alone
+    if m != None and len(m.groups()) == 2:
+        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
+            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+        return ""   # By definition the line is now empty
+    m=Regex.match("^(\d{4}),", islText)     # Comma-terminated
+    if m != None and len(m.groups()) == 2:
+        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
+            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+        return m.string[m.lastindex:]   # Return the unmatched part of the string
+
+    # Lastly, consider it as a simple list of whole numbers
     # It must start with a digit and contain no other characters than whitespace and commas.
     # m=c_list.match(stuff)
     # if m != None and len(m.groups()) == 3:
     #     iList=m.groups()[0]+m.groups()[1]
     #     stuff=m.groups()[2]
     #     iList=iList.replace(" ", "").replace(";", ",").split(",")  # Split on either ',' or ':'
-    sl=issuesText.split(",")
+    sl=islText.split(",")
     sl=[s.strip() for s in sl]
     sl=[s.split("[", 1) for s in sl]
     # print(sl)
@@ -144,6 +178,8 @@ def InterpretIssueSpec(isl, issuesText):
     return ""
 
 
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Main
 
 # Read the list of 1943 fanzines and parse them
 # The format of a line is: <name> (<editor> & <editor>) >comma-separated list of issues> {comment 1} {comment 2}

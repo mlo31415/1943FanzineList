@@ -79,6 +79,7 @@ class IssueSpec:
         return tg
 
 
+#================================================================================
 class IssueSpecList:
     def __init__(self):
         self.list=[]
@@ -123,3 +124,10 @@ class IssueSpecList:
 
     def List(self):
         return self.list
+
+    def __getitem__(self, key):
+        return self.list[key]
+
+    def __setitem__(self, key, value):
+        self.list[key]=value
+        return self

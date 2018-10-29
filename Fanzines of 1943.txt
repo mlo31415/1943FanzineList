@@ -35,7 +35,7 @@ Comic Circle Commentator (Laney) 1 {Cosmic Circle criticism}
 Convention Extra (uncredited) 2
 Cosmic Bulletin (uncredited) 1, 2
 Cosmic Circle & Fandom (Speer) {Cosmic Circle criticism}
-Cosmic Circle Commentator (Rogers) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 {a Cosmic Circle publication}
+Cosmic Circle Commentator (Rogers) 1-7, 8, 9-16 {a Cosmic Circle publication}
 Cosmic Circle Monthly (Rogers) 1  {a Cosmic Circle publication}
 Cosmic Cuts V2#1, V2#2, V2#3, V2#4, V2#5, V2#6 (Holbrow),
 Cosmic Digest (Washington) 1 & 1 bound as CC Monthly  {a Cosmic Circle publication}
@@ -57,7 +57,7 @@ Dreams of Yith (Rimel & Laney)
 Elmurmurings (Perdue) 1
 EN GARDE (ASHLEY) 5, 6, 7, 8 {ELIGIBLE}
 Erebus (Marlow) 1, 2, 3
-F A L –T Annex 2 (Ashley)
+F A L ï¿½T Annex 2 (Ashley)
 FA Lean3 (Fern & Kepner) 1
 FA Lean-To (Ashley) 2, 3 
 FA Lean-To Annex (Ashley) 1, 2
@@ -65,7 +65,7 @@ FAN-DANGO (LANEY) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania (Daugherty) 1.5,2
 Fandom Awake (Sehnert) 
 FANEWS ANALYZER (ROGERS) 1, 2, 8, 10 {a Cosmic Circle publication} {ELIGIBLE}
-FANEWSCARD (TUCKER, CONNOR & ROBINSON) 1-24 – MOSTLY (21) {ELIGIBLE}
+FANEWSCARD (TUCKER, CONNOR & ROBINSON) 1-24 ï¿½ MOSTLY (21) {ELIGIBLE}
 FANFARE (WIDNER - PARO) 10 {ELIGIBLE}
 Fan-Notes (Bronson) 1
 Fan Slants (Brown) 1
@@ -76,7 +76,7 @@ Fantasy Commentator (Searles) 1
 FANTASY FICTION FIELD (UNGER) NEWSZINE 114-152  {ELIGIBLE}
 Fantasy Fiction Field Newsweek (Unger, Jenkins & Gilbert)
 FANTASY NEWS (SYKORA) 161, 162, 163, 165 {ELIGIBLE}
-Fanzine Yearbook – 1942 (Tucker, Swisher, Pratt, & Ackerman)
+Fanzine Yearbook ï¿½ 1942 (Tucker, Swisher, Pratt, & Ackerman)
 Flight Unknown 6 (Gergen)
 Fan-Tods (Stanley) 2, 3, 4, 5
 Fanzine Yearbook (Tucker) 1942 (in LeZ 56)
@@ -99,14 +99,14 @@ GUTETO (MOROJO [MYRTLE DOUGLAS) V2#4; V3#1, V3#2, V3#3 F {ELIGIBLE}
 Have at Thee, Knanves (sic) (Russell) 1
 History of the Future Index Cards (uncredited)
 HORIZONS (WARNER) V4#3, V4#4; V5#1, V5#2 {ELIGIBLE}
-Howard Phillips Lovecraft – Tentative Biblio (Laney & Evans) F #
+Howard Phillips Lovecraft ï¿½ Tentative Biblio (Laney & Evans) F #
 Imagi-Music (Ackerman) 2
 INSPIRATION (BRIDGES) V2#1, V2#2, V2#3, V2#4 {ELIGIBLE}
 JINX (JENKINS) 5 {ELIGIBLE}
 Konan (Speer) 1943?
 Lamppost (Parker) 1
 Lens (Beach) 2
-LET’S SWAP (CROUTCH) 1, 2,3,4,5 {#S 1 AND 2 UNDATED}  {ELIGIBLE}
+LETï¿½S SWAP (CROUTCH) 1, 2,3,4,5 {#S 1 AND 2 UNDATED}  {ELIGIBLE}
 LIGHT (CROUTCH) 124, 125, 126, 127, 128, 129 {ELIGIBLE}
 Literary Newsette (Laney & Rimel) 144
 Lovecraft & Benefit Street (Walter & Cook)
@@ -125,7 +125,7 @@ Midlands S-F Con (Johnson) 1,2,3
 Midvention Booklet (Williams) 1943:4
 Midvention Report (Johnson) 1943
 Mighty Atom (Johnson) 2,3 (Fido)
-MILTY’S MAG (Rothman) 12,13 {ELIGIBLE}
+MILTYï¿½S MAG (Rothman) 12,13 {ELIGIBLE}
 Moonshine (Moffatt) 2,3
 Morpheus (Marconette) 1
 NEBULA (SHAW) NEWSZINE 17, 18, 19, 20 {ELIGIBLE}
@@ -157,7 +157,7 @@ Science Fiction Savant (Washington) 1  {a Cosmic Circle publication}
 SCI-FIC VARIETY (Tucker) 8 {ELIGIBLE}
 Selene (Wilninszyk) 1
 S-F Republican (Speer) Dec.
-SHANGRI L’AFFAIRES B (various) 8,9,10,11,12 {ELIGIBLE}
+SHANGRI Lï¿½AFFAIRES B (various) 8,9,10,11,12 {ELIGIBLE}
 Silver Dusk (Vhauvenet)
 Songs with Certain Dissonances (Mayer & Joquel) 1943
 Staplecon (Ackerman) 1
@@ -178,7 +178,7 @@ Unknown Madman (Shaw) 1943:12
 Vision (Wright) 1
 VOICE OF THE IMAGI-NATION (Ackerman) 27, 28 {ELIGIBLE}
 Vulcan (Inman) 3,4,5, ?
-WALT’S WRAMBLINGS (Liebscher) 4,45,6,7,8 {ELIGIBLE}
+WALTï¿½S WRAMBLINGS (Liebscher) 4,45,6,7,8 {ELIGIBLE}
 We Just Had To Do It (Brown & Fern) 1
 Whoopdoodle (Liebscher) 1943:6
 Wowsy Wamblings (Liebscher) 1943:6
