@@ -148,12 +148,10 @@ def InterpretIssueSpec(isl, islText):
     # print(sl)
 
     # The splits create a nested affair of a list some of the members of which are themselves lists. Flatten it.
-    slist=[""]
+    slist=[]
     for s in sl:
         if s != None:
-            slist.append(s[0])
-            if len(s) == 2:
-                slist.append(s[1])
+            slist.extend(s)
 
     def fix(x):  # An inline function to restore the leading '[' or '(' which the splits on them consumed
         if len(x) == 0: return x
