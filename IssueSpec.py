@@ -4,16 +4,23 @@ class IssueSpec:
         self.Vol=None
         self.Num=None
         self.Whole=None
+        self.Year=None
+        self.Month=None
         self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
-    def Set2(self, v, n):
+    def SetVN(self, v, n):
         self.Vol=v
         self.Num=n
         return self
 
-    def Set1(self, w):
+    def SetW(self, w):
         self.Whole=w
+        return self
+
+    def SetDate(selfself, y, m):
+        self=Year=y
+        self.Month=m
         return self
 
     def SetUninterpretableText(self, str):
@@ -38,9 +45,15 @@ class IssueSpec:
         if self.Whole != None:
             w=str(self.Whole)
 
-        s="IS(V"+v+", N"+n+", W"+w
+        d="-"
+        if self.Year != None:
+            d=str(self.Year)
+        if self.Month != None:
+            d=":"+str(self.Month)
+
+        s="IS(V"+v+", N"+n+", W"+w+", D"+d
         if self.TrailingGarbage != None:
-            s=s+", "+self.TrailingGarbage
+            s=s+", G='"+self.TrailingGarbage+"'"
         return s+")"
 
 
@@ -48,21 +61,24 @@ class IssueSpecList:
     def __init__(self):
         self.list=[]
 
-    def Append1(self, issuespec):
+    def AppendIS(self, issuespec):
         self.list.append(issuespec)
+        return self
 
-    def Append2(self, vol, issuelist):
+    def AppendVIS(self, vol, issuelist):
         for i in issuelist:
-            self.Append(IssueSpec().Set2(vol, i))
+            self.Append(IssueSpec().SetVN(vol, i))
+        return self
 
-    def Append(self, isl):
+    def Extend(self, isl):
         self.list.extend(isl)
+        return self
 
     def Str(self):
         s=""
         for i in self.list:
             if len(s) > 0:
-                s=s+", "
+                s=s+",  "
             if i != None:
                 s=s+i.Str()
             else:

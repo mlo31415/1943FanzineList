@@ -1,6 +1,7 @@
 import re as Regex
 import IssueSpec
 
+
 def DecodeIssueList(issuesText):
     if issuesText == None:    # Skip empty stuff
         return None
@@ -10,7 +11,7 @@ def DecodeIssueList(issuesText):
     # Turn all multiple spaces into a single space
     issuesText=issuesText.replace("  ", " ").replace("  ", " ").replace("  ", " ").strip()   # Hopefully there's never more than 8 spaces in succession...
 
-    issueSpecList=IssueSpec.IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting stuff
+    isl=IssueSpec.IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting stuff
 
     # Cases:
     #   1,2,3,4
@@ -33,7 +34,7 @@ def DecodeIssueList(issuesText):
     #   A range of whole numbers
     #   A list of year:issue pairs
     #  In all cases we need to be prepared to deal with (and preserve) random text.
-    c_VnnNnn=Regex.compile(r"""^       # Start at the beginning
+    c_VnnNnn=Regex.compile(r"""^    # Start at the beginning
                 [vV](\d+\s*)        # Look for a V followed by 1 or more digits
                 [#:]\s*             # Then a '#' or a ':' followed by option whitespace
                 ((?:\d+,\s*)*)      # Then a non-capturing group of one or more digits followed by a comma followed by optional whitespace -- this whole thing is a group
@@ -43,17 +44,16 @@ def DecodeIssueList(issuesText):
     c_range=Regex.compile("^(\d+)\s*[\-–]\s*(\d+)$")
 
     while len(issuesText) > 0:
-        isl=[]
         issuesText=issuesText.strip()  # Leading and trailing whitespace is uninteresting
 
-         # OK, now try to decode the spec and return a list (possibly of length 1) of IssueSpecs
+        # OK, now try to decode the spec and return a list (possibly of length 1) of IssueSpecs
         # It could be
         #   Vnn#nn
         #   Vnn:nn
         #   Vnn#nn,nn,nn
         #   Vnn:nn,nn,nn
         m=c_VnnNnn.match(issuesText)
-        if m!= None and len(m.groups()) == 4:
+        if m != None and len(m.groups()) == 4:
             vol=int(m.groups()[0])
             iList=m.groups()[1]+m.groups()[2]
             issuesText=m.groups()[3]
@@ -62,15 +62,15 @@ def DecodeIssueList(issuesText):
                 if len(i) == 0:
                     continue
                 t=IssueSpec.IssueSpec()
-                t.Set2(vol, int(i))
-                isl.append(t)
+                t.SetVN(vol, int(i))
+                isl.AppendIS(t)
 
             # Check to see if the last item was followed by a bracketed comment.  If so, add it to the last item.
             if len(iList) > 0:
                 issuesText=issuesText.strip()
                 if len(issuesText)> 0:
                     if issuesText[0] == '[':
-                        m=re.compile("^(\[.*\])(.*)$").match(issuesText)
+                        m=Regex.compile("^(\[.*\])(.*)$").match(issuesText)
                         if m != None and len(m.groups()) == 2:
                             isl[len(isl)-1]=isl[len(isl)-1].SetTrailingGarbage(m.groups()[0])
                             issuesText=m.groups()[1].strip()
@@ -88,7 +88,7 @@ def DecodeIssueList(issuesText):
             m=c_range.match(issuesText)
             if m != None and len(m.groups()) == 2:
                 for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-                    isl.append(IssueSpec.IssueSpec().Set1(k))
+                    isl.append(IssueSpec.IssueSpec().SetW(k))
                 issuesText=""
 
             else:
@@ -128,10 +128,10 @@ def DecodeIssueList(issuesText):
                     m=Regex.match("^#?(\d+)(.*)$", i)
                     if m != None:
                         t=IssueSpec.IssueSpec()
-                        t.Set1(int(m.groups()[0]))
+                        t.SetW(int(m.groups()[0]))
                         if len(m.groups()[1])>0:
                             t.SetTrailingGarbage(m.groups()[1])
-                        isl.append(t)
+                        isl.AppendIS(t)
 
                 # OK, it's probably junk. Absorb everything until the next V-spec or digit
                 # else:
@@ -139,7 +139,7 @@ def DecodeIssueList(issuesText):
                 issuesText=""
 
 
-    print("   "+"   ".join([i.Str() for i in isl]))
+    print("   "+isl.Str())
     return isl
 
 # Read the list of 1943 fanzines and parse them
