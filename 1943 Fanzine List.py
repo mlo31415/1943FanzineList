@@ -50,6 +50,7 @@ def DecodeIssueList(issuesText):
 # Interpret some or all of the input text (from islText) as an issue spec list and append the interpreted ISs we find to isl
 # It's permissible to not handle the complete list in oen go, since we are called repeatedly until islText is completely interpreted.
 def InterpretIssueSpec(isl, islText):
+    islText=islText.strip()
 
     # OK, now try to decode the spec, update the isl, and return whatever text can't be handled this round
     # We'll try several alteratives
@@ -106,7 +107,7 @@ def InterpretIssueSpec(isl, islText):
         return islText   # Return the unmatched part of the string
 
     # Second, deal with a range of numbers, nnn-nnn
-    # Look at two cases, (1) a range all by itself and (2) A range in a list
+    # Look at two cases, (1) a range all by itself and (2) A range in a list (i.e., followed by a comma)
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
@@ -116,7 +117,7 @@ def InterpretIssueSpec(isl, islText):
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
-        return m.string[m.lastindex:]   # Return the unmatched part of the string
+        return m.string[m.lastindex+1:]   # Return the unmatched part of the string
 
 
     # Next, consider a list of years or year-month pairs:
@@ -133,46 +134,33 @@ def InterpretIssueSpec(isl, islText):
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
-        return m.string[m.lastindex:]   # Return the unmatched part of the string
+        return m.string[m.lastindex+1:]   # Return the unmatched part of the string
 
-    # Lastly, consider it as a simple list of whole numbers
-    # It must start with a digit and contain no other characters than whitespace and commas.
-    # m=c_list.match(stuff)
-    # if m != None and len(m.groups()) == 3:
-    #     iList=m.groups()[0]+m.groups()[1]
-    #     stuff=m.groups()[2]
-    #     iList=iList.replace(" ", "").replace(";", ",").split(",")  # Split on either ',' or ':'
-    sl=islText.split(",")
-    sl=[s.strip() for s in sl]
-    sl=[s.split("[", 1) for s in sl]
-    # print(sl)
+    # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26)
+    # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
+    m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*,", islText)
+    if m != None and len(m.groups()) > 0:
+        n=int(m.groups()[0])
+        a=m.groups()[1]
+        t=IssueSpec.IssueSpec()
+        t.SetW(n)
+        if a is not None:
+            t.SetTrailingGarbage(a)
+        isl.AppendIS(t)
+        return m.string[m.lastindex+1:]
 
-    # The splits create a nested affair of a list some of the members of which are themselves lists. Flatten it.
-    slist=[]
-    for s in sl:
-        if s != None:
-            slist.extend(s)
+    # And there may be a single number (maybe with trailing alpha) alone on the line
+    m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*$", islText)
+    if m != None and len(m.groups()) > 0:
+        n=int(m.groups()[0])
+        a=m.groups()[1]
+        t=IssueSpec.IssueSpec()
+        t.SetW(n)
+        if a is not None:
+            t.SetTrailingGarbage(a)
+        isl.AppendIS(t)
+        return m.string[m.lastindex+1:]
 
-    def fix(x):  # An inline function to restore the leading '[' or '(' which the splits on them consumed
-        if len(x) == 0: return x
-        if x[0].isdigit(): return x
-        if x[-1:] == ")": return "("+x
-        if x[-1:] == "]": return "["+x
-        return x
-
-    iList=[fix(s) for s in slist]
-    # print(iList)
-
-    # The last bit is to move any trailing characters on a number into the TrailingGarbage section.
-    for i in iList:
-        # print(i)
-        m=Regex.match("^#?(\d+)(.*)$", i)
-        if m != None:
-            t=IssueSpec.IssueSpec()
-            t.SetW(int(m.groups()[0]))
-            if len(m.groups()[1]) > 0:
-                t.SetTrailingGarbage(m.groups()[1])
-            isl.AppendIS(t)
     return ""
 
 
