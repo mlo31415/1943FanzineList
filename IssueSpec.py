@@ -18,8 +18,8 @@ class IssueSpec:
         self.Whole=w
         return self
 
-    def SetDate(selfself, y, m):
-        self=Year=y
+    def SetDate(self, y, m):
+        self.Year=y
         self.Month=m
         return self
 
