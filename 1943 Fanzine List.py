@@ -111,7 +111,7 @@ def InterpretIssueSpec(isl, islText):
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.append(IssueSpec.IssueSpec().SetW(k))
+            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
         return ""    # By definition the line is now empty
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+),", islText)   # Now a range which is part of a list (Note that we terminate on a comma rather than EOL
     if m != None and len(m.groups()) == 2:
@@ -175,6 +175,10 @@ with open("fanzines of 1943.txt") as f:
     lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
 for line in lines:
+    # The line may have one or more sets of comments one or more curly brackets at the end
+    comments=Regex.findall("{(.+?)}", line)
+    line=Regex.sub("{(.+?)}", "", line)
+
     m=Regex.match("(.*)\((.*)\)(.*){(.*)}$", line)     # First look for line with comments
     if m is not None:
         print("1: "+str(m.groups()))
