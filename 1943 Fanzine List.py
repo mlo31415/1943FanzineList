@@ -189,18 +189,14 @@ with open("fanzines of 1943.txt") as f:
 
 for line in lines:
     # The line may have one or more sets of comments one or more curly brackets at the end
-    comments=Regex.findall("{(.+?)}", line)
-    line=Regex.sub("{(.+?)}", "", line)
+    comments=Regex.findall("{(.+?)}", line)     # Find all the comments
+    line=Regex.sub("{(.+?)}", "", line)         # Delete all comment text by replacing them with empty strings
 
-    m=Regex.match("(.*)\((.*)\)(.*){(.*)}$", line)     # First look for line with comments
+    m=Regex.match("(.*)\((.*)\)(.*)$", line)  # Try it without comments
     if m is not None:
-        print("1: "+str(m.groups()))
+        print(str(m.groups()))
     else:
-        m=Regex.match("(.*)\((.*)\)(.*)$", line)  # Try it without comments
-        if m is not None:
-            print("2: "+str(m.groups()))
-        else:
-            print("No match: "+line)
+        print("No match: "+line)
 
     DecodeIssueList(m.groups()[2])
 i=0
