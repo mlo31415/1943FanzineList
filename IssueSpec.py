@@ -45,11 +45,13 @@ class IssueSpec:
         if self.Whole != None:
             w=str(self.Whole)
 
-        d="-"
+        d=""
         if self.Year != None:
             d=str(self.Year)
         if self.Month != None:
-            d=":"+str(self.Month)
+            d=d+":"+str(self.Month)
+        if d == "":
+            d="-"
 
         s="IS(V"+v+", N"+n+", W"+w+", D"+d
         if self.TrailingGarbage != None:
