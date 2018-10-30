@@ -125,16 +125,29 @@ def InterpretIssueSpec(isl, islText):
     # yyyy:mm[, yyyy:mm]
     # The years *must* be 4-digit so we can tell them apart from just-plain-numbers
     # There are two cases, alone on the line and as part of a comma-separated list
-    m=Regex.match("^(\d{4})$", islText)     # Alone
-    if m != None and len(m.groups()) == 2:
-        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+    # Year alone
+    m=Regex.match("^(\d{4})$", islText)
+    if m != None and len(m.groups()) > 0:
+        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), None))
         return ""   # By definition the line is now empty
-    m=Regex.match("^(\d{4}),", islText)     # Comma-terminated
-    if m != None and len(m.groups()) == 2:
-        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+
+    # Year comma-terminated
+    m=Regex.match("^(\d{4})\s*,", islText)
+    if m != None and len(m.groups()) > 0:
+        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), None))
         return m.string[m.lastindex+1:]   # Return the unmatched part of the string
+
+    # Year:month alone
+    m=Regex.match("^(\d{4}):(\d+)$", islText)
+    if m != None and len(m.groups()) > 0:
+        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), int(m.groups()[1])))
+        return ""  # By definition the line is now empty
+
+    # Year:month comma-terminated
+    m=Regex.match("^(\d{4}):(\d+)\s*,", islText)
+    if m != None and len(m.groups()) > 0:
+        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), int(m.groups()[1])))
+        return m.string[m.lastindex+1:]  # Return the unmatched part of the string
 
     # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
