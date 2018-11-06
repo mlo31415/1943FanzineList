@@ -32,23 +32,23 @@ class IssueSpec:
         return self
 
     def Str(self):  # Convert the IS into a debugging form
-        if self.UninterpretableText != None:
+        if self.UninterpretableText is not None:
             return "IS("+self.UninterpretableText+")"
 
         v="-"
-        if self.Vol != None:
+        if self.Vol is not None:
             v=str(self.Vol)
         n="-"
-        if self.Num != None:
+        if self.Num is not None:
             n=str(self.Num)
         w="-"
-        if self.Whole != None:
+        if self.Whole is not None:
             w=str(self.Whole)
 
         d=""
-        if self.Year != None:
+        if self.Year is not None:
             d=str(self.Year)
-        if self.Month != None:
+        if self.Month is not None:
             d=d+":"+str(self.Month)
         if d == "":
             d="-"

@@ -1,6 +1,6 @@
 import re as Regex
 import IssueSpec
-
+import FanzineSeriesSpec
 
 def DecodeIssueList(issuesText):
     if issuesText == None:    # Skip empty stuff
@@ -178,7 +178,8 @@ def InterpretIssueSpec(isl, islText):
 
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# Main
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#  Main
 
 # Read the list of 1943 fanzines and parse them
 # The format of a line is: <name> (<editor> & <editor>) >comma-separated list of issues> {comment 1} {comment 2}
@@ -187,17 +188,25 @@ with open("fanzines of 1943.txt") as f:
     lines=f.readlines()
     lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
+fisList=[]
+
 for line in lines:
+    fis=FanzineSeriesSpec.FanzineSeriesSpec()
+
     # The line may have one or more sets of comments one or more curly brackets at the end
-    comments=Regex.findall("{(.+?)}", line)     # Find all the comments
+    fis.Notes=Regex.findall("{(.+?)}", line)    # Find all the comments
     line=Regex.sub("{(.+?)}", "", line)         # Delete all comment text by replacing them with empty strings
 
-    m=Regex.match("(.*)\((.*)\)(.*)$", line)  # Try it without comments
+    m=Regex.match("(.*)\((.*)\)(.*)$", line)    # Try it without comments
     if m is not None:
         print(str(m.groups()))
     else:
         print("No match: "+line)
+        continue
 
-    DecodeIssueList(m.groups()[2])
+    fis.Name=m.groups()[0]
+    fis.Editor=m.groups()[1]
+    fis.IssueSpecList=DecodeIssueList(m.groups()[2])
+    fisList.append(fis)
 i=0
 
