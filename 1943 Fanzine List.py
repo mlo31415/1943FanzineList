@@ -194,8 +194,12 @@ for line in lines:
     fis=FanzineSeriesSpec.FanzineSeriesSpec()
 
     # The line may have one or more sets of comments one or more curly brackets at the end
-    fis.Notes=Regex.findall("{(.+?)}", line)    # Find all the comments
+    notes=Regex.findall("{(.+?)}", line)    # Find all the comments
     line=Regex.sub("{(.+?)}", "", line)         # Delete all comment text by replacing them with empty strings
+    if "ELIGIBLE" in notes:
+        fis.Eligible=True
+        notes.remove("ELIGIBLE")
+    fis.Notes=notes
 
     m=Regex.match("(.*)\((.*)\)(.*)$", line)    # Try it without comments
     if m is not None:
@@ -208,5 +212,10 @@ for line in lines:
     fis.Editor=m.groups()[1]
     fis.IssueSpecList=DecodeIssueList(m.groups()[2])
     fisList.append(fis)
+
+# List the fanzines found
+print("\n\n\n\n\n\n\n")
+for fis in fisList:
+    print(fis.Format())
 i=0
 

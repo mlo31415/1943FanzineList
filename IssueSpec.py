@@ -70,7 +70,7 @@ class IssueSpec:
             return "V"+str(self.Vol)+"#"+str(self.Num)+tg
 
         if self.Whole is not None:
-            return str(self.Whole)+tg
+            return "#"+str(self.Whole)+tg
 
         if self.Year is not None:
             if self.Month is None:
