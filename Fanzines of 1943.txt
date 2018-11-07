@@ -125,7 +125,7 @@ Midlands S-F Con (Johnson) 1,2,3
 Midvention Booklet (Williams) 1943:4
 Midvention Report (Johnson) 1943
 Mighty Atom (Johnson) 2,3 (Fido)
-MILTY'S MAG (Rothman) 12,13 {ELIGIBLE}
+Milty's Mag (Rothman) 12,13 {ELIGIBLE}
 Moonshine (Moffatt) 2,3
 Morpheus (Marconette) 1
 Nebula (Shaw) Newszine 17, 18, 19, 20 {ELIGIBLE}
