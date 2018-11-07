@@ -28,30 +28,23 @@ class FanzineSeriesSpec:
 
         return "FSS(N"+na+", Ed"+e+", No"+no+", ISL("+isl+"), E"+e+")"
 
+
     def Format(self):  # Pretty print the FSS
-        isl=""
-        if self.IssueSpecList is not None:
-            isl=self.IssueSpecList.Format()
 
-        na=""
+        out=""
         if self.Name is not None:
-            na=self.Name
+            out=self.Name
 
-        e=""
-        if self.Editor is not None:
-            e=self.Editor
+        if self.Editor is not None and len(self.Editor) > 0:
+            out=out+"   ("+self.Editor+")"
 
-        no=""
-        if self.Notes is not None:
-            no=self.Notes
+        if self.Notes is not None and len(self.Notes) > 0:
+            for n in self.Notes:
+                out=out+"   {"+n+"}"
 
-        out=na
-        if len(e) > 0:
-            out=out+"   ("+e+")"
-        if len(no) > 0:
-            out=out+"   {"+str(no)+"}"
-        if len(isl) > 0:
-            out=out+"  "+isl
+        if self.IssueSpecList is not None and len(self.IssueSpecList) > 0:
+            out=out+"  "+self.IssueSpecList.Format()
+
         if self.Eligible:
             out=out+"   Eligible!"
         return out
