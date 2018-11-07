@@ -1,6 +1,7 @@
 import re as Regex
-import IssueSpec
+from IssueSpec import IssueSpec, IssueSpecList
 import FanzineSeriesSpec
+import FanacIssueData
 
 def DecodeIssueList(issuesText):
     if issuesText == None:    # Skip empty stuff
@@ -11,7 +12,7 @@ def DecodeIssueList(issuesText):
     # Turn all multiple spaces into a single space
     issuesText=issuesText.replace("  ", " ").replace("  ", " ").replace("  ", " ").strip()   # Hopefully there's never more than 8 spaces in succession...
 
-    isl=IssueSpec.IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting stuff
+    isl=IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting stuff
 
     # Cases:
     #   1,2,3,4
@@ -77,8 +78,7 @@ def InterpretIssueSpec(isl, islText):
         for i in iList:
             if len(i) == 0:
                 continue
-            t=IssueSpec.IssueSpec()
-            t.SetVN(vol, int(i))
+            t=IssueSpec(Vol=vol, Num=i)
             isl.AppendIS(t)
 
         # Check to see if the last item was followed by a bracketed comment.  If so, add it to the last item.
@@ -89,7 +89,7 @@ def InterpretIssueSpec(isl, islText):
                 if islText[0] == '[':
                     m=Regex.compile("^(\[.*\])(.*)$").match(islText)
                     if m != None and len(m.groups()) == 2:
-                        t=IssueSpec.IssueSpec()
+                        t=IssueSpec()
                         t.SetTrailingGarbage(m.groups()[0])
                         islText=m.groups()[1].strip()
                         if len(islText) > 0 and islText[0] == ",":
@@ -97,7 +97,7 @@ def InterpretIssueSpec(isl, islText):
                 elif islText[0] == '(':
                     m=Regex.match("^(\(.*\))(.*)$", islText)
                     if m != None and len(m.groups()) == 2:
-                        t=IssueSpec.IssueSpec()
+                        t=IssueSpec()
                         t.SetTrailingGarbage(m.groups()[0])
                         islText=m.groups()[1].strip()
                         if len(islText) > 0 and islText[0] == ",":
@@ -111,12 +111,12 @@ def InterpretIssueSpec(isl, islText):
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+            isl.AppendIS(IssueSpec(Whole=k))
         return ""    # By definition the line is now empty
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+),", islText)   # Now a range which is part of a list (Note that we terminate on a comma rather than EOL
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
+            isl.AppendIS(IssueSpec(Whole=k))
         return m.string[m.lastindex:]   # Return the unmatched part of the string
 
 
@@ -128,25 +128,25 @@ def InterpretIssueSpec(isl, islText):
     # Year alone
     m=Regex.match("^(\d{4})$", islText)
     if m != None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), None))
+        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], None))
         return ""   # By definition the line is now empty
 
     # Year comma-terminated
     m=Regex.match("^(\d{4})\s*,", islText)
     if m != None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), None))
+        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], None))
         return m.string[m.lastindex:]   # Return the unmatched part of the string
 
     # Year:month alone
     m=Regex.match("^(\d{4}):(\d+)$", islText)
     if m != None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), int(m.groups()[1])))
+        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], m.groups()[1]))
         return ""  # By definition the line is now empty
 
     # Year:month comma-terminated
     m=Regex.match("^(\d{4}):(\d+)\s*,", islText)
     if m != None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), int(m.groups()[1])))
+        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], m.groups()[1]))
         return m.string[m.lastindex:]  # Return the unmatched part of the string
 
 
@@ -154,24 +154,16 @@ def InterpretIssueSpec(isl, islText):
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
     m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*,", islText)
     if m != None and len(m.groups()) > 0:
-        n=int(m.groups()[0])
-        a=m.groups()[1]
-        t=IssueSpec.IssueSpec()
-        t.SetW(n)
-        if a is not None and len(a) > 0:
-            t.SetTrailingGarbage(a)
+        t=IssueSpec(Whole=m.groups()[0])
+        t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
         return m.string[m.lastindex:]
 
     # And there may be a single number (maybe with trailing alpha) alone on the line
     m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*$", islText)
     if m != None and len(m.groups()) > 0:
-        n=int(m.groups()[0])
-        a=m.groups()[1]
-        t=IssueSpec.IssueSpec()
-        t.SetW(n)
-        if a is not None and len(a) > 0:
-            t.SetTrailingGarbage(a)
+        t=IssueSpec(Whole=m.groups()[0])
+        t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
         return m.string[m.lastindex:]
 
@@ -187,7 +179,8 @@ def InterpretIssueSpec(isl, islText):
 # the name and editor are always present
 with open("fanzines of 1943.txt") as f:
     lines=f.readlines()
-    lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
+
+lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
 fisList=[]
 
@@ -219,5 +212,39 @@ for line in lines:
 print("\n\n\n\n\n\n\n")
 for fis in fisList:
     print(fis.Format())
+
+# OK, not it's time to read fanac.org looking for 1943 fanzines.
+with open("1943 fanac.org Fanzines.txt") as f:
+    lines=f.readlines()
+
+lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
+
+# The file is "||"-delimited and consists of four columns:
+# Issue title (including issue number)
+# Issue date
+# Containing directory URL
+# Issue index file name
+fidList=[]
+for line in lines:
+    line=line.strip()[2:-2] # Strip off outside whitespace and outside "||"
+    cols=line.split("||")
+    cols=[c.strip() for c in cols]
+
+    # cols[0] should be the issue name including issue number at the end
+    # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
+    fid=FanacIssueData.FanacIssueData
+    fid.DirURL=cols[2]
+    fid.DisplayName=cols[0]
+    fid.Filename=cols[3]
+
+    # Now figure out the IssueSpec
+
+    # First look for the pattern Vn[,][ ]#n where n is a number
+    m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])
+    if m != None and len(m.groups()) > 0:
+        isp=IssueSpec(Vol=m.groups()[1], Num=m.groups()[2], Name=m.groups()[0])
+        fid.IssueSpec=isp
+        continue
+
 i=0
 

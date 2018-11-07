@@ -1,26 +1,65 @@
+def Int(val):
+    if val is int:
+        return val
+    try:
+        return int(val)
+    except:
+        return None
+
 class IssueSpec:
 
-    def __init__(self):
-        self.Vol=None
-        self.Num=None
-        self.Whole=None
-        self.Year=None
-        self.Month=None
+    def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
+        self._Vol=Vol
+        self._Num=Num
+        self._Whole=Whole
+        self.Year=Year
+        self.Month=Month
         self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
-    def SetVN(self, v, n):
-        self.Vol=v
-        self.Num=n
-        return self
+    # .....................
+    @property
+    def Vol(self):
+        return self._Vol
 
-    def SetW(self, w):
-        self.Whole=w
-        return self
+    @Vol.setter
+    def Vol(self, val):
+        self._Vol=Int(val)
 
+    @Vol.getter
+    def Vol(self):
+        return self._Vol
+
+    # .....................
+    @property
+    def Num(self):
+        return self._Num
+
+    @Num.setter
+    def Num(self, val):
+        self._Num=Int(val)
+
+    @Num.getter
+    def Num(self):
+        return self._Num
+
+    #.....................
+    @property
+    def Whole(self):
+        return self._Whole
+
+    @Whole.setter
+    def Whole(self, val):
+        self._Whole=Int(val)
+
+    @Whole.getter
+    def Whole(self):
+        return self._Whole
+
+    # .....................
     def SetDate(self, y, m):
-        self.Year=y
-        self.Month=m
+        self.Year=Int(y)
+        self.Month=Int(m)
         return self
 
     def SetUninterpretableText(self, str):
