@@ -24,11 +24,13 @@ class IssueSpec:
         return self
 
     def SetUninterpretableText(self, str):
-        self.UninterpretableText=str
+        if str is not None and len(str) > 0:
+            self.UninterpretableText=str
         return self
 
     def SetTrailingGarbage(self, str):
-        self.TrailingGarbage=str
+        if str is not None and len(str) > 0:
+            self.TrailingGarbage=str
         return self
 
     def Str(self):  # Convert the IS into a debugging form
@@ -92,7 +94,7 @@ class IssueSpecList:
 
     def AppendVIS(self, vol, issuelist):
         for i in issuelist:
-            self.Append(IssueSpec().SetVN(vol, i))
+            self.append(IssueSpec().SetVN(vol, i))
         return self
 
     def Extend(self, isl):
@@ -121,7 +123,7 @@ class IssueSpecList:
                 s=s+i.Format()
         return s
 
-    def len(self):
+    def __len__(self):
         return len(self.list)
 
     def List(self):
