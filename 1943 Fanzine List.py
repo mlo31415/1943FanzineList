@@ -117,7 +117,7 @@ def InterpretIssueSpec(isl, islText):
     if m != None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(IssueSpec.IssueSpec().SetW(k))
-        return m.string[m.lastindex+1:]   # Return the unmatched part of the string
+        return m.string[m.lastindex:]   # Return the unmatched part of the string
 
 
     # Next, consider a list of years or year-month pairs:
@@ -135,7 +135,7 @@ def InterpretIssueSpec(isl, islText):
     m=Regex.match("^(\d{4})\s*,", islText)
     if m != None and len(m.groups()) > 0:
         isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), None))
-        return m.string[m.lastindex+1:]   # Return the unmatched part of the string
+        return m.string[m.lastindex:]   # Return the unmatched part of the string
 
     # Year:month alone
     m=Regex.match("^(\d{4}):(\d+)$", islText)
@@ -147,7 +147,8 @@ def InterpretIssueSpec(isl, islText):
     m=Regex.match("^(\d{4}):(\d+)\s*,", islText)
     if m != None and len(m.groups()) > 0:
         isl.AppendIS(IssueSpec.IssueSpec().SetDate(int(m.groups()[0]), int(m.groups()[1])))
-        return m.string[m.lastindex+1:]  # Return the unmatched part of the string
+        return m.string[m.lastindex:]  # Return the unmatched part of the string
+
 
     # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
@@ -157,10 +158,10 @@ def InterpretIssueSpec(isl, islText):
         a=m.groups()[1]
         t=IssueSpec.IssueSpec()
         t.SetW(n)
-        if a is not None:
+        if a is not None and len(a) > 0:
             t.SetTrailingGarbage(a)
         isl.AppendIS(t)
-        return m.string[m.lastindex+1:]
+        return m.string[m.lastindex:]
 
     # And there may be a single number (maybe with trailing alpha) alone on the line
     m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*$", islText)
@@ -169,10 +170,10 @@ def InterpretIssueSpec(isl, islText):
         a=m.groups()[1]
         t=IssueSpec.IssueSpec()
         t.SetW(n)
-        if a is not None:
+        if a is not None and len(a) > 0:
             t.SetTrailingGarbage(a)
         isl.AppendIS(t)
-        return m.string[m.lastindex+1:]
+        return m.string[m.lastindex:]
 
     return ""
 
@@ -191,6 +192,7 @@ with open("fanzines of 1943.txt") as f:
 fisList=[]
 
 for line in lines:
+    print("\n"+line)
     fis=FanzineSeriesSpec.FanzineSeriesSpec()
 
     # The line may have one or more sets of comments one or more curly brackets at the end
