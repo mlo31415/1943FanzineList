@@ -65,7 +65,7 @@ Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania (Daugherty) 1.5,2
 Fandom Awake (Sehnert)
 Fanews Analyzer (Rogers) 1, 2, 8, 10 {a Cosmic Circle publication} {ELIGIBLE}
-Fanewscard (Tucker, Connor & Robinson) 1-24 � MOSTLY (21) {ELIGIBLE}
+Fanewscard (Tucker, Connor & Robinson) 1-24 {ELIGIBLE}
 Fanfare (Widner - Paro) 10 {ELIGIBLE}
 Fan-Notes (Bronson) 1
 Fan Slants (Brown) 1
@@ -73,7 +73,7 @@ Fantasite (Bronson) V2#5 (#11) {ELIGIBLE}
 Fanta Snide (Ackerman)
 Fantasy Amateur (FAPA OO)
 Fantasy Commentator (Searles) 1
-Fantasy Fiction Field (Unger) Newszine 114-152  {ELIGIBLE}
+Fantasy Fiction Field (Unger)  114-152  {ELIGIBLE} {Newszine}
 Fantasy Fiction Field Newsweek (Unger, Jenkins & Gilbert)
 Fantasy News (Sykora) 161, 162, 163, 165 {ELIGIBLE}
 Fanzine Yearbook -- 1942 (Tucker, Swisher, Pratt, & Ackerman)
