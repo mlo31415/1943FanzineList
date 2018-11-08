@@ -265,5 +265,20 @@ for line in lines:
 
 for fid in fidList:
     print(fid.Format())
+
+# Now cross-reference them.
+# Go through the list of 1943 Fanzines and find those that we have on fanac.org
+for fis in fisList:
+    if fis.IssueSpecList is not None:
+        for isp in fis.IssueSpecList:
+            match=False
+            for fid in fidList:
+                if fis.Name.lower() == fid.Name.lower():
+                    if isp == fid.IssueSpec:
+                        print("Match: "+fis.Name+" "+isp.Format())
+                        match=True
+                        break
+            if not match:
+                print("Failed: "+fis.Name+" "+isp.Format())
 i=0
 
