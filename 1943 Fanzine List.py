@@ -1,10 +1,10 @@
 import re as Regex
 from IssueSpec import IssueSpec, IssueSpecList
 import FanzineSeriesSpec
-import FanacIssueData
+from FanacIssueData import FanacIssueData
 
 def DecodeIssueList(issuesText):
-    if issuesText == None:    # Skip empty stuff
+    if issuesText is None:    # Skip empty stuff
         return None
     if len(issuesText.strip()) == 0: # Skip if it's all whitespace
         return None
@@ -88,7 +88,7 @@ def InterpretIssueSpec(isl, islText):
                 t=isl.List()[-1:]   # Get the last element of the list
                 if islText[0] == '[':
                     m=Regex.compile("^(\[.*\])(.*)$").match(islText)
-                    if m != None and len(m.groups()) == 2:
+                    if m is not None and len(m.groups()) == 2:
                         t=IssueSpec()
                         t.SetTrailingGarbage(m.groups()[0])
                         islText=m.groups()[1].strip()
@@ -96,7 +96,7 @@ def InterpretIssueSpec(isl, islText):
                             islText=islText[1:].strip()  # If there was a trailing comma, delete it.
                 elif islText[0] == '(':
                     m=Regex.match("^(\(.*\))(.*)$", islText)
-                    if m != None and len(m.groups()) == 2:
+                    if m is not None and len(m.groups()) == 2:
                         t=IssueSpec()
                         t.SetTrailingGarbage(m.groups()[0])
                         islText=m.groups()[1].strip()
@@ -109,12 +109,12 @@ def InterpretIssueSpec(isl, islText):
     # Second, deal with a range of numbers, nnn-nnn
     # Look at two cases, (1) a range all by itself and (2) A range in a list (i.e., followed by a comma)
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
-    if m != None and len(m.groups()) == 2:
+    if m is not None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(IssueSpec(Whole=k))
         return ""    # By definition the line is now empty
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+),", islText)   # Now a range which is part of a list (Note that we terminate on a comma rather than EOL
-    if m != None and len(m.groups()) == 2:
+    if m is not None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(IssueSpec(Whole=k))
         return m.string[m.lastindex:]   # Return the unmatched part of the string
@@ -127,25 +127,25 @@ def InterpretIssueSpec(isl, islText):
     # There are two cases, alone on the line and as part of a comma-separated list
     # Year alone
     m=Regex.match("^(\d{4})$", islText)
-    if m != None and len(m.groups()) > 0:
+    if m is not None and len(m.groups()) > 0:
         isl.AppendIS(IssueSpec().SetDate(m.groups()[0], None))
         return ""   # By definition the line is now empty
 
     # Year comma-terminated
     m=Regex.match("^(\d{4})\s*,", islText)
-    if m != None and len(m.groups()) > 0:
+    if m is not None and len(m.groups()) > 0:
         isl.AppendIS(IssueSpec().SetDate(m.groups()[0], None))
         return m.string[m.lastindex:]   # Return the unmatched part of the string
 
     # Year:month alone
     m=Regex.match("^(\d{4}):(\d+)$", islText)
-    if m != None and len(m.groups()) > 0:
+    if m is not None and len(m.groups()) > 0:
         isl.AppendIS(IssueSpec().SetDate(m.groups()[0], m.groups()[1]))
         return ""  # By definition the line is now empty
 
     # Year:month comma-terminated
     m=Regex.match("^(\d{4}):(\d+)\s*,", islText)
-    if m != None and len(m.groups()) > 0:
+    if m is not None and len(m.groups()) > 0:
         isl.AppendIS(IssueSpec().SetDate(m.groups()[0], m.groups()[1]))
         return m.string[m.lastindex:]  # Return the unmatched part of the string
 
@@ -153,7 +153,7 @@ def InterpretIssueSpec(isl, islText):
     # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
     m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*,", islText)
-    if m != None and len(m.groups()) > 0:
+    if m is not None and len(m.groups()) > 0:
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
@@ -161,7 +161,7 @@ def InterpretIssueSpec(isl, islText):
 
     # And there may be a single number (maybe with trailing alpha) alone on the line
     m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*$", islText)
-    if m != None and len(m.groups()) > 0:
+    if m is not None and len(m.groups()) > 0:
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
@@ -232,7 +232,7 @@ for line in lines:
 
     # cols[0] should be the issue name including issue number at the end
     # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
-    fid=FanacIssueData.FanacIssueData
+    fid=FanacIssueData()
     fid.DirURL=cols[2]
     fid.DisplayName=cols[0]
     fid.Filename=cols[3]
@@ -241,10 +241,29 @@ for line in lines:
 
     # First look for the pattern Vn[,][ ]#n where n is a number
     m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])
-    if m != None and len(m.groups()) > 0:
-        isp=IssueSpec(Vol=m.groups()[1], Num=m.groups()[2], Name=m.groups()[0])
-        fid.IssueSpec=isp
+    if m is not None and len(m.groups()) > 0:
+        fid.IssueSpec=IssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
+        fid.Name=m.groups()[0]
+        fidList.append(fid)
         continue
 
+    # Next look for the pattern #n where n is a number
+    m=Regex.match("(.*)#([0-9]+)$", cols[0])
+    if m is not None and len(m.groups()) > 0:
+        fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
+        fid.Name=m.groups()[0]
+        fidList.append(fid)
+        continue
+
+    # Finally look for the pattern n where n is a number
+    m=Regex.match("(.*?)([0-9]+)$", cols[0])
+    if m is not None and len(m.groups()) > 0:
+        fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
+        fid.Name=m.groups()[0]
+        fidList.append(fid)
+        continue
+
+for fid in fidList:
+    print(fid.Format())
 i=0
 

@@ -1,4 +1,4 @@
-A II (Speer)
+A  (Speer) #2
 Aagh! (Schwartz) 1
 Acolyte (Laney & Rimel) 3, 4, 5
 Adulux Beskan (Wollheim) 1, 2
@@ -9,7 +9,7 @@ Around the World in ??? Days (Moffatt) 1
 Asteroid (Moffatt) 1, 2 {#1 is undated and unnumbered}
 Astra (Chidsey) 1
 Banshee (Shaw) 1, 2, 3
-Beyond (Parker) 4, 5, 6, 7, 8 {#S 5-8 Are Undated} {ELIGIBLE}
+Beyond (Parker) 4, 5, 6, 7, 8 {#5-#8 Are Undated} {ELIGIBLE}
 Beyond (Wright) 1
 Bibliophan (Medhurst) 3, 4 (Fido)
 Black Star   (Elsner) 1, 2, 3 {#s 1 and 3 are undated}
@@ -61,7 +61,7 @@ F A L -- T Annex 2 (Ashley)
 FA Lean3 (Fern & Kepner) 1
 FA Lean-To (Ashley) 2, 3
 FA Lean-To Annex (Ashley) 1, 2
-Fan-Dango (Laney) 1, 2, 3, 3A {ELIGIBLE}
+Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania (Daugherty) 1.5,2
 Fandom Awake (Sehnert)
 Fanews Analyzer (Rogers) 1, 2, 8, 10 {a Cosmic Circle publication} {ELIGIBLE}
@@ -168,7 +168,7 @@ Stef Nyaa-aa-a!! (Shaw) 1943:12
 Stefnews (Speer) 29
 Stellar Tales (Dunmire - Moffatt) 2
 Sustaining Program (Speer) 17,18,19,20 (Spr to Win) {ELIGIBLE}
-Tale Of The Evans (Evans) V2#1 {aka Atote} {ELIGIBLE}
+A Tale Of The Evans (Evans) #5 {aka Atote} {ELIGIBLE}
 Tellus (Smith) 4
 Toward Yesterday (Jike) 1
 Trends (Williams) 1
