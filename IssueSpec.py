@@ -6,6 +6,7 @@ def Int(val):
     except:
         return None
 
+
 class IssueSpec:
 
     def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
@@ -62,14 +63,14 @@ class IssueSpec:
         self.Month=Int(m)
         return self
 
-    def SetUninterpretableText(self, str):
-        if str is not None and len(str) > 0:
-            self.UninterpretableText=str
-        return self
+    def SetUninterpretableText(self, s):
+        if s is not None and len(s) > 0:
+            self.UninterpretableText=s
+        return s
 
-    def SetTrailingGarbage(self, str):
-        if str is not None and len(str) > 0:
-            self.TrailingGarbage=str
+    def SetTrailingGarbage(self, s):
+        if s is not None and len(s) > 0:
+            self.TrailingGarbage=s
         return self
 
     def Str(self):  # Convert the IS into a debugging form
@@ -95,7 +96,7 @@ class IssueSpec:
             d="-"
 
         s="IS(V"+v+", N"+n+", W"+w+", D"+d
-        if self.TrailingGarbage != None:
+        if self.TrailingGarbage is not None:
             s=s+", G='"+self.TrailingGarbage+"'"
         return s+")"
 
@@ -133,7 +134,7 @@ class IssueSpecList:
 
     def AppendVIS(self, vol, issuelist):
         for i in issuelist:
-            self.append(IssueSpec().SetVN(vol, i))
+            self.list.append(IssueSpec(Vol=vol, Num=i))
         return self
 
     def Extend(self, isl):
@@ -145,7 +146,7 @@ class IssueSpecList:
         for i in self.list:
             if len(s) > 0:
                 s=s+",  "
-            if i != None:
+            if i is not None:
                 s=s+i.Str()
             else:
                 s=s+"Missing ISlist"
