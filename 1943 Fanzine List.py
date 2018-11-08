@@ -90,7 +90,7 @@ def InterpretIssueSpec(isl, islText):
                     m=Regex.compile("^(\[.*\])(.*)$").match(islText)
                     if m is not None and len(m.groups()) == 2:
                         t=IssueSpec()
-                        t.SetTrailingGarbage(m.groups()[0])
+                        t.TrailingGarbage=m.groups()[0]
                         islText=m.groups()[1].strip()
                         if len(islText) > 0 and islText[0] == ",":
                             islText=islText[1:].strip()  # If there was a trailing comma, delete it.
@@ -98,7 +98,7 @@ def InterpretIssueSpec(isl, islText):
                     m=Regex.match("^(\(.*\))(.*)$", islText)
                     if m is not None and len(m.groups()) == 2:
                         t=IssueSpec()
-                        t.SetTrailingGarbage(m.groups()[0])
+                        t.TrailingGarbage=m.groups()[0]
                         islText=m.groups()[1].strip()
                         if len(islText) > 0 and islText[0] == ",":
                             islText=islText[1:].strip()  # If there was a trailing comma, delete it.
@@ -289,8 +289,10 @@ for fid in fanacFanzinesFIDList:
     match=False
     for fis in AllFanzinesFISList:
         if fis.IssueSpecList is not None:
-            for isp in fis.IssueSpecList:
-                if fis.Name.lower() == fid.Name.lower():
+            #print("'"+fis.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
+            if fis.Name.lower() == fid.Name.lower():
+                for isp in fis.IssueSpecList:
+                    #print(isp.Format()+"   <-->   "+fid.IssueSpec.Format())
                     if isp == fid.IssueSpec:
                         print("Match: "+fis.Name+" "+isp.Format())
                         match=True
