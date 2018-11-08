@@ -157,7 +157,7 @@ def InterpretIssueSpec(isl, islText):
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
-        return m.string[m.lastindex:]
+        return m.string[m.lastindex+1:]
 
     # And there may be a single number (maybe with trailing alpha) alone on the line
     m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*$", islText)
@@ -165,7 +165,7 @@ def InterpretIssueSpec(isl, islText):
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
-        return m.string[m.lastindex:]
+        return m.string[m.lastindex+1:]
 
     return ""
 
@@ -203,8 +203,8 @@ for line in lines:
         print("No match: "+line)
         continue
 
-    fis.Name=m.groups()[0]
-    fis.Editor=m.groups()[1]
+    fis.Name=m.groups()[0].strip()
+    fis.Editor=m.groups()[1].strip()
     fis.IssueSpecList=DecodeIssueList(m.groups()[2])
     fisList.append(fis)
 
@@ -248,7 +248,7 @@ for line in lines:
         continue
 
     # Next look for the pattern #n where n is a number
-    m=Regex.match("(.*)#([0-9]+)$", cols[0])
+    m=Regex.match("(.*) #([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
         fid.Name=m.groups()[0]
@@ -256,7 +256,7 @@ for line in lines:
         continue
 
     # Finally look for the pattern n where n is a number
-    m=Regex.match("(.*?)([0-9]+)$", cols[0])
+    m=Regex.match("(.*?) ([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
         fid.Name=m.groups()[0]
