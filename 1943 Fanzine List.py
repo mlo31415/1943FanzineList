@@ -1,6 +1,6 @@
 import re as Regex
 from IssueSpec import IssueSpec, IssueSpecList
-import FanzineSeriesSpec
+from FanzineSeriesSpec import FanzineSeriesSpec
 from FanacIssueData import FanacIssueData
 
 def DecodeIssueList(issuesText):
@@ -182,11 +182,11 @@ with open("fanzines of 1943.txt") as f:
 
 lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
-fisList=[]
+AllFanzinesFISList=[]
 
 for line in lines:
     print("\n"+line)
-    fis=FanzineSeriesSpec.FanzineSeriesSpec()
+    fis=FanzineSeriesSpec()
 
     # The line may have one or more sets of comments one or more curly brackets at the end
     notes=Regex.findall("{(.+?)}", line)    # Find all the comments
@@ -206,14 +206,15 @@ for line in lines:
     fis.Name=m.groups()[0].strip()
     fis.Editor=m.groups()[1].strip()
     fis.IssueSpecList=DecodeIssueList(m.groups()[2])
-    fisList.append(fis)
+    AllFanzinesFISList.append(fis)
 
 # List the fanzines found
-print("\n\n\n\n\n\n\n")
-for fis in fisList:
+print("\n\n\n\n\n\n\nList of all fanzines found in list of all 1943 fanzines")
+for fis in AllFanzinesFISList:
     print(fis.Format())
 
-# OK, not it's time to read fanac.org looking for 1943 fanzines.
+# OK, now it's time to read fanac.org looking for 1943 fanzines.
+print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
 with open("1943 fanac.org Fanzines.txt") as f:
     lines=f.readlines()
 
@@ -224,7 +225,7 @@ lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 # Issue date
 # Containing directory URL
 # Issue index file name
-fidList=[]
+fanacFanzinesFIDList=[]
 for line in lines:
     line=line.strip()[2:-2] # Strip off outside whitespace and outside "||"
     cols=line.split("||")
@@ -244,7 +245,7 @@ for line in lines:
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
         fid.Name=m.groups()[0]
-        fidList.append(fid)
+        fanacFanzinesFIDList.append(fid)
         continue
 
     # Next look for the pattern #n where n is a number
@@ -252,7 +253,7 @@ for line in lines:
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
         fid.Name=m.groups()[0]
-        fidList.append(fid)
+        fanacFanzinesFIDList.append(fid)
         continue
 
     # Finally look for the pattern n where n is a number
@@ -260,19 +261,20 @@ for line in lines:
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
         fid.Name=m.groups()[0]
-        fidList.append(fid)
+        fanacFanzinesFIDList.append(fid)
         continue
 
-for fid in fidList:
+for fid in fanacFanzinesFIDList:
     print(fid.Format())
 
 # Now cross-reference them.
 # Go through the list of 1943 Fanzines and find those that we have on fanac.org
-for fis in fisList:
+print("\n\n\n\nAttempt to match all fanzines published in 1943 to fanac.org 1943 fanzines")
+for fis in AllFanzinesFISList:
     if fis.IssueSpecList is not None:
         for isp in fis.IssueSpecList:
             match=False
-            for fid in fidList:
+            for fid in fanacFanzinesFIDList:
                 if fis.Name.lower() == fid.Name.lower():
                     if isp == fid.IssueSpec:
                         print("Match: "+fis.Name+" "+isp.Format())
@@ -280,5 +282,22 @@ for fis in fisList:
                         break
             if not match:
                 print("Failed: "+fis.Name+" "+isp.Format())
+
+# Now the inverse: go through the 1943 fanzines we have on fanac.org and see if they're on the list of 1943 Fanzines
+print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
+for fid in fanacFanzinesFIDList:
+    match=False
+    for fis in AllFanzinesFISList:
+        if fis.IssueSpecList is not None:
+            for isp in fis.IssueSpecList:
+                if fis.Name.lower() == fid.Name.lower():
+                    if isp == fid.IssueSpec:
+                        print("Match: "+fis.Name+" "+isp.Format())
+                        match=True
+                        break
+            if match is True:
+                break
+    if not match:
+        print("Failed: "+fid.DisplayName)
 i=0
 
