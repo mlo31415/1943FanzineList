@@ -18,6 +18,22 @@ class IssueSpec:
         self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
+    def __eq__(self, other):
+        if self._Vol != other._Vol:
+            return False
+        if self._Num != other._Num:
+            return False
+        if self._Whole != other._Whole:
+            return False
+        if self.Year != other.Year:
+            return False
+        if self.Month != other.Month:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self == other
+
     # .....................
     @property
     def Vol(self):
