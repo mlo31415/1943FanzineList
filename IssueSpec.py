@@ -15,8 +15,8 @@ class IssueSpec:
         self._Whole=Whole
         self.Year=Year
         self.Month=Month
-        self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
-        self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
+        self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
+        self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
     def __eq__(self, other):
         if self._Vol != other._Vol:
@@ -73,22 +73,54 @@ class IssueSpec:
     def Whole(self):
         return self._Whole
 
+    #.....................
+    @property
+    def UninterpretableText(self):
+        return self._UninterpretableText
+
+    @UninterpretableText.setter
+    def UninterpretableText(self, val):
+        if val is None:
+            self._UninterpretableText=None
+            return
+        val=val.strip()
+        if len(val) == 0:
+            self._UninterpretableText=None
+            return
+        self._UninterpretableText=val
+
+    @UninterpretableText.getter
+    def UninterpretableText(self):
+        return self._UninterpretableText
+
+    #.....................
+    @property
+    def TrailingGarbage(self):
+        return self._TrailingGarbage
+
+    @TrailingGarbage.setter
+    def TrailingGarbage(self, val):
+        if val is None:
+            self._TrailingGarbage=None
+            return
+        val=val.strip()
+        if len(val) == 0:
+            self._TrailingGarbage=None
+            return
+        self._TrailingGarbage=val
+
+    @TrailingGarbage.getter
+    def TrailingGarbage(self):
+        return self._TrailingGarbage
+
+
     # .....................
     def SetDate(self, y, m):
         self.Year=Int(y)
         self.Month=Int(m)
         return self
 
-    def SetUninterpretableText(self, s):
-        if s is not None and len(s) > 0:
-            self.UninterpretableText=s
-        return s
-
-    def SetTrailingGarbage(self, s):
-        if s is not None and len(s) > 0:
-            self.TrailingGarbage=s
-        return self
-
+    #.......................
     def Str(self):  # Convert the IS into a debugging form
         if self.UninterpretableText is not None:
             return "IS("+self.UninterpretableText+")"
@@ -113,9 +145,12 @@ class IssueSpec:
 
         s="IS(V"+v+", N"+n+", W"+w+", D"+d
         if self.TrailingGarbage is not None:
-            s=s+", G='"+self.TrailingGarbage+"'"
+            s=s+", TG='"+self.TrailingGarbage+"'"
+        if self.TrailingGarbage is not None:
+            s=s+", TG='"+self.TrailingGarbage+"'"
         return s+")"
 
+    #.......................
     def Format(self):   # Convert the IS into a pretty string
         if self.UninterpretableText is not None:
             return self.UninterpretableText
