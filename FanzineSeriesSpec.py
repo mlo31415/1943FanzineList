@@ -4,10 +4,25 @@ class FanzineSeriesSpec:
 
     def __init__(self):
         self.IssueSpecList=None
-        self.Name=None
+        self._Name=None
         self.Editor=None
         self.Eligible=None
         self.Notes=None
+
+        # .....................
+        @property
+        def Name(self):
+            return self._Name
+
+        @Name.setter
+        def Vol(self, val):
+            if val is not None:
+                val=val.strip()
+            self._Name=val
+
+        @Name.getter
+        def Name(self):
+            return self._Name
 
     def Str(self):  # Convert the FSS into a debugging form
         isl="-"
@@ -15,8 +30,8 @@ class FanzineSeriesSpec:
             isl=self.IssueSpecList.Format()
 
         na="-"
-        if self.Name is not None:
-            na=self.Name
+        if self._Name is not None:
+            na=self._Name
 
         e="-"
         if self.Editor is not None:
