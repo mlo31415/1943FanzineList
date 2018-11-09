@@ -157,7 +157,7 @@ def InterpretIssueSpec(isl, islText):
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
-        return m.string[m.lastindex+1:]
+        return m.string[m.lastindex:]
 
     # And there may be a single number (maybe with trailing alpha) alone on the line
     m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*$", islText)
