@@ -59,8 +59,8 @@ En Garde (Ashley) 5, 6, 7, 8 {ELIGIBLE}
 Erebus (Marlow) 1, 2, 3
 F A L -- T Annex 2 (Ashley)
 FA Lean 3 (Fern & Kepner) 1
-Fantasy Amateur Lean To (Ashley) 2, 3
-Fantasy Amateur Lean To Annex (Ashley) V1#1, V1#2 {#1, #2}
+Fantasy Amateur Lean To (Ashley) V1#2, V1#3
+Fantasy Amateur Lean To Annex (Ashley) #1, #2 {V1#1, V1#2}
 Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania (Daugherty) 1.5,2
 Fandom Awake (Sehnert)
