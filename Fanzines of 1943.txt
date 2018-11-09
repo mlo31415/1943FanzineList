@@ -60,7 +60,7 @@ Erebus (Marlow) 1, 2, 3
 F A L -- T Annex 2 (Ashley)
 FA Lean 3 (Fern & Kepner) 1
 Fantasy Amateur Lean To (Ashley) 2, 3
-Fantasy Amateur Lean To Annex (Ashley) 1, 2
+Fantasy Amateur Lean To Annex (Ashley) V1#1, V1#2 {#1, #2}
 Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania (Daugherty) 1.5,2
 Fandom Awake (Sehnert)
@@ -87,7 +87,7 @@ Fighting Fan (Widner) 1
 Full Length Article (Speer) 3 {In Memorium: Spirit of FooFoo}
 Fungi from Yuggoth (HPL/Evans)
 Futurian Daily Planet (Stein) 1, 2
-Futurian War Digest (FIDO) (Rosenblum) V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V4#1, V4#2 {UK}  {ELIGIBLE}
+Futurian War Digest  (Rosenblum) V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V4#1, V4#2 {UK}  {ELIGIBLE} {FIDO}
 Galaxy (Overton)  4, 5, 6, 7 {UK} {ELIGIBLE} {FWD}
 Gargantua Grapefruit Growers (Ackerman et al)
 Ghost (Cook) 1
@@ -144,20 +144,20 @@ Rahuun Ta-Ka (Ackerman) 1,2
 Ray (Wollheim) 1,2
 Reader and Collector (Koenig) V3#2 {ELIGIBLE}
 Report to S-F Fandom:Cosmic Circle (Yerke)
-Review Section (Holmes) 3,4,5,6,7,8 (Fido) {ELIGIBLE}
+Review Section (Holmes) 3,4,5,6,7,8 {Fido} {ELIGIBLE}
 Rocket-Flight (Buchanan) 6
 Rogues Gallery (Schwartz & Lazar) 1943
 Sands Of Time (Carnell) 8,9,10 {ELIGIBLE}
 Sappho (Watson & Ebey) 1,2,3
 Sardonyx (Chauvenet) 8, 9, 10  {ELIGIBLE}
 Saturnalia (Sehnert) 1
-Satyric (Martin) 2 (mis# 1)
+Satyric (Martin) 2 {mis# 1}
 Science Fiction Fandom (Carnell) 1943
 Science Fiction Savant (Washington) 1  {a Cosmic Circle publication}
 S-F Variety (Tucker) 8 {ELIGIBLE}
 Selene (Wilninszyk) 1
 S-F Republican (Speer) Dec.
-Shangri-L'Affaires B (various) 8,9,10,11,12 {ELIGIBLE}
+Shangri-L'Affaires (various) 8,9,10,11,12 {ELIGIBLE} {series B}
 Silver Dusk (Vhauvenet)
 Songs with Certain Dissonances (Mayer & Joquel) 1943
 Staplecon (Ackerman) 1
