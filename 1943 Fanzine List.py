@@ -177,7 +177,7 @@ def InterpretIssueSpec(isl, islText):
 # Read the list of 1943 fanzines and parse them
 # The format of a line is: <name> (<editor> & <editor>) >comma-separated list of issues> {comment 1} {comment 2}
 # the name and editor are always present
-with open("fanzines of 1943.txt") as f:
+with open("1943 All Fanzines list.txt") as f:
     lines=f.readlines()
 
 lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
@@ -215,7 +215,7 @@ for fis in AllFanzinesFISList:
 
 # OK, now it's time to read fanac.org looking for 1943 fanzines.
 print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
-with open("1943 fanac.org Fanzines.txt") as f:
+with open("1943 Fanac.org Fanzines.txt") as f:
     lines=f.readlines()
 
 lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
@@ -301,5 +301,8 @@ for fid in fanacFanzinesFIDList:
                 break
     if not match:
         print("Failed: '"+fid.Name+"'   "+fid.IssueSpec.Format())
+
+# Next, we read in the list of "foreign" fanzine links
+
 i=0
 
