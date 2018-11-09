@@ -18,7 +18,7 @@ Booklist (Rosenblum) {ELIGIBLE}
 Braggadocio (Laney) 1
 British Fantasy Society Bulletin  (Smith) 8,9,10,11,12,13  {Fido} {ELIGIBLE}
 British Fantasy Society Library List (FIDO) 1, 2 {#s1-2 are undated, #2 is uncredited} {ELIGIBLE}
-Browsing (Rosenblum) 2, 3 {ELIGIBLE}
+Browsing (Rosenblum) 1, 2, 3 {ELIGIBLE}
 Caliban (Shaw) 2,3,4 {ELIGIBLE}
 Canadian Fandom (Taylor) 4,5 {ELIGIBLE}
 CAPA Mailing (Rogers) 1 {a Cosmic Circle publication}
@@ -168,7 +168,7 @@ Stef Nyaa-aa-a!! (Shaw) 1943:12
 Stefnews (Speer) 29
 Stellar Tales (Dunmire - Moffatt) 2
 Sustaining Program (Speer) 17,18,19,20 (Spr to Win) {ELIGIBLE}
-A Tale Of The Evans (Evans) #5 {aka Atote} {ELIGIBLE}
+A Tale Of The 'Evans (Evans) #5 {aka Atote} {ELIGIBLE}
 Tellus (Smith) 4
 Toward Yesterday (Jike) 1
 Trends (Williams) 1
@@ -178,7 +178,7 @@ Unknown Madman (Shaw) 1943:12
 Vision (Wright) 1
 Voice Of The Imagi-Nation (Ackerman) 27, 28 {ELIGIBLE}
 Vulcan (Inman) 3,4,5, ?
-Walt's Wramblings (Liebscher) 4,45,6,7,8 {ELIGIBLE}
+Walt's Wramblings (Liebscher) 4,5,6,7,8 {ELIGIBLE}
 We Just Had To Do It (Brown & Fern) 1
 Whoopdoodle (Liebscher) 1943:6
 Wowsy Wamblings (Liebscher) 1943:6
