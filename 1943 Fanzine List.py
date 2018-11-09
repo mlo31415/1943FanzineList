@@ -117,7 +117,7 @@ def InterpretIssueSpec(isl, islText):
     if m is not None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(IssueSpec(Whole=k))
-        return m.string[m.lastindex:]   # Return the unmatched part of the string
+        return m.string[m.lastindex+1:]   # Return the unmatched part of the string
 
 
     # Next, consider a list of years or year-month pairs:
