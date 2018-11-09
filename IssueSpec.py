@@ -19,17 +19,45 @@ class IssueSpec:
         self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
     def __eq__(self, other):
-        if self._Vol != other._Vol:
-            return False
-        if self._Num != other._Num:
-            return False
-        if self._Whole != other._Whole:
-            return False
         if self.Year != other.Year:
             return False
         if self.Month != other.Month:
             return False
-        return True
+
+        # Now it gets a bit complicated.  We need either Vol/Num or Whole to match. The other must also match or be None on at least one side
+        # So, ("-" is None) the following match:
+        # V1 N2 W3 matches V1 N2 W3
+        # V1 N2 W3 matches V1 N2 W-
+        # V1 N2 W3 matches V- N- W3
+        # The following don't match:
+        # V1 N2 W3 does not match V1 N2 W4
+        # V1 N2 W3 matches V2 N2 W3
+        vnMatches=False
+        if self._Vol is None and other._Vol is None and self._Num is None and other._Num is None:
+            vnMatches=True
+        elif self._Vol == other._Vol and self._Num == other._Num:
+            vnMatches=True
+        vnOneIsNone=False
+        if self._Vol is None and other._Vol is not None and self._Num is None and other._Num is not None:
+            vnOneIsNone=True
+        if self._Vol is not None and other._Vol is None and self._Num is not None and other._Num is None:
+            vnOneIsNone=True
+
+        wMatches=False
+        if self._Whole is None and other._Whole is None:
+            wMatches=True
+        if self._Whole == other._Whole:
+            wMatches=True
+        wOneIsNone=False
+        if (self._Whole is None and other._Whole is not None) or (self._Whole is not None and other._Whole is None):
+            wOneIsNone=True
+
+        if vnMatches and (wMatches or wOneIsNone):
+            return True
+        if (vnMatches or vnOneIsNone) and wMatches:
+            return True
+
+        return False
 
     def __ne__(self, other):
         return not self == other
