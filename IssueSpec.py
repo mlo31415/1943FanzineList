@@ -10,13 +10,13 @@ def Int(val):
 class IssueSpec:
 
     def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
-        self._Vol=Vol
-        self._Num=Num
-        self._Whole=Whole
+        self.Vol=Vol
+        self.Num=Num
+        self.Whole=Whole
         self.Year=Year
         self.Month=Month
-        self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
-        self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
+        self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
+        self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
     def __eq__(self, other):
         if self._Vol != other._Vol:
