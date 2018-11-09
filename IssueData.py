@@ -1,4 +1,4 @@
-class FanacIssueData:
+class IssueData:
 
     def __init__(self):
         self.DisplayName=None

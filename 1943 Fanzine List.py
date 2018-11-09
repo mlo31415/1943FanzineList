@@ -1,8 +1,9 @@
 import re as Regex
 from IssueSpec import IssueSpec, IssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
-from FanacIssueData import FanacIssueData
+from IssueData import IssueData
 
+#**************************************************************************************************************************************
 def DecodeIssueList(issuesText):
     if issuesText is None:    # Skip empty stuff
         return None
@@ -48,6 +49,8 @@ def DecodeIssueList(issuesText):
     print("   "+isl.Str())
     return isl
 
+
+#**************************************************************************************************************************************
 # Interpret some or all of the input text (from islText) as an issue spec list and append the interpreted ISs we find to isl
 # It's permissible to not handle the complete list in oen go, since we are called repeatedly until islText is completely interpreted.
 def InterpretIssueSpec(isl, islText):
@@ -170,6 +173,41 @@ def InterpretIssueSpec(isl, islText):
     return ""
 
 
+#**************************************************************************************************************************************
+import collections
+def ReadExternalLinks(filename):
+    externalLinks=[]
+    print("\n\n----Begin reading "+filename)
+    # Now we read Links1942.txt, which contains links to issues of fanzines *outside* fanac.org.
+    # It is organized as a table, with the first row a ';'-delimited list of column headers
+    #    and the remaining rows are each a ';'-delimited pointer to an exteral fanzine
+    # First read the header line which names the columns.  The headers are separated from ';", so we need to remove these.
+    with open(filename) as f:
+        lines=f.readlines()
+    lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
+    line=lines[0].replace(";", "")
+    del lines[0]
+    links1942ColNames=line.split(" ")
+    # Define a named tuple to hold the data I get from the external links input file
+    # This -- elegantly -- defines a named tuple to hold the elements of a line and names each element according to the column header in the first row.
+    ExternalLinksData=collections.namedtuple("ExternalLinksData", line)
+
+    # Now read the rest of the data.
+    for line in lines:  # Each line after the first is a link to an external fanzine
+        print("   line="+line.strip())
+        temp=line.split(";")
+        t2=[]
+        for t in temp:
+            t2.append(t.strip())
+        if len(t2) != 10:
+            print("***Length error: Length is "+str(len(t2)))
+            continue
+        externalLinks.append(ExternalLinksData(*tuple(t2)))  # Turn the list into a named tuple.
+    print("----Done reading "+filename)
+    return externalLinks
+
+
+
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #  Main
@@ -233,7 +271,7 @@ for line in lines:
 
     # cols[0] should be the issue name including issue number at the end
     # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
-    fid=FanacIssueData()
+    fid=IssueData()
     fid.DirURL=cols[2]
     fid.DisplayName=cols[0]
     fid.Filename=cols[3]
@@ -283,7 +321,7 @@ for fis in AllFanzinesFISList:
             if not match:
                 print("Failed: "+fis.Name+" "+isp.Format())
 
-# Now the inverse: go through the 1943 fanzines we have on fanac.org and see if they're on the list of 1943 Fanzines
+# Now the inverse: go through the 1943 fanzines we have on fanac.org and see if they're on the list of all 1943 Fanzines
 print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
 for fid in fanacFanzinesFIDList:
     match=False
@@ -303,6 +341,26 @@ for fid in fanacFanzinesFIDList:
         print("Failed: '"+fid.Name+"'   "+fid.IssueSpec.Format())
 
 # Next, we read in the list of "foreign" fanzine links
+externalLinks=ReadExternalLinks("1943 External Fanzine Links.txt")
+
+# Go through the external links and see if they're on the list of all 1943 Fanzines
+print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
+for fid in fanacFanzinesFIDList:
+    match=False
+    for fis in AllFanzinesFISList:
+        if fis.IssueSpecList is not None:
+            #print("'"+fis.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
+            if fis.Name.lower() == fid.Name.lower():
+                for isp in fis.IssueSpecList:
+                    #print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
+                    if isp == fid.IssueSpec:
+                        print("Match: "+fis.Name+" "+isp.Format())
+                        match=True
+                        break
+            if match is True:
+                break
+    if not match:
+        print("Failed: '"+fid.Name+"'   "+fid.IssueSpec.Format())
 
 i=0
 
