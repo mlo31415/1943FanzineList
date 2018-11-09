@@ -58,9 +58,9 @@ Elmurmurings (Perdue) 1
 En Garde (Ashley) 5, 6, 7, 8 {ELIGIBLE}
 Erebus (Marlow) 1, 2, 3
 F A L -- T Annex 2 (Ashley)
-FA Lean3 (Fern & Kepner) 1
-FA Lean-To (Ashley) 2, 3
-FA Lean-To Annex (Ashley) 1, 2
+FA Lean 3 (Fern & Kepner) 1
+Fantasy Amateur Lean To (Ashley) 2, 3
+Fantasy Amateur Lean To Annex (Ashley) 1, 2
 Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania (Daugherty) 1.5,2
 Fandom Awake (Sehnert)
@@ -69,7 +69,7 @@ Fanewscard (Tucker, Connor & Robinson) 1-24 {ELIGIBLE}
 Fanfare (Widner - Paro) 10 {ELIGIBLE}
 Fan-Notes (Bronson) 1
 Fan Slants (Brown) 1
-Fantasite (Bronson) V2#5 (#11) {ELIGIBLE}
+Fantasite (Bronson) #11 {V2#5} {ELIGIBLE}
 Fanta Snide (Ackerman)
 Fantasy Amateur (FAPA OO)
 Fantasy Commentator (Searles) 1
@@ -88,17 +88,17 @@ Full Length Article (Speer) 3 {In Memorium: Spirit of FooFoo}
 Fungi from Yuggoth (HPL/Evans)
 Futurian Daily Planet (Stein) 1, 2
 Futurian War Digest (FIDO) (Rosenblum) V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V4#1, V4#2 {UK}  {ELIGIBLE}
-Galaxy (Overton) FWD 4, 5, 6, 7 {UK} {ELIGIBLE}
+Galaxy (Overton)  4, 5, 6, 7 {UK} {ELIGIBLE} {FWD}
 Gargantua Grapefruit Growers (Ackerman et al)
 Ghost (Cook) 1
 Ghu (Stein) 1 {a Cosmic Circle publication}
 Give Degler His Due (Futurian Society of NY)
-Golden Atom 10 (Farsaci)
+Golden Atom  (Farsaci) 10
 Le Grotesque (Semaj) 4 {ELIGIBLE}
-Guteto (Morojo [Myrtle Douglas) V2#4; V3#1, V3#2, V3#3 {FAPA} {ELIGIBLE}
+Guteto (Morojo [Myrtle Douglas]) V2#4, V3#1, V3#2, V3#3 {FAPA} {ELIGIBLE}
 Have at Thee, Knanves (sic) (Russell) 1
 History of the Future Index Cards (uncredited)
-Horizons (Warner) V4#3, V4#4; V5#1, V5#2 {ELIGIBLE}
+Horizons (Warner) 15, 16, 17, 18 {ELIGIBLE} {V4#3-V5#2}
 Howard Phillips Lovecraft -- Tentative Biblio (Laney & Evans) {FAPA} #
 Imagi-Music (Ackerman) 2
 Inspiration (Bridges) V2#1, V2#2, V2#3, V2#4 {ELIGIBLE}
@@ -112,7 +112,7 @@ Literary Newsette (Laney & Rimel) 144
 Lovecraft & Benefit Street (Walter & Cook)
 Love, Elmer (Perdue)
 Madman of Mars (Ackerman) 4 {ELIGIBLE}
-Matters of Opinion 13,14,15 (Speer) {ELIGIBLE}
+Matters of Opinion (Speer) 13,14,15 {ELIGIBLE}
 Meet FAPA (Ashley)
 Memo Sheet (OO of Cosmos Club) 1943:4
 Mephisto (Child) 1,2
@@ -128,36 +128,36 @@ Mighty Atom (Johnson) 2,3 (Fido)
 Milty's Mag (Rothman) 12,13 {ELIGIBLE}
 Moonshine (Moffatt) 2,3
 Morpheus (Marconette) 1
-Nebula (Shaw) Newszine 17, 18, 19, 20 {ELIGIBLE}
-Nova (Ashley) 3 Win
+Nebula (Shaw)  17, 18, 19, 20 {ELIGIBLE} {Newszine}
+Nova (Ashley) 3 {Win}
 Nucleus (Kuslan) V4#1, V4#2
 Paradox (Wilimczyk) V1#4, V2#1, V2#2 {ELIGIBLE}
 Pegasus (Jones) V2#1
 People Stories (Brown & Fern) 1
 Phanny (Thompson) V2#2, V2#3, V2#4  {ELIGIBLE}
-Phantagraph (Wollheim) V11#1, V11#2 {ELIGIBLE}
+The Phantagraph (Wollheim) 44, 45 {V10#3, V11#1} {ELIGIBLE}
 Please Lay This Aside (Speer)
-Pogorus (Wood) 2
+Pogorus (Wood) V1#2
 Presenting Ronald Clyne (Freehafer) 1
 PSFS News (Train)
 Rahuun Ta-Ka (Ackerman) 1,2
 Ray (Wollheim) 1,2
-Reader & Collector (Koenig) V3#2 {ELIGIBLE}
+Reader and Collector (Koenig) V3#2 {ELIGIBLE}
 Report to S-F Fandom:Cosmic Circle (Yerke)
-Review-Section (Holmes) 3,4,5,6,7,8 (Fido) {ELIGIBLE}
+Review Section (Holmes) 3,4,5,6,7,8 (Fido) {ELIGIBLE}
 Rocket-Flight (Buchanan) 6
 Rogues Gallery (Schwartz & Lazar) 1943
 Sands Of Time (Carnell) 8,9,10 {ELIGIBLE}
 Sappho (Watson & Ebey) 1,2,3
-Sardonyx (Chauvenet) V2#4, V3#1, V3#2  {ELIGIBLE}
+Sardonyx (Chauvenet) 8, 9, 10  {ELIGIBLE}
 Saturnalia (Sehnert) 1
 Satyric (Martin) 2 (mis# 1)
 Science Fiction Fandom (Carnell) 1943
 Science Fiction Savant (Washington) 1  {a Cosmic Circle publication}
-Sci-Fic Variety (Tucker) 8 {ELIGIBLE}
+S-F Variety (Tucker) 8 {ELIGIBLE}
 Selene (Wilninszyk) 1
 S-F Republican (Speer) Dec.
-Shangri L'Affaires B (various) 8,9,10,11,12 {ELIGIBLE}
+Shangri-L'Affaires B (various) 8,9,10,11,12 {ELIGIBLE}
 Silver Dusk (Vhauvenet)
 Songs with Certain Dissonances (Mayer & Joquel) 1943
 Staplecon (Ackerman) 1
@@ -167,7 +167,7 @@ Stefan (Ashley) 1943:3
 Stef Nyaa-aa-a!! (Shaw) 1943:12
 Stefnews (Speer) 29
 Stellar Tales (Dunmire - Moffatt) 2
-Sustaining Program (Speer) 17,18,19,20 (Spr to Win) {ELIGIBLE}
+Sustaining Program (Speer) 17,18,19,20 {Spr to Win} {ELIGIBLE}
 A Tale Of The 'Evans (Evans) #5 {aka Atote} {ELIGIBLE}
 Tellus (Smith) 4
 Toward Yesterday (Jike) 1
@@ -179,7 +179,7 @@ Vision (Wright) 1
 Voice Of The Imagi-Nation (Ackerman) 27, 28 {ELIGIBLE}
 Vulcan (Inman) 3,4,5, ?
 Walt's Wramblings (Liebscher) 4,5,6,7,8 {ELIGIBLE}
-We Just Had To Do It (Brown & Fern) 1
+We Just Had To Do It (Brown & Fern) V1#1
 Whoopdoodle (Liebscher) 1943:6
 Wowsy Wamblings (Liebscher) 1943:6
 Wudgy Tales (Bronson) 1,2
