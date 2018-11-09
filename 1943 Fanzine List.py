@@ -150,9 +150,9 @@ def InterpretIssueSpec(isl, islText):
         return m.string[m.lastindex:]  # Return the unmatched part of the string
 
 
-    # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26)
+    # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
-    m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*,", islText)
+    m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*,", islText)
     if m is not None and len(m.groups()) > 0:
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
@@ -160,7 +160,7 @@ def InterpretIssueSpec(isl, islText):
         return m.string[m.lastindex+1:]
 
     # And there may be a single number (maybe with trailing alpha) alone on the line
-    m=Regex.match("^([0-9]+)([a-zA-Z]*)\s*$", islText)
+    m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*$", islText)
     if m is not None and len(m.groups()) > 0:
         t=IssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
@@ -292,7 +292,7 @@ for fid in fanacFanzinesFIDList:
             #print("'"+fis.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
             if fis.Name.lower() == fid.Name.lower():
                 for isp in fis.IssueSpecList:
-                    #print(isp.Format()+"   <-->   "+fid.IssueSpec.Format())
+                    #print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
                     if isp == fid.IssueSpec:
                         print("Match: "+fis.Name+" "+isp.Format())
                         match=True
@@ -300,6 +300,6 @@ for fid in fanacFanzinesFIDList:
             if match is True:
                 break
     if not match:
-        print("Failed: "+fid.DisplayName)
+        print("Failed: '"+fid.Name+"'   "+fid.IssueSpec.Format())
 i=0
 
