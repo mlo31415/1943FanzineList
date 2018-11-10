@@ -1,13 +1,11 @@
 Title; Issue; Editor; Volume; Number; Whole_Number; Month; Day; Year; URL
-Acolyte, The; Acolyte 3; F. Towner Laney;  1; 3; 3; Spring; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/32/rec/1
-Acolyte, The; Acolyte 4; F. Towner Laney;  1; 4; 4; Summer; ; 1943;
-http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/4435/rec/15
-Acolyte, The; Acolyte 5; F. Towner Laney;  2; 1; 5; Fall; ; 1943
-http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10173/rec/26
+Acolyte; Acolyte 3; F. Towner Laney;  1; 3; 3; Spring; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/32/rec/1
+Acolyte; Acolyte 4; F. Towner Laney;  1; 4; 4; Summer; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/4435/rec/15
+Acolyte; Acolyte 5; F. Towner Laney;  2; 1; 5; Fall; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10173/rec/26
 Catalyst; Catalyst 1; Ed Chamberlain; 1; 1; 1; January; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/2118/rec/11
 Chanticleer; Chanticleer 1; Walt Liebscher; 1; 1; 1; ; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10889/rec/30
 Erebus; Erebus 4; Len Marlowe; 1; 4; 4; ; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10216/rec/27
-Fantasy Commentator; Fantasy Commentator 1; Langley Searles; 1; 1; 1; December; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10950/rec/31
+Fantasy Commentator; Fantasy Commentator 1; Langley Searles; 1; 1; 1; December; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10950/rec/31
 Futurian War Digest; Futurian War Digest 25; J. Michael Rosenblum; 3; 3; 25; January; ; 1943; http://efanzines.com/FWD/FWD25.htm
 Futurian War Digest; Futurian War Digest 26; J. Michael Rosenblum; 3; 4; 26; February; ; 1943; http://efanzines.com/FWD/FWD26.htm
 Futurian War Digest; Futurian War Digest 28; J. Michael Rosenblum; 3; 6; 28; May; ; 1943; http://efanzines.com/FWD/FWD28.htm
@@ -16,7 +14,7 @@ Futurian War Digest; Futurian War Digest 30; J. Michael Rosenblum; 3; 8; 30; Aug
 Futurian War Digest; Futurian War Digest 31; J. Michael Rosenblum; 4; 1; 31; October; ; 1943; http://efanzines.com/FWD/FWD31.htm
 Futurian War Digest; Futurian War Digest 32; J. Michael Rosenblum; 4; 2; 32; December; ; 1943; http://efanzines.com/FWD/FWD32.htm
 Le Zombie; Le Zombie 51; Bob Tucker; 5; 4; 51; January; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/411/rec/2
-MFS Bulletin; MSF Bulletin 13; Brackney Gergen; 3; 1; 13; January; ; 1943 http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/743/rec/3
+MFS Bulletin; MSF Bulletin 13; Brackney Gergen; 3; 1; 13; January; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/743/rec/3
 MFS Bulletin; MFS Bulletin 14; Brackney Gergen; 3; 2; 14; January; 11; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/750/rec/4
 MFS Bulletin; MFS Bulletin 15; Brackney Gergen; 3; 4; 15; January; 18; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/755/rec/5
 MFS Bulletin; MFS Bulletin 16; Brackney Gergen; 3; 4; 16; January; 25; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/760/rec/6
@@ -24,6 +22,6 @@ MFS Bulletin; MFS Bulletin 17; Brackney Gergen; 3; 6; 17; February; 1; 1943; htt
 MFS Bulletin; MFS Bulletin 18; Brackney Gergen; 3; 6; 18; February; 8; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/772/rec/8
 MFS Bulletin; MFS Bulletin 19; Brackney Gergen; 3; 7; 19; February; 15; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/779/rec/9
 MFS Bulletin; MFS Bulletin 20; Brackney Gergen; 3; 8; 20; February; 22; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/10816/rec/29
-Phantagraph; Phantagraph; Donald Wollheim; 11; 2; ; October; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/8843/rec/23
-Shangri-L'Affaires; Shangri-L'Affaires 10; Walt Daugherty; ; ; 10 November; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/8852/rec/24
-Shangri-L'Affaires; Shangri-L'Affaires 10; Phil Bronson; ; ; 10; May; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/11635/rec/34
+The Phantagraph; Phantagraph; Donald Wollheim; 11; 2; 46; October; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/8843/rec/23
+Shangri-L'Affaires; Shangri-L'Affaires 10; Walt Daugherty; ; ; 10; November; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/8852/rec/24
+Shangri-L'Affaires; Shangri-L'Affaires 10; Phil Bronson; ; ; 10; May; ; 1943; http://digital.lib.uiowa.edu/cdm/compoundobject/collection/hevelin/id/11635/rec/34
