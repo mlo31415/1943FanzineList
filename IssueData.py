@@ -1,14 +1,13 @@
 class IssueData:
 
     def __init__(self):
-        self.DisplayName=None
-        self.DirURL=None
-        self.Filename=None
+        self.DisplayName=None   # Includes issue number/date/whatever
+        self.URL=None
         self.IssueSpec=None
         self._Name=None
 
     def Format(self):
-        return self.Name+" "+self.IssueSpec.Format()+": "+self.DirURL+"/"+self.DisplayName
+        return self.Name+" "+self.IssueSpec.Format()+": "+self.URL
 
     # .....................
     @property

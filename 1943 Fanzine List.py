@@ -72,7 +72,7 @@ def InterpretIssueSpec(isl, islText):
                 (\d+[;,]?)(.*)      # Then a last group of digits which must be present followed by an optional comma followed by the rest of the line
                 """, Regex.X)
     m=c_VnnNnn.match(islText)
-    if m != None and len(m.groups()) == 4:
+    if m is not None and len(m.groups()) == 4:
         vol=int(m.groups()[0])
         # Create iList, which is a list of issues associated with this volume number
         iList=m.groups()[1]+m.groups()[2]
@@ -187,22 +187,33 @@ def ReadExternalLinks(filename):
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
     line=lines[0].replace(";", "")
     del lines[0]
-    links1942ColNames=line.split(" ")
-    # Define a named tuple to hold the data I get from the external links input file
-    # This -- elegantly -- defines a named tuple to hold the elements of a line and names each element according to the column header in the first row.
-    ExternalLinksData=collections.namedtuple("ExternalLinksData", line)
+    externalLinksColNames=line.split(" ")
+    # The columns are labeled: Title; Issue; Editor; Volume; Number; Whole_Number; Month; Day; Year; URL
+    # We need Title, Volume, Number, Whole, Issue, and URL
+    cName=externalLinksColNames.index("Title") # (Title is really the series name)
+    cDisplayName=externalLinksColNames.index("Issue")   # (Issue is really the display name)
+    cVol=externalLinksColNames.index("Volume")
+    cNum=externalLinksColNames.index("Number")
+    cWhole=externalLinksColNames.index("Whole_Number")
+    cURL=externalLinksColNames.index("URL")
 
     # Now read the rest of the data.
-    for line in lines:  # Each line after the first is a link to an external fanzine
+    for line in lines:  # Each remaining line is a link to an external fanzine
         print("   line="+line.strip())
-        temp=line.split(";")
-        t2=[]
-        for t in temp:
-            t2.append(t.strip())
+        t2=[t.strip() for t in line.split(";")]
         if len(t2) != 10:
             print("***Length error: Length is "+str(len(t2)))
             continue
-        externalLinks.append(ExternalLinksData(*tuple(t2)))  # Turn the list into a named tuple.
+        eld=IssueData()
+        eld.URL=t2[cURL]
+        eld.Name=t2[cName]
+        eld.DisplayName=t2[cDisplayName]
+        iss=IssueSpec()
+        iss.Num=t2[cNum]
+        iss.Vol=t2[cVol]
+        iss.Whole=t2[cWhole]
+        eld.IssueSpec=iss
+        externalLinks.append(eld)
     print("----Done reading "+filename)
     return externalLinks
 
@@ -272,9 +283,8 @@ for line in lines:
     # cols[0] should be the issue name including issue number at the end
     # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
     fid=IssueData()
-    fid.DirURL=cols[2]
+    fid.URL=cols[2]+"/"+cols[3]
     fid.DisplayName=cols[0]
-    fid.Filename=cols[3]
 
     # Now figure out the IssueSpec
 
@@ -344,8 +354,8 @@ for fid in fanacFanzinesFIDList:
 externalLinks=ReadExternalLinks("1943 External Fanzine Links.txt")
 
 # Go through the external links and see if they're on the list of all 1943 Fanzines
-print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
-for fid in fanacFanzinesFIDList:
+print("\n\n\n\nAttempt to match external links fanzines to the list of all fanzines published in 1943")
+for fid in externalLinks:
     match=False
     for fis in AllFanzinesFISList:
         if fis.IssueSpecList is not None:
