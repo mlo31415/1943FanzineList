@@ -418,7 +418,7 @@ def FormatISSListAsHtml(issList, fidList):
     s=""
     for iss, fid in zip(issList, fidList):
         if len(s) > 0:
-            s=s+", "
+            s=s+", &nbsp;&nbsp;&nbsp;"
         if fid is None:
             s=s+iss.Format()
         else:
