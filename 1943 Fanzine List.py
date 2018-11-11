@@ -123,6 +123,17 @@ def InterpretIssueSpec(isl, islText):
             isl.AppendIS(FanzineIssueSpec(Whole=k))
         return m.string[m.lastindex+1:]   # Return the unmatched part of the string
 
+    #.....................................
+    # Nibble away at a line
+    def MatchAndRemove(input, pattern):
+        m=Regex.match(pattern, islText)         # Do we match the pattern?
+        if m is not None and len(m.groups()) > 0:
+            g0=m.groups()[0]                    # There may be either 1 or two groups, but we need to return two matches
+            g1=None
+            if len(m.groups()) > 1:
+                g1=m.groups()[1]
+            return Regex.sub(pattern, "", islText), g0, g1      # And delete the matched text
+        return input, None, None
 
     # Next, consider a list of years or year-month pairs:
     # yyyy[, yyyy]
@@ -130,38 +141,19 @@ def InterpretIssueSpec(isl, islText):
     # The years *must* be 4-digit so we can tell them apart from just-plain-numbers
     # There are two cases, alone on the line and as part of a comma-separated list
     # Year alone
-    m=Regex.match("^(\d{4})$", islText)
-    if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], None))
-        return ""   # By definition the line is now empty
-
-    # Year comma-terminated
-    m=Regex.match("^(\d{4})\s*,", islText)
-    if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], None))
-        return m.string[m.lastindex:]   # Return the unmatched part of the string
-
-    # Year:month alone
-    m=Regex.match("^(\d{4}):(\d+)$", islText)
-    if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], m.groups()[1]))
-        return ""  # By definition the line is now empty
-
-    # Year:month comma-terminated
-    m=Regex.match("^(\d{4}):(\d+)\s*,", islText)
-    if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], m.groups()[1]))
-        return m.string[m.lastindex:]  # Return the unmatched part of the string
-
+    patterns=["^(\d{4})\s*,",       # Year comma-terminated
+              "^(\d{4})$",          # Year
+              "^(\d{4}):(\d+)\s*,"  # Year:month comma-terminated
+              "^(\d{4}):(\d+)$",    # Year:month
+              ]
+    for pat in patterns:
+        islText, t1, t2=MatchAndRemove(islText, pat)
+        if t1 is not None:
+            isl.AppendIS(FanzineIssueSpec().SetDate(t1, None))
+            return islText
 
     # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
-    def MatchAndRemove(input, pattern):
-        m=Regex.match(pattern, islText)
-        if m is not None and len(m.groups()) > 0:
-            return Regex.sub(pattern, "", islText), m.groups()[0], m.groups()[1]
-        return input, None, None
-
     patterns=["^#?([0-9]+)([a-zA-Z]*)\s*,",         # <Integer>[alpha]<comma>
               "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*,", # <Decimal>[alpha]<comma>
               "^#?([0-9]+)([a-zA-Z]*)\s*$",         # <Integer>[alpha]
