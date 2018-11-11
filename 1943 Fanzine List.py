@@ -156,8 +156,8 @@ def InterpretIssueSpec(isl, islText):
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
     patterns=["^#?([0-9]+)([a-zA-Z]*)\s*,",         # <Integer>[alpha]<comma>
               "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*,", # <Decimal>[alpha]<comma>
-              "^#?([0-9]+)([a-zA-Z]*)\s*",         # <Integer>[alpha]
-              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*"  # <Decimal>[alpha]
+              "^#?([0-9]+)([a-zA-Z]*)\s*",          # <Integer>[alpha]
+              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*"   # <Decimal>[alpha]
               ]
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
@@ -285,37 +285,30 @@ for line in lines:
 
     # Now figure out the IssueSpec
 
-    # First look for the pattern Vn[,][ ]#n where n is a number
-    m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])
-    if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=FanzineIssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
-        fid.SeriesName=m.groups()[0]
-        fanacFanzinesFIDList.append(fid)
-        continue
+    def MatchIssueSpec(fidList, fid, text, pattern):
+        m=Regex.match(pattern, text)
+        if m is not None and len(m.groups()) > 0:
+            g0=m.groups()[0]                    # There may be either 1 or two groups, but we need to return two matches
+            g1=None
+            if len(m.groups()) > 1:
+                g1=m.groups()[1]
+            g2=None
+            if len(m.groups()) > 2:
+                g2=m.groups()[2]
+            fid.IssueSpec=FanzineIssueSpec(Vol=g1, Num=g2)
+            fid.SeriesName=g0
+            fidList.append(fid)
+            return True
+        return False
 
-    # Next look for the pattern #n where n is a number
-    m=Regex.match("(.*) #([0-9]+)$", cols[0])
-    if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
-        fid.SeriesName=m.groups()[0]
-        fanacFanzinesFIDList.append(fid)
-        continue
-
-    # Look for the pattern n.m where n and m are numbers
-    m=Regex.match("(.*?) ([0-9]+/.[0-9]+)$", cols[0])
-    if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
-        fid.SeriesName=m.groups()[0]
-        fanacFanzinesFIDList.append(fid)
-        continue
-
-    # Finally look for the pattern n where n is a number
-    m=Regex.match("(.*?) ([0-9]+)$", cols[0])
-    if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
-        fid.SeriesName=m.groups()[0]
-        fanacFanzinesFIDList.append(fid)
-        continue
+    patterns=["(.*)V([0-9]+)[, ]*#([0-9]+)$",   # Pattern Vn[,][ ]#n where n is a number
+              "(.*) #([0-9]+)$",                # Pattern #n where n is a number
+              "(.*?) ([0-9]+/.[0-9]+)$",        # Pattern n.m where n and m are numbers
+              "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
+              ]
+    for pat in patterns:
+        if MatchIssueSpec(fanacFanzinesFIDList, fid, cols[0], pat):
+            continue
 
 for fid in fanacFanzinesFIDList:
     print(fid.Format())
