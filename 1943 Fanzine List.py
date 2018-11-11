@@ -422,14 +422,12 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             fidList.append(LookupFSS(fssToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
         oneOrMoreFound=any(fidList)
     else:
-        iss=None
-        oneOrMoreFound=False
         fidList=None
+        oneOrMoreFound=False
 
+    issHtml=""
     if fz.IssueSpecList is not None:
         issHtml=FormatISSListAsHtml(fz.IssueSpecList, fidList)
-    else:
-        issHtml=""
 
     seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
     htm="<i>"
