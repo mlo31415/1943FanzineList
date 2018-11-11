@@ -1,10 +1,13 @@
-def Int(val):
-    if val is int:
+def Numeric(val):
+    if val is int or val is float:
         return val
     try:
         return int(val)
     except:
-        return None
+        try:
+            return float(val)
+        except:
+            return None
 
 
 class FanzineIssueSpec:
@@ -69,7 +72,7 @@ class FanzineIssueSpec:
 
     @Vol.setter
     def Vol(self, val):
-        self._Vol=Int(val)
+        self._Vol=Numeric(val)
 
     @Vol.getter
     def Vol(self):
@@ -82,7 +85,7 @@ class FanzineIssueSpec:
 
     @Num.setter
     def Num(self, val):
-        self._Num=Int(val)
+        self._Num=Numeric(val)
 
     @Num.getter
     def Num(self):
@@ -95,7 +98,7 @@ class FanzineIssueSpec:
 
     @Whole.setter
     def Whole(self, val):
-        self._Whole=Int(val)
+        self._Whole=Numeric(val)
 
     @Whole.getter
     def Whole(self):
@@ -144,8 +147,8 @@ class FanzineIssueSpec:
 
     # .....................
     def SetDate(self, y, m):
-        self.Year=Int(y)
-        self.Month=Int(m)
+        self.Year=Numeric(y)
+        self.Month=Numeric(m)
         return self
 
     #.......................

@@ -156,20 +156,24 @@ def InterpretIssueSpec(isl, islText):
 
     # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
-    m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*,", islText)
-    if m is not None and len(m.groups()) > 0:
-        t=FanzineIssueSpec(Whole=m.groups()[0])
-        t.TrailingGarbage=m.groups()[1]
-        isl.AppendIS(t)
-        return m.string[m.lastindex:]
+    def MatchAndRemove(input, pattern):
+        m=Regex.match(pattern, islText)
+        if m is not None and len(m.groups()) > 0:
+            return Regex.sub(pattern, "", islText), m.groups()[0], m.groups()[1]
+        return input, None, None
 
-    # And there may be a single number (maybe with trailing alpha) alone on the line
-    m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*$", islText)
-    if m is not None and len(m.groups()) > 0:
-        t=FanzineIssueSpec(Whole=m.groups()[0])
-        t.TrailingGarbage=m.groups()[1]
-        isl.AppendIS(t)
-        return m.string[m.lastindex+1:]
+    patterns=["^#?([0-9]+)([a-zA-Z]*)\s*,",         # <Integer>[alpha]<comma>
+              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*,", # <Decimal>[alpha]<comma>
+              "^#?([0-9]+)([a-zA-Z]*)\s*$",         # <Integer>[alpha]
+              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*$"  # <Decimal>[alpha]
+              ]
+    for pat in patterns:
+        islText, t1, t2=MatchAndRemove(islText, pat)
+        if t1 is not None:
+            t=FanzineIssueSpec(Whole=t1)
+            t.TrailingGarbage=t2
+            isl.AppendIS(t)
+            return islText
 
     return ""
 
@@ -299,6 +303,14 @@ for line in lines:
 
     # Next look for the pattern #n where n is a number
     m=Regex.match("(.*) #([0-9]+)$", cols[0])
+    if m is not None and len(m.groups()) > 0:
+        fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
+        fid.SeriesName=m.groups()[0]
+        fanacFanzinesFIDList.append(fid)
+        continue
+
+    # Look for the pattern n.m where n and m are numbers
+    m=Regex.match("(.*?) ([0-9]+/.[0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
         fid.SeriesName=m.groups()[0]
