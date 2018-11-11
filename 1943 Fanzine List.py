@@ -206,7 +206,7 @@ def ReadExternalLinks(filename):
             continue
         eld=IssueData()
         eld.URL=t2[cURL]
-        eld.Name=t2[cName]
+        eld.SeriesName=t2[cName]
         eld.DisplayName=t2[cDisplayName]
         iss=IssueSpec()
         iss.Num=t2[cNum]
@@ -231,19 +231,19 @@ with open("1943 All Fanzines list.txt") as f:
 
 lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
-AllFanzinesFISList=[]
+allFanzinesFSSList=[]
 
 for line in lines:
     print("\n"+line)
-    fis=FanzineSeriesSpec()
+    fss=FanzineSeriesSpec()
 
     # The line may have one or more sets of comments one or more curly brackets at the end
     notes=Regex.findall("{(.+?)}", line)    # Find all the comments
     line=Regex.sub("{(.+?)}", "", line)         # Delete all comment text by replacing them with empty strings
     if "ELIGIBLE" in notes:
-        fis.Eligible=True
+        fss.Eligible=True
         notes.remove("ELIGIBLE")
-    fis.Notes=notes
+    fss.Notes=notes
 
     m=Regex.match("(.*)\((.*)\)(.*)$", line)    # Try it without comments
     if m is not None:
@@ -252,15 +252,15 @@ for line in lines:
         print("No match: "+line)
         continue
 
-    fis.Name=m.groups()[0].strip()
-    fis.Editor=m.groups()[1].strip()
-    fis.IssueSpecList=DecodeIssueList(m.groups()[2])
-    AllFanzinesFISList.append(fis)
+    fss.SeriesName=m.groups()[0].strip()
+    fss.Editor=m.groups()[1].strip()
+    fss.IssueSpecList=DecodeIssueList(m.groups()[2])
+    allFanzinesFSSList.append(fss)
 
 # List the fanzines found
 print("\n\n\n\n\n\n\nList of all fanzines found in list of all 1943 fanzines")
-for fis in AllFanzinesFISList:
-    print(fis.Format())
+for fss in allFanzinesFSSList:
+    print(fss.Format())
 
 # OK, now it's time to read fanac.org looking for 1943 fanzines.
 print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
@@ -292,7 +292,7 @@ for line in lines:
     m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
-        fid.Name=m.groups()[0]
+        fid.SeriesName=m.groups()[0]
         fanacFanzinesFIDList.append(fid)
         continue
 
@@ -300,7 +300,7 @@ for line in lines:
     m=Regex.match("(.*) #([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
-        fid.Name=m.groups()[0]
+        fid.SeriesName=m.groups()[0]
         fanacFanzinesFIDList.append(fid)
         continue
 
@@ -308,7 +308,7 @@ for line in lines:
     m=Regex.match("(.*?) ([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
         fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
-        fid.Name=m.groups()[0]
+        fid.SeriesName=m.groups()[0]
         fanacFanzinesFIDList.append(fid)
         continue
 
@@ -316,61 +316,160 @@ for fid in fanacFanzinesFIDList:
     print(fid.Format())
 
 # Now cross-reference them.
-# Go through the list of 1943 Fanzines and find those that we have on fanac.org
-print("\n\n\n\nAttempt to match all fanzines published in 1943 to fanac.org 1943 fanzines")
-for fis in AllFanzinesFISList:
-    if fis.IssueSpecList is not None:
-        for isp in fis.IssueSpecList:
-            match=False
-            for fid in fanacFanzinesFIDList:
-                if fis.Name.lower() == fid.Name.lower():
-                    if isp == fid.IssueSpec:
-                        print("Match: "+fis.Name+" "+isp.Format())
-                        match=True
-                        break
-            if not match:
-                print("Failed: "+fis.Name+" "+isp.Format())
-
-# Now the inverse: go through the 1943 fanzines we have on fanac.org and see if they're on the list of all 1943 Fanzines
+# First go through the 1943 fanzines we have on fanac.org and see if they're on the list of all 1943 Fanzines
+# For each one that is, add a tuple to
 print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
-for fid in fanacFanzinesFIDList:
-    match=False
-    for fis in AllFanzinesFISList:
-        if fis.IssueSpecList is not None:
-            #print("'"+fis.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
-            if fis.Name.lower() == fid.Name.lower():
-                for isp in fis.IssueSpecList:
-                    #print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
+
+
+#************************************************************
+# Locate an fid in the all fanzines FSS list
+# Return with None or the fss matched
+def FindInFSSList(fssList, fid):
+    for fss in fssList:
+        if fss.IssueSpecList is not None:
+            # print("'"+fss.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
+            if fss.SeriesName.lower() == fid.SeriesName.lower():
+                for isp in fss.IssueSpecList:
+                    # print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
                     if isp == fid.IssueSpec:
-                        print("Match: "+fis.Name+" "+isp.Format())
-                        match=True
-                        break
-            if match is True:
-                break
-    if not match:
-        print("Failed: '"+fid.Name+"'   "+fid.IssueSpec.Format())
+                        print("Match: "+fss.SeriesName+" "+isp.Format())
+                        return fss
+    print("Failed: '"+fid.SeriesName+"'   "+fid.IssueSpec.Format())
+    return None
 
 # Next, we read in the list of "foreign" fanzine links
 externalLinks=ReadExternalLinks("1943 External Fanzine Links.txt")
 
+# Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all 1943 fanzines
+fisToFID={}
+
 # Go through the external links and see if they're on the list of all 1943 Fanzines
 print("\n\n\n\nAttempt to match external links fanzines to the list of all fanzines published in 1943")
+
+
+# Create a dictionary keyed by fanzine name. The value is a dictionary keyed by IssueSpec names.  The value of *those* is the IssueDate for the link we need
+def AddToFSSToFID(fssToFID, fid):
+    lst=fssToFID.get(fid.SeriesName)
+    if lst is None:
+        lst={}
+    lst[fid.IssueSpec.Format()]=fid
+    fssToFID[fid.SeriesName]=lst
+
+# Add all the external links to fisToFID
 for fid in externalLinks:
-    match=False
-    for fis in AllFanzinesFISList:
-        if fis.IssueSpecList is not None:
-            #print("'"+fis.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
-            if fis.Name.lower() == fid.Name.lower():
-                for isp in fis.IssueSpecList:
-                    #print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
-                    if isp == fid.IssueSpec:
-                        print("Match: "+fis.Name+" "+isp.Format())
-                        match=True
-                        break
-            if match is True:
-                break
-    if not match:
-        print("Failed: '"+fid.Name+"'   "+fid.IssueSpec.Format())
+    fss=FindInFSSList(allFanzinesFSSList, fid)
+    if fss is not None:
+        AddToFSSToFID(fisToFID, fid)
+
+# Do the same for the links in fanac.org
+for fid in fanacFanzinesFIDList:
+    fss=FindInFSSList(allFanzinesFSSList, fid)
+    if fss is not None:
+        AddToFSSToFID(fisToFID, fid)
+
+#============================================================================================
+print("----Begin generating the HTML")
+f=open("1943.html", "w")
+f.write("<body>\n")
+f.write('<style>\n')
+f.write('<!--\n')
+f.write('p            { line-height: 100%; margin-top: 0; margin-bottom: 0 }\n')
+f.write('-->\n')
+f.write('</style>\n')
+f.write('<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0; margin-bottom: 0">\n')
+f.write('<tr>\n')
+f.write('<td valign="top" align="left" width="50%">\n')
+f.write('<ul>\n')
+
+def Lookup(fssToFID, fss, iss):
+    if fss.SeriesName not in fssToFID.keys():
+        return None
+    if iss.Format() not in fssToFID[fss.SeriesName].keys():
+        return None
+    return fssToFID[fss.SeriesName][iss.Format()]
+
+# We want to produce a two-column page, with well-balanced columns. Count the number of distinct title (not issues) in allFanzines1942
+listoftitles=[]
+for fz in allFanzinesFSSList:  # fz is a FanzineData class object
+    if not fz.SeriesName in listoftitles:
+        listoftitles.append(fz.SeriesName)
+numTitles=len(listoftitles)
+
+def FormatLink(name, url):
+    return '<a href='+url+'>'+name+'</a>'
+
+def FormatISSListAsHtml(issList, fidList):
+    s=""
+    for iss, fid in zip(issList, fidList):
+        if len(s) > 0:
+            s=s+", "
+        if fid is None:
+            s=s+iss.Format()
+        else:
+            s=s+FormatLink(iss.Format(), fid.URL)
+    return s
+
+# Create the HTML table rows
+listoftitles=[]     # Empty it so we can again add titles to it as we find them
+for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
+    print("   Writing HTML for: "+fz.Str())
+
+    htm=None
+    name=fz.SeriesName
+    editors=fz.Editor
+
+    # There are three cases:
+    #   Case 1: We have online copies of one or more 1943 issues for this fanzine
+    #   Case 2: We don't have any 1943 issue online, but we do have issues from other years
+    #   Case 3: We have no issues at all from this fanzine
+
+    # Create a list of FIDs to parallel the fanzine's ISS list.
+    # Determine if any were found
+    if fz.IssueSpecList is not None:
+        fidList=[]
+        for iss in fz.IssueSpecList:
+            fidList.append(Lookup(fisToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
+        oneOrMoreFound=any(fidList)
+    else:
+        iss=None
+        oneOrMoreFound=False
+        fidList=None
+
+    if fz.IssueSpecList is not None:
+        issHtml=FormatISSListAsHtml(fz.IssueSpecList, fidList)
+    else:
+        issHtml=""
+
+    seriesURL=None
+    txt=None
+    htm="<i>"
+    if seriesURL is not None:
+        htm=htm+FormatLink(name, seriesURL)
+    else:
+        htm=htm+name
+    htm=htm+"</i>&nbsp;&nbsp;("+editors+")"
+    if fz.Eligible:
+        htm=htm+'<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
+    htm=htm+"<br>"+issHtml
+
+    # Insert the column end, new column start HTML when half the fanzines titles have been processed.
+    if not fz.SeriesName in listoftitles:
+        listoftitles.append(fz.SeriesName)
+    if round(numTitles/2) == len(listoftitles):
+        f.write('</td>\n<td valign="top" align="left" width="50%">\n<ul>')
+
+    if txt is not None:
+        print(txt)
+    if htm is not None:
+        print(htm)
+        f.write('<li><p>\n')
+        f.write(htm+'</li>\n')
+
+# And finally the table end and page end code
+f.write('</td>\n</tr>\n</table>')
+f.write('</ul></body>')
+f.flush()
+f.close()
 
 i=0
 

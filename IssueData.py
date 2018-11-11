@@ -4,23 +4,23 @@ class IssueData:
         self.DisplayName=None   # Includes issue number/date/whatever
         self.URL=None
         self.IssueSpec=None
-        self._Name=None
+        self._SeriesName=None
 
     def Format(self):
-        return self.Name+" "+self.IssueSpec.Format()+": "+self.URL
+        return self.SeriesName+" "+self.IssueSpec.Format()+": "+self.URL
 
     # .....................
     @property
-    def Name(self):
-        return self._Name
+    def SeriesName(self):
+        return self._SeriesName
 
-    @Name.setter
-    def Name(self, val):
+    @SeriesName.setter
+    def SeriesName(self, val):
         if val is not None:
             val=val.strip()
-        self._Name=val
+        self._SeriesName=val
 
-    @Name.getter
-    def Name(self):
-        return self._Name
+    @SeriesName.getter
+    def SeriesName(self):
+        return self._SeriesName
 
