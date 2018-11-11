@@ -351,6 +351,7 @@ for fid in fanzinesFIDList:
         fssToFID[fid.SeriesName]=lst
 
 #============================================================================================
+#============================================================================================
 print("----Begin generating the HTML")
 f=open("1943.html", "w")
 f.write("<body>\n")
@@ -380,10 +381,9 @@ def LookupURLFromName(fidList, name):
 
 
 # We want to produce a two-column page, with well-balanced columns. Count the number of distinct title (not issues) in allFanzines1942
-listoftitles=[]
-for fz in allFanzinesFSSList:  # fz is a FanzineData class object
-    if not fz.SeriesName in listoftitles:
-        listoftitles.append(fz.SeriesName)
+listoftitles=set()
+for fss in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
+    listoftitles.add(fss.SeriesName)
 numTitles=len(listoftitles)
 
 def FormatLink(name, url):
