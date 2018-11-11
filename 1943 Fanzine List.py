@@ -1,7 +1,7 @@
 import re as Regex
 from IssueSpec import IssueSpec, IssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
-from IssueData import IssueData
+from FanzineIssueData import FanzineIssueData
 
 #**************************************************************************************************************************************
 def DecodeIssueList(issuesText):
@@ -204,16 +204,16 @@ def ReadExternalLinks(filename):
         if len(t2) != 10:
             print("***Length error: Length is "+str(len(t2)))
             continue
-        eld=IssueData()
-        eld.URL=t2[cURL]
-        eld.SeriesName=t2[cName]
-        eld.DisplayName=t2[cDisplayName]
+        elFID=FanzineIssueData()
+        elFID.URL=t2[cURL]
+        elFID.SeriesName=t2[cName]
+        elFID.DisplayName=t2[cDisplayName]
         iss=IssueSpec()
         iss.Num=t2[cNum]
         iss.Vol=t2[cVol]
         iss.Whole=t2[cWhole]
-        eld.IssueSpec=iss
-        externalLinks.append(eld)
+        elFID.IssueSpec=iss
+        externalLinks.append(elFID)
     print("----Done reading "+filename)
     return externalLinks
 
@@ -282,7 +282,7 @@ for line in lines:
 
     # cols[0] should be the issue name including issue number at the end
     # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
-    fid=IssueData()
+    fid=FanzineIssueData()
     fid.URL=cols[2]+"/"+cols[3]
     fid.DisplayName=cols[0]
 
@@ -345,7 +345,6 @@ fisToFID={}
 
 # Go through the external links and see if they're on the list of all 1943 Fanzines
 print("\n\n\n\nAttempt to match external links fanzines to the list of all fanzines published in 1943")
-
 
 # Create a dictionary keyed by fanzine name. The value is a dictionary keyed by IssueSpec names.  The value of *those* is the IssueDate for the link we need
 def AddToFSSToFID(fssToFID, fid):

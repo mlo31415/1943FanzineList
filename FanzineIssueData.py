@@ -1,4 +1,4 @@
-class IssueData:
+class FanzineIssueData:
 
     def __init__(self):
         self.DisplayName=None   # Includes issue number/date/whatever
