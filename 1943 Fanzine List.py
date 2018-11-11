@@ -1,4 +1,5 @@
 import re as Regex
+from os import path
 from FanzineIssueSpec import FanzineIssueSpec, IssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
 from FanzineIssueData import FanzineIssueData
@@ -366,6 +367,10 @@ for fid in fanacFanzinesFIDList:
     if fss is not None:
         AddToFSSToFID(fisToFID, fid)
 
+# Create a combined FID list
+combinedFIDList=externalLinks+fanacFanzinesFIDList
+
+
 #============================================================================================
 print("----Begin generating the HTML")
 f=open("1943.html", "w")
@@ -380,12 +385,20 @@ f.write('<tr>\n')
 f.write('<td valign="top" align="left" width="50%">\n')
 f.write('<ul>\n')
 
-def Lookup(fssToFID, fss, iss):
+def LookupFSS(fssToFID, fss, iss):
     if fss.SeriesName not in fssToFID.keys():
         return None
     if iss.Format() not in fssToFID[fss.SeriesName].keys():
         return None
     return fssToFID[fss.SeriesName][iss.Format()]
+
+def LookupURLFromName(fidList, name):
+    urllist=[f for f in fidList if f.SeriesName == name] # List of all fanac.org FID entries with this name
+    if urllist == None or len(urllist) == 0:
+        return None
+    # Need to remove filename to get just path
+    return path.split(urllist[0].URL)[0]
+
 
 # We want to produce a two-column page, with well-balanced columns. Count the number of distinct title (not issues) in allFanzines1942
 listoftitles=[]
@@ -427,7 +440,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     if fz.IssueSpecList is not None:
         fidList=[]
         for iss in fz.IssueSpecList:
-            fidList.append(Lookup(fisToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
+            fidList.append(LookupFSS(fisToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
         oneOrMoreFound=any(fidList)
     else:
         iss=None
@@ -439,8 +452,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     else:
         issHtml=""
 
-    seriesURL=None
-    txt=None
+    seriesURL=LookupURLFromName(fanacFanzinesFIDList, fz.SeriesName)
     htm="<i>"
     if seriesURL is not None:
         htm=htm+FormatLink(name, seriesURL)
@@ -457,8 +469,6 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     if round(numTitles/2) == len(listoftitles):
         f.write('</td>\n<td valign="top" align="left" width="50%">\n<ul>')
 
-    if txt is not None:
-        print(txt)
     if htm is not None:
         print(htm)
         f.write('<li><p>\n')
