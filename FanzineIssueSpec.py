@@ -7,7 +7,7 @@ def Int(val):
         return None
 
 
-class IssueSpec:
+class FanzineIssueSpec:
 
     def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
         self.Vol=Vol
@@ -213,7 +213,7 @@ class IssueSpecList:
 
     def AppendVIS(self, vol, issuelist):
         for i in issuelist:
-            self.list.append(IssueSpec(Vol=vol, Num=i))
+            self.list.append(FanzineIssueSpec(Vol=vol, Num=i))
         return self
 
     def Extend(self, isl):

@@ -1,5 +1,5 @@
 import re as Regex
-from IssueSpec import IssueSpec, IssueSpecList
+from FanzineIssueSpec import FanzineIssueSpec, IssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
 from FanzineIssueData import FanzineIssueData
 
@@ -81,7 +81,7 @@ def InterpretIssueSpec(isl, islText):
         for i in iList:
             if len(i) == 0:
                 continue
-            t=IssueSpec(Vol=vol, Num=i)
+            t=FanzineIssueSpec(Vol=vol, Num=i)
             isl.AppendIS(t)
 
         # Check to see if the last item was followed by a bracketed comment.  If so, add it to the last item.
@@ -92,7 +92,7 @@ def InterpretIssueSpec(isl, islText):
                 if islText[0] == '[':
                     m=Regex.compile("^(\[.*\])(.*)$").match(islText)
                     if m is not None and len(m.groups()) == 2:
-                        t=IssueSpec()
+                        t=FanzineIssueSpec()
                         t.TrailingGarbage=m.groups()[0]
                         islText=m.groups()[1].strip()
                         if len(islText) > 0 and islText[0] == ",":
@@ -100,7 +100,7 @@ def InterpretIssueSpec(isl, islText):
                 elif islText[0] == '(':
                     m=Regex.match("^(\(.*\))(.*)$", islText)
                     if m is not None and len(m.groups()) == 2:
-                        t=IssueSpec()
+                        t=FanzineIssueSpec()
                         t.TrailingGarbage=m.groups()[0]
                         islText=m.groups()[1].strip()
                         if len(islText) > 0 and islText[0] == ",":
@@ -114,12 +114,12 @@ def InterpretIssueSpec(isl, islText):
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
     if m is not None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(IssueSpec(Whole=k))
+            isl.AppendIS(FanzineIssueSpec(Whole=k))
         return ""    # By definition the line is now empty
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+),", islText)   # Now a range which is part of a list (Note that we terminate on a comma rather than EOL
     if m is not None and len(m.groups()) == 2:
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(IssueSpec(Whole=k))
+            isl.AppendIS(FanzineIssueSpec(Whole=k))
         return m.string[m.lastindex+1:]   # Return the unmatched part of the string
 
 
@@ -131,25 +131,25 @@ def InterpretIssueSpec(isl, islText):
     # Year alone
     m=Regex.match("^(\d{4})$", islText)
     if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], None))
+        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], None))
         return ""   # By definition the line is now empty
 
     # Year comma-terminated
     m=Regex.match("^(\d{4})\s*,", islText)
     if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], None))
+        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], None))
         return m.string[m.lastindex:]   # Return the unmatched part of the string
 
     # Year:month alone
     m=Regex.match("^(\d{4}):(\d+)$", islText)
     if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], m.groups()[1]))
+        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], m.groups()[1]))
         return ""  # By definition the line is now empty
 
     # Year:month comma-terminated
     m=Regex.match("^(\d{4}):(\d+)\s*,", islText)
     if m is not None and len(m.groups()) > 0:
-        isl.AppendIS(IssueSpec().SetDate(m.groups()[0], m.groups()[1]))
+        isl.AppendIS(FanzineIssueSpec().SetDate(m.groups()[0], m.groups()[1]))
         return m.string[m.lastindex:]  # Return the unmatched part of the string
 
 
@@ -157,7 +157,7 @@ def InterpretIssueSpec(isl, islText):
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
     m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*,", islText)
     if m is not None and len(m.groups()) > 0:
-        t=IssueSpec(Whole=m.groups()[0])
+        t=FanzineIssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
         return m.string[m.lastindex:]
@@ -165,7 +165,7 @@ def InterpretIssueSpec(isl, islText):
     # And there may be a single number (maybe with trailing alpha) alone on the line
     m=Regex.match("^#?([0-9]+)([a-zA-Z]*)\s*$", islText)
     if m is not None and len(m.groups()) > 0:
-        t=IssueSpec(Whole=m.groups()[0])
+        t=FanzineIssueSpec(Whole=m.groups()[0])
         t.TrailingGarbage=m.groups()[1]
         isl.AppendIS(t)
         return m.string[m.lastindex+1:]
@@ -208,7 +208,7 @@ def ReadExternalLinks(filename):
         elFID.URL=t2[cURL]
         elFID.SeriesName=t2[cName]
         elFID.DisplayName=t2[cDisplayName]
-        iss=IssueSpec()
+        iss=FanzineIssueSpec()
         iss.Num=t2[cNum]
         iss.Vol=t2[cVol]
         iss.Whole=t2[cWhole]
@@ -291,7 +291,7 @@ for line in lines:
     # First look for the pattern Vn[,][ ]#n where n is a number
     m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=IssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
+        fid.IssueSpec=FanzineIssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
         fid.SeriesName=m.groups()[0]
         fanacFanzinesFIDList.append(fid)
         continue
@@ -299,7 +299,7 @@ for line in lines:
     # Next look for the pattern #n where n is a number
     m=Regex.match("(.*) #([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
+        fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
         fid.SeriesName=m.groups()[0]
         fanacFanzinesFIDList.append(fid)
         continue
@@ -307,7 +307,7 @@ for line in lines:
     # Finally look for the pattern n where n is a number
     m=Regex.match("(.*?) ([0-9]+)$", cols[0])
     if m is not None and len(m.groups()) > 0:
-        fid.IssueSpec=IssueSpec(Whole=m.groups()[1])
+        fid.IssueSpec=FanzineIssueSpec(Whole=m.groups()[1])
         fid.SeriesName=m.groups()[0]
         fanacFanzinesFIDList.append(fid)
         continue
