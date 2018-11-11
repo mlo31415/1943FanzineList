@@ -50,7 +50,7 @@ class FanzineSeriesSpec:
         if self.Eligible is not None:
             el="T" if self.Eligible else "F"
 
-        return "FSS(N:"+na+", Ed:"+ed+", No:"+no+", ISL("+isl+"), El:"+el+")"
+        return "FSS(N:"+na+", Ed:"+ed+", No:"+no+", ISL:"+isl+", El:"+el+")"
 
 
     def Format(self):  # Pretty print the FSS
