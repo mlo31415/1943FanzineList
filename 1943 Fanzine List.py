@@ -271,7 +271,7 @@ lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 # Issue date
 # Containing directory URL
 # Issue index file name
-fanacFanzinesFIDList=[]
+fanzinesFIDList=[]
 for line in lines:
     line=line.strip()[2:-2] # Strip off outside whitespace and outside "||"
     cols=line.split("||")
@@ -307,10 +307,10 @@ for line in lines:
               "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
               ]
     for pat in patterns:
-        if MatchIssueSpec(fanacFanzinesFIDList, fid, cols[0], pat):
+        if MatchIssueSpec(fanzinesFIDList, fid, cols[0], pat):
             continue
 
-for fid in fanacFanzinesFIDList:
+for fid in fanzinesFIDList:
     print(fid.Format())
 
 # Now cross-reference them.
@@ -319,7 +319,7 @@ for fid in fanacFanzinesFIDList:
 print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
 
 
-#************************************************************
+#...........................................
 # Locate an fid in the all fanzines FSS list
 # Return with None or the fss matched
 def FindInFSSList(fssList, fid):
@@ -336,37 +336,19 @@ def FindInFSSList(fssList, fid):
     return None
 
 # Next, we read in the list of "foreign" fanzine links
-externalLinks=ReadExternalLinks("1943 External Fanzine Links.txt")
+fanzinesFIDList.extend(ReadExternalLinks("1943 External Fanzine Links.txt"))
 
 # Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all 1943 fanzines
-fisToFID={}
-
-# Go through the external links and see if they're on the list of all 1943 Fanzines
-print("\n\n\n\nAttempt to match external links fanzines to the list of all fanzines published in 1943")
-
 # Create a dictionary keyed by fanzine name. The value is a dictionary keyed by IssueSpec names.  The value of *those* is the IssueDate for the link we need
-def AddToFSSToFID(fssToFID, fid):
-    lst=fssToFID.get(fid.SeriesName)
-    if lst is None:
-        lst={}
-    lst[fid.IssueSpec.Format()]=fid
-    fssToFID[fid.SeriesName]=lst
-
-# Add all the external links to fisToFID
-for fid in externalLinks:
+fssToFID={}
+for fid in fanzinesFIDList:
     fss=FindInFSSList(allFanzinesFSSList, fid)
     if fss is not None:
-        AddToFSSToFID(fisToFID, fid)
-
-# Do the same for the links in fanac.org
-for fid in fanacFanzinesFIDList:
-    fss=FindInFSSList(allFanzinesFSSList, fid)
-    if fss is not None:
-        AddToFSSToFID(fisToFID, fid)
-
-# Create a combined FID list
-combinedFIDList=externalLinks+fanacFanzinesFIDList
-
+        lst=fssToFID.get(fid.SeriesName)
+        if lst is None:
+            lst={}
+        lst[fid.IssueSpec.Format()]=fid
+        fssToFID[fid.SeriesName]=lst
 
 #============================================================================================
 print("----Begin generating the HTML")
@@ -437,7 +419,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     if fz.IssueSpecList is not None:
         fidList=[]
         for iss in fz.IssueSpecList:
-            fidList.append(LookupFSS(fisToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
+            fidList.append(LookupFSS(fssToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
         oneOrMoreFound=any(fidList)
     else:
         iss=None
@@ -449,7 +431,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     else:
         issHtml=""
 
-    seriesURL=LookupURLFromName(fanacFanzinesFIDList, fz.SeriesName)
+    seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
     htm="<i>"
     if seriesURL is not None:
         htm=htm+FormatLink(name, seriesURL)
