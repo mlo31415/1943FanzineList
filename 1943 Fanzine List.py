@@ -142,9 +142,9 @@ def InterpretIssueSpec(isl, islText):
     # There are two cases, alone on the line and as part of a comma-separated list
     # Year alone
     patterns=["^(\d{4})\s*,",       # Year comma-terminated
-              "^(\d{4})$",          # Year
+              "^(\d{4})",          # Year
               "^(\d{4}):(\d+)\s*,"  # Year:month comma-terminated
-              "^(\d{4}):(\d+)$",    # Year:month
+              "^(\d{4}):(\d+)",    # Year:month
               ]
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
@@ -156,8 +156,8 @@ def InterpretIssueSpec(isl, islText):
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
     patterns=["^#?([0-9]+)([a-zA-Z]*)\s*,",         # <Integer>[alpha]<comma>
               "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*,", # <Decimal>[alpha]<comma>
-              "^#?([0-9]+)([a-zA-Z]*)\s*$",         # <Integer>[alpha]
-              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*$"  # <Decimal>[alpha]
+              "^#?([0-9]+)([a-zA-Z]*)\s*",         # <Integer>[alpha]
+              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*"  # <Decimal>[alpha]
               ]
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
