@@ -132,7 +132,7 @@ Nebula (Shaw)  17, 18, 19, 20 {ELIGIBLE} {Newszine}
 Nova (Ashley) 3 {Win}
 Nucleus (Kuslan) V4#1, V4#2
 Paradox (Wilimczyk) V1#4, V2#1, V2#2 {ELIGIBLE}
-Pegasus (Jones) V2#1
+Pegasus (Jones) 2 {V2#1}
 People Stories (Brown & Fern) 1
 Phanny (Thompson) V2#2, V2#3, V2#4  {ELIGIBLE}
 The Phantagraph (Wollheim) 44, 45, 46 {V10#3, V11#1-2} {ELIGIBLE}
