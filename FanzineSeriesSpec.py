@@ -33,9 +33,9 @@ class FanzineSeriesSpec:
         if self._SeriesName is not None:
             na=self._SeriesName
 
-        e="-"
+        ed="-"
         if self.Editor is not None:
-            e=self.Editor
+            ed=self.Editor
 
         no=""
         if self.Notes is not None:
@@ -46,7 +46,11 @@ class FanzineSeriesSpec:
             if len(no) == 0:
                 no="-"
 
-        return "FSS(N"+na+", Ed"+e+", No"+no+", ISL("+isl+"), E"+e+")"
+        el="-"
+        if self.Eligible is not None:
+            el="T" if self.Eligible else "F"
+
+        return "FSS(N:"+na+", Ed:"+ed+", No:"+no+", ISL("+isl+"), El:"+el+")"
 
 
     def Format(self):  # Pretty print the FSS
