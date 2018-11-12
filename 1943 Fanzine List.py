@@ -225,29 +225,26 @@ def ReadExternalLinks(filename):
 # the name and editor are always present
 with open("1943 All Fanzines list.txt") as f:
     lines=f.readlines()
-
 lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
 allFanzinesFSSList=[]
-
 for line in lines:
     print("\n"+line)
     fss=FanzineSeriesSpec()
 
     # The line may have one or more sets of comments one or more curly brackets at the end
     notes=Regex.findall("{(.+?)}", line)    # Find all the comments
-    line=Regex.sub("{(.+?)}", "", line)         # Delete all comment text by replacing them with empty strings
+    line=Regex.sub("{(.+?)}", "", line)     # Delete all comment text by replacing them with empty strings
     if "ELIGIBLE" in notes:
         fss.Eligible=True
         notes.remove("ELIGIBLE")
     fss.Notes=notes
 
     m=Regex.match("(.*)\((.*)\)(.*)$", line)    # Try it without comments
-    if m is not None:
-        print(str(m.groups()))
-    else:
+    if m is None:
         print("No match: "+line)
         continue
+    print(str(m.groups()))
 
     fss.SeriesName=m.groups()[0].strip()
     fss.Editor=m.groups()[1].strip()
@@ -263,7 +260,6 @@ for fss in allFanzinesFSSList:
 print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
 with open("1943 Fanac.org Fanzines.txt") as f:
     lines=f.readlines()
-
 lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 
 # The file is "||"-delimited and consists of four columns:
@@ -285,30 +281,32 @@ for line in lines:
 
     # Now figure out the IssueSpec
 
-    def MatchIssueSpec(fidList, fid, text, pattern):
-        m=Regex.match(pattern, text)
-        if m is not None and len(m.groups()) > 0:
-            g0=m.groups()[0]                    # There may be either 1 or two groups, but we need to return two matches
-            g1=None
-            if len(m.groups()) > 1:
-                g1=m.groups()[1]
-            g2=None
-            if len(m.groups()) > 2:
-                g2=m.groups()[2]
-            fid.IssueSpec=FanzineIssueSpec(Vol=g1, Num=g2)
-            fid.SeriesName=g0
-            fidList.append(fid)
-            return True
-        return False
+    m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])  # Pattern Vn[,][ ]#n where n is a number
+    if m is not None and len(m.groups()) == 3:
+        fid.IssueSpec=FanzineIssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
+        fid.SeriesName=m.groups()[0]
+        fanzinesFIDList.append(fid)
+    else:
+        def MatchIssueSpec(fidList, fid, text, pattern):
+            m=Regex.match(pattern, text)
+            if m is not None and len(m.groups()) > 0:
+                g0=m.groups()[0]                    # There may be either 1 or two groups, but we need to return two matches
+                g1=None
+                if len(m.groups()) > 1:
+                    g1=m.groups()[1]
+                fid.IssueSpec=FanzineIssueSpec(Whole=g1)
+                fid.SeriesName=g0
+                fidList.append(fid)
+                return True
+            return False
 
-    patterns=["(.*)V([0-9]+)[, ]*#([0-9]+)$",   # Pattern Vn[,][ ]#n where n is a number
-              "(.*) #([0-9]+)$",                # Pattern #n where n is a number
-              "(.*?) ([0-9]+/.[0-9]+)$",        # Pattern n.m where n and m are numbers
-              "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
-              ]
-    for pat in patterns:
-        if MatchIssueSpec(fanzinesFIDList, fid, cols[0], pat):
-            continue
+        patterns=["(.*) #([0-9]+)$",                # Pattern #n where n is a number
+                  "(.*?) ([0-9]+/.[0-9]+)$",        # Pattern n.m where n and m are numbers
+                  "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
+                  ]
+        for pat in patterns:
+            if MatchIssueSpec(fanzinesFIDList, fid, cols[0], pat):
+                break
 
 for fid in fanzinesFIDList:
     print(fid.Format())
@@ -318,21 +316,20 @@ for fid in fanzinesFIDList:
 # For each one that is, add a tuple to
 print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
 
-
 #...........................................
 # Locate an fid in the all fanzines FSS list
 # Return with None or the fss matched
 def FindInFSSList(fssList, fid):
     for fss in fssList:
         if fss.IssueSpecList is not None:
-            # print("'"+fss.Name.lower()+"'  <===>  '"+fid.Name.lower()+"'")
+            print("'"+fss.SeriesName.lower()+"'  <===>  '"+fid.SeriesName.lower()+"'")
             if fss.SeriesName.lower() == fid.SeriesName.lower():
                 for isp in fss.IssueSpecList:
-                    # print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
+                    print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
                     if isp == fid.IssueSpec:
                         print("Match: "+fss.SeriesName+" "+isp.Format())
                         return fss
-    print("Failed: '"+fid.SeriesName+"'   "+fid.IssueSpec.Format())
+    print("Failed: '"+fid.DisplayName)
     return None
 
 # Next, we read in the list of "foreign" fanzine links
