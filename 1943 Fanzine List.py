@@ -287,26 +287,26 @@ for line in lines:
         fid.SeriesName=m.groups()[0]
         fanzinesFIDList.append(fid)
     else:
-        def MatchIssueSpec(fidList, fid, text, pattern):
-            m=Regex.match(pattern, text)
+        patterns=["(.*) #([0-9]+)$",                # Pattern #n where n is a number
+                  "(.*?) ([0-9]+/.[0-9]+)$",        # Pattern n.m where n and m are numbers
+                  "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
+                  ]
+        found=False
+        for pat in patterns:
+            m=Regex.match(pat, cols[0])
             if m is not None and len(m.groups()) > 0:
-                g0=m.groups()[0]                    # There may be either 1 or two groups, but we need to return two matches
+                g0=m.groups()[0]  # There may be either 1 or two groups, but we need to return two matches
                 g1=None
                 if len(m.groups()) > 1:
                     g1=m.groups()[1]
                 fid.IssueSpec=FanzineIssueSpec(Whole=g1)
                 fid.SeriesName=g0
-                fidList.append(fid)
-                return True
-            return False
-
-        patterns=["(.*) #([0-9]+)$",                # Pattern #n where n is a number
-                  "(.*?) ([0-9]+/.[0-9]+)$",        # Pattern n.m where n and m are numbers
-                  "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
-                  ]
-        for pat in patterns:
-            if MatchIssueSpec(fanzinesFIDList, fid, cols[0], pat):
+                fanzinesFIDList.append(fid)
+                found=True
                 break
+        if not found:
+            fid.SeriesName=cols[0]
+            fanzinesFIDList.append(fid)
 
 for fid in fanzinesFIDList:
     print(fid.Format())
@@ -325,7 +325,7 @@ def FindInFSSList(fssList, fid):
             print("'"+fss.SeriesName.lower()+"'  <===>  '"+fid.SeriesName.lower()+"'")
             if fss.SeriesName.lower() == fid.SeriesName.lower():
                 for isp in fss.IssueSpecList:
-                    print(isp.Str()+"   <-->   "+fid.IssueSpec.Str()+"  ==> "+str(isp == fid.IssueSpec))
+                    print((isp.Str() if isp is not None else "<None>")+"   <-->   "+(fid.IssueSpec.Str() if fid.IssueSpec is not None else "<None>")+"  ==> "+str(isp == fid.IssueSpec))
                     if isp == fid.IssueSpec:
                         print("Match: "+fss.SeriesName+" "+isp.Format())
                         return fss

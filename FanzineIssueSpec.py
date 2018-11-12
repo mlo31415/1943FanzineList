@@ -22,6 +22,8 @@ class FanzineIssueSpec:
         self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
     def __eq__(self, other):
+        if other is None:
+            return False
         if self.Year != other.Year:
             return False
         if self.Month != other.Month:
