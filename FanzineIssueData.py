@@ -7,9 +7,14 @@ class FanzineIssueData:
         self._SeriesName=None
 
     def Format(self):
+        out=""
+        if self.SeriesName is not None:
+            out=self.SeriesName
         if self.IssueSpec is not None:
-            return self.SeriesName+" "+self.IssueSpec.Format()+": "+self.URL
-        return self.SeriesName+": "+self.URL
+            out=out+" "+self.IssueSpec.Format()
+        if self.URL is not None:
+            out=out+" "+self.URL
+        return out
 
     # .....................
     @property

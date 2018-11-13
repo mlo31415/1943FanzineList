@@ -100,7 +100,7 @@
 || Fantasy Amateur V6, #4 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0604-cv.html ||
 || Fantasy Amateur V7, #1 || September 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0701-01.html ||
 || Fantasy Amateur V7, #2 || December 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0702-01.html ||
-|| Fantasy Commentator || 1943 || http://www.fanac.org/fanzines/Fantasy_Comment ||  ||
+|| Fantasy Commentator 1 || 1943 || http://www.fanac.org/fanzines/Fantasy_Comment ||  ||
 || Fantasy Fiction Field 114 || January 6, 1943 || http://www.fanac.org/fanzines/Fantasy_Fiction_Field || FanFic_Field114-01.html ||
 || Fantasy Fiction Field 115 || January 20, 1943 || http://www.fanac.org/fanzines/Fantasy_Fiction_Field || FanFic_Field115-01.html ||
 || Fantasy Fiction Field 116 || February 3, 1943 || http://www.fanac.org/fanzines/Fantasy_Fiction_Field || FanFic_Field116-01.html ||
@@ -141,8 +141,8 @@
 || FAPA Correspondent 2 || December 1943 || http://www.fanac.org/fanzines/FAPA_Correspondent || FAPA_Correspondent02-01.html ||
 || Fen #1 || December 1943 || http://www.fanac.org/fanzines/Fen || Fen01-01.html ||
 || Flight Unknown || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc07-01.html ||
-|| Full Length Articles #3, In Memoriam - Spirit of FooFoo || December 1943 || http://www.fanac.org/fanzines/Full_Length_Articles || FullLength03-01.html ||
-|| Fungi From Yuggoth by H.P. Lovecraft || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc11-01.html ||
+|| Full Length Articles #3 || December 1943 || http://www.fanac.org/fanzines/Full_Length_Articles || FullLength03-01.html ||
+|| Fungi From Yuggoth || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc11-01.html ||
 || Futurian War Digest V3, #5 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || Futurian_War0305-01.html ||
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Galaxy || Galaxy06-01.html ||
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || http://fanac.org/fanzines/Galaxy/Galaxy06-01.html ||
@@ -151,7 +151,7 @@
 || Guteto V2, #3 || June 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0203-01.html ||
 || Guteto V2, #4 || September 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0204-01.html ||
 || Guteto V3, #3 || December 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0303-01.html ||
-|| Have at Thee Knaves || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc14-01.html ||
+|| Have at Thee, Knaves || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc14-01.html ||
 || Horizons 15 || March 1943 || http://www.fanac.org/fanzines/Horizons || Horizons15-01.html ||
 || Horizons 16 || June 1943 || http://www.fanac.org/fanzines/Horizons || Horizons16-01.html ||
 || Horizons 17 || September 1943 || http://www.fanac.org/fanzines/Horizons || Horizons17-01.html ||
@@ -163,7 +163,7 @@
 || Le Zombie 53 || May 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom53-01.html ||
 || Le Zombie 54 || September 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom54-cv.html ||
 || Le Zombie 55 || November 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom55-cv.html ||
-|| Le Zombie Ad || December 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom555-01.html ||
+|| LEZ Advertiser || December 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom555-01.html ||
 || Light 129 || Winter 1943 || http://www.fanac.org/fanzines/Light || Light129-01.html ||
 || Madman of Mars 4 || March 1943 || http://www.fanac.org/fanzines/Madman_Mars || Madman0343-01.html ||
 || Matters of Opinion 13 || March 1943 || http://www.fanac.org/fanzines/Matters_Opinion || mat13-01.html ||
@@ -182,7 +182,7 @@
 || Nucleus V4,#1 || March 1943 || http://www.fanac.org/fanzines/Nucleus || Nucleus0401-01.html ||
 || Nucleus V4,#2 || September 1943 || http://www.fanac.org/fanzines/Nucleus || Nucleus0402-01.html ||
 || Pegasus 2 || June 1943 || http://www.fanac.org/fanzines/Pegasus || Pegasus02-cv.html ||
-|| People Stories || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc27-01.html ||
+|| People Stories 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc27-01.html ||
 || Phanny V2,#3 || Fall 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0203-cv.html ||
 || Phanny V2,#4 || December 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0204-cv.html ||
 || Pogorus V1, #2 || June 1943 || http://www.fanac.org/fanzines/Pogorus || Pogorus02-cv.html ||
@@ -194,7 +194,7 @@
 || Ray #2 || November 1943 || http://www.fanac.org/fanzines/Ray || Ray02-01.html ||
 || Reader and Collector V3, #2 || June 1943 || http://www.fanac.org/fanzines/Reader_Collector || Reader0302-01.html ||
 || Reader and Collector V3, #2 || June 1943 || http://www.fanac.org/fanzines/Reader_Collector || Reader0302-01.pdf ||
-|| Report to Fandom - The Cosmic Circle || 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle22-01.html ||
+|| Report to Science Fiction Fandom: The Cosmic Circle || 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle22-01.html ||
 || Review Section 5 || April 1943 || http://www.fanac.org/fanzines/ReviewSection || ReviewSection05-01.html ||
 || Review Section 5 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || http://fanac.org/fanzines/ReviewSection/ReviewSection05-01.html ||
 || S-F Variety 8 || June 1943 || http://www.fanac.org/fanzines/Sci-Fic_Variety || sfv08-01.html ||
@@ -205,12 +205,12 @@
 || Sardonyx 9 || June 1943 || http://www.fanac.org/fanzines/Sardonyx || Sardonyx09-01.html ||
 || Satyric 2 || September 1943 || http://www.fanac.org/fanzines/Satyric || Satyric02-01.html ||
 || Science Fiction Savant #1 || September 1943 || http://www.fanac.org/fanzines/Science_Fiction_Savant || SFSavant01-01.html ||
-|| Shangri-L'affaires 11 || August 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires11-01.html ||
-|| Shangri-L'affaires 12 || September 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires12-01.html ||
-|| Shangri-L'affaires 8 || January 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires08-01.html ||
+|| Shangri-L'Affaires 11 || August 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires11-01.html ||
+|| Shangri-L'Affaires 12 || September 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires12-01.html ||
+|| Shangri-L'Affaires 8 || January 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires08-01.html ||
 || Silver Dusk || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc13-01.html ||
 || Society of Juridica || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc22-01.html ||
-|| Stef-Nyaa-aa-a!! || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc23-01.html ||
+|| Stef Nyaa-aa-a!! || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc23-01.html ||
 || STEFNEWS Parody || December 1943 || http://www.fanac.org/fanzines/STEFNEWS || STEFNEWS82-03.html ||
 || Sustaining Program 17 || March 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain0343-cv.html ||
 || Sustaining Program 18 || Summer 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain0643-cv.html ||
@@ -228,14 +228,14 @@
 || Toward Yesterday #1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc28-01.html ||
 || Voice of the Imagi-Nation 27 || September 1943 || http://www.fanac.org/fanzines/VOM || vom27-01.html ||
 || Voice of the Imagi-Nation 28 || November 1943 || http://www.fanac.org/fanzines/VOM || vom28-01.html ||
-|| Vote for Landon || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc33-01.html ||
+|| The S-F Republican || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc33-01.html ||
 || Walt's Wramblings 4 || March 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings04-01.html ||
 || Walt's Wramblings 5 || Summer 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings05-01.html ||
 || Walt's Wramblings 6 || Fall 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings06-01.html ||
 || Walt's Wramblings 7 || Fall 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings07-01.html ||
 || Walt's Wramblings 8 || Winter 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings08-01.html ||
 || We Just Had To Do It V1, #1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc20-01.html ||
-|| Whopdoodle || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc09-01.html ||
+|| Whoopdoodle || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc09-01.html ||
 || Wowzy Wamblings! || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc10-01.html ||
 || Wudgy Tales #1 || March 1943 || http://www.fanac.org/fanzines/Wudgy_Tales || Wudgy01-01.html ||
 || Wudgy Tales #2 || September 1943 || http://www.fanac.org/fanzines/Wudgy_Tales || Wudgy02-01.html ||

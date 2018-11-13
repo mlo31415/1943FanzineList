@@ -270,6 +270,8 @@ lines=[l.strip() for l in lines]   # Remove whitespace including trailing '\n'
 fanzinesFIDList=[]
 for line in lines:
     line=line.strip()[2:-2] # Strip off outside whitespace and outside "||"
+    if len(line) == 0:  # Skip whitespace lines
+        continue
     cols=line.split("||")
     cols=[c.strip() for c in cols]
 
@@ -280,18 +282,33 @@ for line in lines:
     fid.DisplayName=cols[0]
 
     # Now figure out the IssueSpec
-
+    found=False
     m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])  # Pattern Vn[,][ ]#n where n is a number
     if m is not None and len(m.groups()) == 3:
         fid.IssueSpec=FanzineIssueSpec(Vol=m.groups()[1], Num=m.groups()[2])
         fid.SeriesName=m.groups()[0]
         fanzinesFIDList.append(fid)
-    else:
+        found=True
+    if not found:
+        pattern="(.*) (\d+)-(\d+)"
+        m=Regex.match(pattern, cols[0])
+        if m is not None and len(m.groups()) == 3:
+            start=int(m.groups()[1])
+            end=int(m.groups()[2])
+            fid.SeriesName=m.groups()[0]
+            for i in range(start, end+1):
+                fid.IssueSpec=FanzineIssueSpec(Whole=i)
+                fanzinesFIDList.append(fid)
+                fid=FanzineIssueData()      # Needed so we don't have the same FID in multiple positions
+                fid.URL=cols[2]+"/"+cols[3]
+                fid.DisplayName=cols[0]
+            found=True
+
+    if not found:
         patterns=["(.*) #([0-9]+)$",                # Pattern #n where n is a number
                   "(.*?) ([0-9]+/.[0-9]+)$",        # Pattern n.m where n and m are numbers
                   "(.*?) ([0-9]+)$"                 # Pattern n where n is a number
                   ]
-        found=False
         for pat in patterns:
             m=Regex.match(pat, cols[0])
             if m is not None and len(m.groups()) > 0:
@@ -304,9 +321,9 @@ for line in lines:
                 fanzinesFIDList.append(fid)
                 found=True
                 break
-        if not found:
-            fid.SeriesName=cols[0]
-            fanzinesFIDList.append(fid)
+    if not found:
+        fid.SeriesName=cols[0]
+        fanzinesFIDList.append(fid)
 
 for fid in fanzinesFIDList:
     print(fid.Format())
@@ -322,8 +339,9 @@ print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fan
 def FindInFSSList(fssList, fid):
     for fss in fssList:
         if fss.IssueSpecList is not None:
-            print("'"+fss.SeriesName.lower()+"'  <===>  '"+fid.SeriesName.lower()+"'")
-            if fss.SeriesName.lower() == fid.SeriesName.lower():
+            print("'"+(fss.SeriesName.lower() if fss.SeriesName is not None else "<None>")+"'  <===>  '"+(fid.SeriesName.lower() if fid.SeriesName is not None else "<None>")+"'")
+            if (fss.SeriesName is None and fid.SeriesName is None) or \
+                    (fss.SeriesName is not None and fid.SeriesName is not None and fss.SeriesName.lower() == fid.SeriesName.lower()):
                 for isp in fss.IssueSpecList:
                     print((isp.Str() if isp is not None else "<None>")+"   <-->   "+(fid.IssueSpec.Str() if fid.IssueSpec is not None else "<None>")+"  ==> "+str(isp == fid.IssueSpec))
                     if isp == fid.IssueSpec:
