@@ -92,10 +92,10 @@
 || Fanfare 10 || December 1943 || http://www.fanac.org/fanzines/Fanfare || Fanfare10-01.html ||
 || Fanta Snide || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc25-01.html ||
 || Fantasite 11 || May 1943 || http://www.fanac.org/fanzines/Fantasite || Fantasite11-01.html ||
-|| Fantasy Amateur Lean To Annex #1 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06035-01.html ||
-|| Fantasy Amateur Lean To Annex #2 || July 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06045-01.html ||
-|| Fantasy Amateur Lean To V1, #2 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06036-01.html ||
-|| Fantasy Amateur Lean To V1,#3 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06046-01.html ||
+|| FA Lean-To Annex #1 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06035-01.html ||
+|| FAL-T Annex 2 || July 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06045-01.html ||
+|| FA Lean-To V1 #2 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06036-01.html ||
+|| FA Lean-To V1 #3 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06046-01.html ||
 || Fantasy Amateur V6, #3 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0603-cv.html ||
 || Fantasy Amateur V6, #4 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0604-cv.html ||
 || Fantasy Amateur V7, #1 || September 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0701-01.html ||
