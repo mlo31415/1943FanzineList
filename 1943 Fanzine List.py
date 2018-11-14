@@ -218,7 +218,6 @@ def ReadExternalLinks(filename):
 #**************************************************************************************************************************************
 # Read the master file of all 1943 fanzines
 def Read1943AllFanzines(name):
-    global f, allFanzinesFSSList, fss, fss
     # Read the list of 1943 fanzines and parse them
     # The format of a line is: <name> (<editor> & <editor>) >comma-separated list of issues> {comment 1} {comment 2}
     # the name and editor are always present
@@ -248,13 +247,19 @@ def Read1943AllFanzines(name):
         fss.Editor=m.groups()[1].strip()
         fss.IssueSpecList=DecodeIssueList(m.groups()[2])
         allFanzinesFSSList.append(fss)
+
     # List the fanzines found
     print("\n\n\n\n\n\n\nList of all fanzines found in list of all 1943 fanzines")
     for fss in allFanzinesFSSList:
         print(fss.Format())
+
+    return allFanzinesFSSList
+
+
+def ReadFanacFanzines(name):
     # OK, now it's time to read fanac.org looking for 1943 fanzines.
     print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
-    with open("1943 Fanac.org Fanzines.txt") as f:
+    with open(name) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
     # The file is "||"-delimited and consists of four columns:
@@ -319,22 +324,8 @@ def Read1943AllFanzines(name):
         if not found:
             fid.SeriesName=cols[0]
             fanzinesFIDList.append(fid)
-
     return fanzinesFIDList
 
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#  Main
-
-fanzinesFIDList=Read1943AllFanzines("1943 All Fanzines list.txt")
-
-for fid in fanzinesFIDList:
-    print(fid.Format())
-
-# Now cross-reference them.
-# First go through the 1943 fanzines we have on fanac.org and see if they're on the list of all 1943 Fanzines
-# For each one that is, add a tuple to
-print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
 
 #...........................................
 # Locate an fid in the all fanzines FSS list
@@ -353,7 +344,25 @@ def FindInFSSList(fssList, fid):
     print("Failed: '"+fid.DisplayName)
     return None
 
-# Next, we read in the list of "foreign" fanzine links
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#  Main
+
+# Read the master list of all 1943 fanzines
+allFanzinesFSSList=Read1943AllFanzines("1943 All Fanzines list.txt")
+
+# Read what's on fanac.org
+fanzinesFIDList=ReadFanacFanzines("1943 Fanac.org Fanzines.txt")
+
+for fid in fanzinesFIDList:
+    print(fid.Format())
+
+# Now cross-reference them.
+# First go through the 1943 fanzines we have on fanac.org and see if they're on the list of all 1943 Fanzines
+# For each one that is, add a tuple to
+print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
+
+# Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
 fanzinesFIDList.extend(ReadExternalLinks("1943 External Fanzine Links.txt"))
 
 # Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all 1943 fanzines
@@ -368,7 +377,9 @@ for fid in fanzinesFIDList:
         lst[fid.IssueSpec.Format()]=fid
         fssToFID[fid.SeriesName]=lst
 
+
 #============================================================================================
+# Write the HTML
 #============================================================================================
 print("----Begin generating the HTML")
 f=open("1943.html", "w")
