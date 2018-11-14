@@ -53,7 +53,7 @@ def DecodeIssueList(issuesText):
 
 #**************************************************************************************************************************************
 # Interpret some or all of the input text (from islText) as an issue spec list and append the interpreted ISs we find to isl
-# It's permissible to not handle the complete list in oen go, since we are called repeatedly until islText is completely interpreted.
+# It's permissible to not handle the complete list in one go, since we called this function repeatedly until islText is completely interpreted.
 def InterpretIssueSpec(isl, islText):
     islText=islText.strip()
 
@@ -142,9 +142,9 @@ def InterpretIssueSpec(isl, islText):
     # There are two cases, alone on the line and as part of a comma-separated list
     # Year alone
     patterns=["^(\d{4})\s*,",       # Year comma-terminated
-              "^(\d{4})",          # Year
+              "^(\d{4})",           # Year
               "^(\d{4}):(\d+)\s*,"  # Year:month comma-terminated
-              "^(\d{4}):(\d+)",    # Year:month
+              "^(\d{4}):(\d+)",     # Year:month
               ]
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
@@ -219,7 +219,7 @@ def ReadExternalLinks(filename):
 # Read the master file of all 1943 fanzines
 def Read1943AllFanzines(name):
     # Read the list of 1943 fanzines and parse them
-    # The format of a line is: <name> (<editor> & <editor>) >comma-separated list of issues> {comment 1} {comment 2}
+    # The format of a line is: <series name> (<editor> [& <editor>...]) >comma-separated list of issues> {comment 1} {comment 2}
     # the name and editor are always present
     with open(name) as f:
         lines=f.readlines()
@@ -230,25 +230,29 @@ def Read1943AllFanzines(name):
         fss=FanzineSeriesSpec()
 
         # The line may have one or more sets of comments one or more curly brackets at the end
+        # Begin by recognizing them and removingt hem from the line
         notes=Regex.findall("{(.+?)}", line)  # Find all the comments
-        line=Regex.sub("{(.+?)}", "", line)  # Delete all comment text by replacing them with empty strings
-        if "ELIGIBLE" in notes:
+        line=Regex.sub("{(.+?)}", "", line)   # Delete all comment text by replacing them with empty strings
+        if "ELIGIBLE" in notes:               # "ELIGIBLE" is a special case and means that it's eligible for thh Retro Hugo for 1943 fanzines.  We store that flag separately.
             fss.Eligible=True
             notes.remove("ELIGIBLE")
         fss.Notes=notes
 
-        m=Regex.match("(.*)\((.*)\)(.*)$", line)  # Try it without comments
+        # Now there are no comments, so the line's format is <series name> (<editor> [& <editor>...]) <comma-separated list of issuespecs>
+        # the series name and editor is mandatory; the issuespecs are not when the fanzine is a one-shot
+        m=Regex.match("(.*)\((.*)\)(.*)$", line)    # We're using the parenthesis around the editor(s) to delimit the three sections of the line.
         if m is None:
             print("No match: "+line)
             continue
         print(str(m.groups()))
 
+        # Decode and store the data.
         fss.SeriesName=m.groups()[0].strip()
         fss.Editor=m.groups()[1].strip()
         fss.IssueSpecList=DecodeIssueList(m.groups()[2])
         allFanzinesFSSList.append(fss)
 
-    # List the fanzines found
+    # List the fanzines found (a debugging aid)
     print("\n\n\n\n\n\n\nList of all fanzines found in list of all 1943 fanzines")
     for fss in allFanzinesFSSList:
         print(fss.Format())
@@ -256,12 +260,13 @@ def Read1943AllFanzines(name):
     return allFanzinesFSSList
 
 
+#**************************************************************************************************************
 def ReadFanacFanzines(name):
-    # OK, now it's time to read fanac.org looking for 1943 fanzines.
     print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
     with open(name) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
+
     # The file is "||"-delimited and consists of four columns:
     # Issue title (including issue number)
     # Issue date
@@ -277,11 +282,13 @@ def ReadFanacFanzines(name):
 
         # cols[0] should be the issue name including issue number at the end
         # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
+        issueName=cols[0]
         fid=FanzineIssueData()
         fid.URL=cols[2]+"/"+cols[3]
-        fid.DisplayName=cols[0]
+        fid.DisplayName=issueName
 
-        # Now figure out the IssueSpec
+        # Now figure out the IssueSpec.
+        # We (try to) do this by splitting the issue spec off from the series name which it normally follows
         found=False
         m=Regex.match("(.*)V([0-9]+)[, ]*#([0-9]+)$", cols[0])  # Pattern Vn[,][ ]#n where n is a number
         if m is not None and len(m.groups()) == 3:
@@ -291,7 +298,7 @@ def ReadFanacFanzines(name):
             found=True
         if not found:
             pattern="(.*) (\d+)-(\d+)"
-            m=Regex.match(pattern, cols[0])
+            m=Regex.match(pattern, issueName)
             if m is not None and len(m.groups()) == 3:
                 start=int(m.groups()[1])
                 end=int(m.groups()[2])
@@ -300,8 +307,7 @@ def ReadFanacFanzines(name):
                     fid.IssueSpec=FanzineIssueSpec(Whole=i)
                     fanzinesFIDList.append(fid)
                     fid=FanzineIssueData()  # Needed so we don't have the same FID in multiple positions
-                    fid.URL=cols[2]+"/"+cols[3]
-                    fid.DisplayName=cols[0]
+                    fid.DisplayName=issueName
                 found=True
 
         if not found:
@@ -310,7 +316,7 @@ def ReadFanacFanzines(name):
                       "(.*?) ([0-9]+)$"  # Pattern n where n is a number
                       ]
             for pat in patterns:
-                m=Regex.match(pat, cols[0])
+                m=Regex.match(pat, issueName)
                 if m is not None and len(m.groups()) > 0:
                     g0=m.groups()[0]  # There may be either 1 or two groups, but we need to return two matches
                     g1=None
@@ -321,9 +327,10 @@ def ReadFanacFanzines(name):
                     fanzinesFIDList.append(fid)
                     found=True
                     break
-        if not found:
-            fid.SeriesName=cols[0]
+        if not found:   # No issue number, so this is the series name
+            fid.SeriesName=issueName
             fanzinesFIDList.append(fid)
+
     return fanzinesFIDList
 
 
@@ -343,6 +350,8 @@ def FindInFSSList(fssList, fid):
                         return fss
     print("Failed: '"+fid.DisplayName)
     return None
+
+
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -394,6 +403,7 @@ f.write('<tr>\n')
 f.write('<td valign="top" align="left" width="50%">\n')
 f.write('<ul>\n')
 
+#........................
 def LookupFSS(fssToFID, fss, iss):
     if fss.SeriesName not in fssToFID.keys():
         return None
@@ -401,6 +411,7 @@ def LookupFSS(fssToFID, fss, iss):
         return None
     return fssToFID[fss.SeriesName][iss.Format()]
 
+#........................
 def LookupURLFromName(fidList, name):
     urllist=[f for f in fidList if f.SeriesName == name] # List of all fanac.org FID entries with this name
     if urllist == None or len(urllist) == 0:
