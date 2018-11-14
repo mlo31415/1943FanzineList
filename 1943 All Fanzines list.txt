@@ -57,10 +57,10 @@ Dreams of Yith (Rimel & Laney)
 Elmurmurings (Perdue) 1
 En Garde (Ashley) 5, 6, 7, 8 {ELIGIBLE}
 Erebus (Marlow) 1, 2, 3, 4
-F A L -- T Annex 2 (Ashley)
+FAL-T Annex (Ashley) 2 {FA Lean-To Annex V1#2}
 FA Lean 3 (Fern & Kepner) 1
-Fantasy Amateur Lean To (Ashley) V1#2, V1#3
-Fantasy Amateur Lean To Annex (Ashley) #1, #2 {V1#1, V1#2}
+FA Lean-To (Ashley) V1#2, V1#3
+FA Lean-To Annex (Ashley) #1 {V1#1}
 Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
 Fandomania Special Issue (Daugherty) 1.5,2
 Fandom Awake (Sehnert)
