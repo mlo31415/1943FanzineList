@@ -1,17 +1,17 @@
 class FanzineIssueData:
 
-    def __init__(self):
-        self.DisplayName=None   # Includes issue number/date/whatever
-        self.URL=None
-        self.IssueSpec=None
-        self._SeriesName=None
+    def __init__(self, DisplayName=None, URL=None, FanzineIssueSpec=None, SeriesName=None):
+        self.DisplayName=DisplayName   # Includes issue number/date/whatever
+        self.URL=URL
+        self.FanzineIssueSpec=FanzineIssueSpec
+        self._SeriesName=SeriesName
 
     def Format(self):
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName
-        if self.IssueSpec is not None:
-            out=out+" "+self.IssueSpec.Format()
+        if self.FanzineIssueSpec is not None:
+            out=out+" "+self.FanzineIssueSpec.Format()
         if self.URL is not None:
             out=out+" "+self.URL
         return out

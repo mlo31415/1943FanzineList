@@ -3,7 +3,7 @@
 class FanzineSeriesSpec:
 
     def __init__(self):
-        self.IssueSpecList=None
+        self.IssueSpecList=None     # A FanzineIssueSpec
         self._SeriesName=None
         self.Editor=None
         self.Eligible=None

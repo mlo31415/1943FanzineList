@@ -13,20 +13,20 @@ def Numeric(val):
 class FanzineIssueSpec:
 
     def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
-        self.Vol=Vol
-        self.Num=Num
-        self.Whole=Whole
-        self.Year=Year
-        self.Month=Month
-        self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
-        self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
+        self._Vol=Vol
+        self._Num=Num
+        self._Whole=Whole
+        self._Year=Year
+        self._Month=Month
+        self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
+        self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
     def __eq__(self, other):
         if other is None:
             return False
-        if self.Year != other.Year:
+        if self._Year != other._Year:
             return False
-        if self.Month != other.Month:
+        if self._Month != other._Month:
             return False
 
         # Now it gets a bit complicated.  We need either Vol/Num or Whole to match. The other must also match or be None on at least one side
@@ -67,6 +67,15 @@ class FanzineIssueSpec:
     def __ne__(self, other):
         return not self == other
 
+    def Copy(self, other):
+        self._Vol=other.Vol
+        self._Num=other.Num
+        self._Whole=other.Whole
+        self._Year=other.Year
+        self._Month=other.Month
+        self._UninterpretableText=other.UninterpretableText
+        self._TrailingGarbage=other.TrailingGarbage
+
     # .....................
     @property
     def Vol(self):
@@ -105,6 +114,32 @@ class FanzineIssueSpec:
     @Whole.getter
     def Whole(self):
         return self._Whole
+
+    #.....................
+    @property
+    def Year(self):
+        return self._Year
+
+    @Year.setter
+    def Year(self, val):
+        self._Year=Numeric(val)
+
+    @Year.getter
+    def Year(self):
+        return self._Year
+
+    #.....................
+    @property
+    def Month(self):
+        return self._Month
+
+    @Month.setter
+    def Month(self, val):
+        self._Month=Numeric(val)
+
+    @Month.getter
+    def Month(self):
+        return self._Month
 
     #.....................
     @property
@@ -181,7 +216,9 @@ class FanzineIssueSpec:
             s=s+", TG='"+self.TrailingGarbage+"'"
         if self.UninterpretableText is not None:
             s=s+", UT='"+self.UninterpretableText+"'"
-        return s+")"
+        s=s+")"
+
+        return s
 
     #.......................
     def Format(self):   # Convert the IS into a pretty string
@@ -209,25 +246,26 @@ class FanzineIssueSpec:
 
 #================================================================================
 class IssueSpecList:
-    def __init__(self):
-        self.list=[]
+    def __init__(self, List=None):
+        self._list=None
+        self.List=List
 
-    def AppendIS(self, issuespec):
-        self.list.append(issuespec)
-        return self
-
-    def AppendVIS(self, vol, issuelist):
-        for i in issuelist:
-            self.list.append(FanzineIssueSpec(Vol=vol, Num=i))
+    def AppendIS(self, fanzineIssueSpec):
+        if isinstance(fanzineIssueSpec, FanzineIssueSpec):
+            self._list.append(fanzineIssueSpec)
+        elif isinstance(fanzineIssueSpec, IssueSpecList):
+            self._list.extend(fanzineIssueSpec.List)
+        else:
+            print("****IssueSpecList.AppendIS() had strange input")
         return self
 
     def Extend(self, isl):
-        self.list.extend(isl)
+        self._list.extend(isl)
         return self
 
     def Str(self):      # Print out the ISL for debugging
         s=""
-        for i in self.list:
+        for i in self._list:
             if len(s) > 0:
                 s=s+",  "
             if i is not None:
@@ -240,7 +278,7 @@ class IssueSpecList:
 
     def Format(self):   # Format the ISL for pretty
         s=""
-        for i in self.list:
+        for i in self._list:
             if i is not None:
                 if len(s) > 0:
                     s=s+", "
@@ -248,14 +286,32 @@ class IssueSpecList:
         return s
 
     def __len__(self):
-        return len(self.list)
+        return len(self._list)
 
+    @property
     def List(self):
-        return self.list
+        return self._list
+
+    @List.setter
+    def List(self, val):
+        if val is None:
+            self._list=[]
+            return self
+        if isinstance(val, FanzineIssueSpec):
+            self._list=[val]
+            return self
+        if isinstance(val, IssueSpecList):
+            self._list=val.List
+        print("****IssueSpecList.setter() had strange input")
+        return self
+
+    @List.getter
+    def List(self):
+        return self._list
 
     def __getitem__(self, key):
-        return self.list[key]
+        return self._list[key]
 
     def __setitem__(self, key, value):
-        self.list[key]=value
+        self._list[key]=value
         return self
