@@ -179,8 +179,8 @@ class FanzineIssueSpec:
         s="IS(V"+v+", N"+n+", W"+w+", D"+d
         if self.TrailingGarbage is not None:
             s=s+", TG='"+self.TrailingGarbage+"'"
-        if self.TrailingGarbage is not None:
-            s=s+", TG='"+self.TrailingGarbage+"'"
+        if self.UninterpretableText is not None:
+            s=s+", UT='"+self.UninterpretableText+"'"
         return s+")"
 
     #.......................
