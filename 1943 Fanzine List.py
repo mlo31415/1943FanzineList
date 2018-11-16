@@ -154,10 +154,12 @@ def InterpretIssueSpec(islText):
     # The years *must* be 4-digit so we can tell them apart from just-plain-numbers
     # There are two cases, alone on the line and as part of a comma-separated list
     # Year alone
-    patterns=["^(\d{4})\s*,",       # Year comma-terminated
-              "^(\d{4})",           # Year
-              "^(\d{4}):(\d+)\s*,", # Year:month comma-terminated
-              "^(\d{4}):(\d+)",     # Year:month
+    patterns=["^(\d{4}):(\d{1,2})\s*,", # Year:month comma-terminated
+              "^(\d{4}):(\d{1,2})",     # Year:month
+              "^(\d{4}):([a-zA-Z]+),",  # Year:textmonth comma-terminated
+              "^(\d{4}):([a-zA-Z]+)",   # Year:textmonth
+              "^(\d{4})\s*,",  # Year comma-terminated
+              "^(\d{4})",  # Year
               ]
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
