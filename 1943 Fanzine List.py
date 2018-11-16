@@ -140,12 +140,13 @@ def InterpretIssueSpec(islText):
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(FanzineIssueSpec(Whole=k))
         return isl, "", True    # By definition the line is now empty
-    m=Regex.match("^(\d+)\s*[\-–]\s*(\d+),", islText)   # Now a range which is part of a list (Note that we terminate on a comma rather than EOL
-    if m is not None and len(m.groups()) == 2:
+
+    islText, g0, g1=MatchAndRemove(islText, "^(\d+)\s*[\-–]\s*(\d+),")
+    if g0 is not None and g1 is not None:
         isl=IssueSpecList()
-        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
+        for k in range(int(g0), int(g1)+1):
             isl.AppendIS(FanzineIssueSpec(Whole=k))
-        return isl, m.string[m.lastindex+1:], True
+        return isl, islText, True
 
     # Next, consider a list of years or year-month pairs:
     # yyyy[, yyyy]
