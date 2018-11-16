@@ -38,28 +38,31 @@ class FanzineIssueSpec:
         # V1 N2 W3 does not match V1 N2 W4
         # V1 N2 W3 matches V2 N2 W3
         vnMatches=False
+        vnIsNone=False
         if self._Vol is None and other._Vol is None and self._Num is None and other._Num is None:
+            vnIsNone=True
+        if self._Vol == other._Vol and self._Num == other._Num:
             vnMatches=True
-        elif self._Vol == other._Vol and self._Num == other._Num:
-            vnMatches=True
+
         vnOneIsNone=False
         if self._Vol is None and other._Vol is not None and self._Num is None and other._Num is not None:
             vnOneIsNone=True
         if self._Vol is not None and other._Vol is None and self._Num is not None and other._Num is None:
             vnOneIsNone=True
 
-        wMatches=False
+        wIsNone=False
         if self._Whole is None and other._Whole is None:
-            wMatches=True
+            wIsNone=True
+        wMatches=False
         if self._Whole == other._Whole:
             wMatches=True
         wOneIsNone=False
         if (self._Whole is None and other._Whole is not None) or (self._Whole is not None and other._Whole is None):
             wOneIsNone=True
 
-        if vnMatches and (wMatches or wOneIsNone):
+        if vnMatches and (wMatches or wOneIsNone or wIsNone):
             return True
-        if (vnMatches or vnOneIsNone) and wMatches:
+        if wMatches and (vnMatches or vnOneIsNone or vnIsNone):
             return True
 
         return False
