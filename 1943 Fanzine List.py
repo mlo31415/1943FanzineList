@@ -401,7 +401,7 @@ print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fan
 fanzinesFIDList.extend(ReadExternalLinks("1943 External Fanzine Links.txt"))
 
 # Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all 1943 fanzines
-# Create a dictionary keyed by fanzine name. The value is a dictionary keyed by FanzineIssueSpec names.  The value of *those* is the IssueDate for the link we need
+# Create a dictionary keyed by fanzine name. The value is a dictionary keyed by FanzineIssueSpec names.  The value of *those* is the IssueData for the link we need
 fssToFID={}
 for fid in fanzinesFIDList:
     fss=FindInFSSList(allFanzinesFSSList, fid)
@@ -413,6 +413,7 @@ for fid in fanzinesFIDList:
         fssToFID[fid.SeriesName]=lst
 
 # Sort allFanzinesFSSList into alphabetic order
+# We move A, An and The to the end for sorting purposes
 def inverter(s, prefix):
     if s.startswith(prefix):
         return s[len(prefix):]+s[:len(prefix)]
