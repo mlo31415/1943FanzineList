@@ -152,6 +152,7 @@ def InterpretIssueSpec(islText):
     # yyyy[, yyyy]
     # yyyy:mm[, yyyy:mm]
     # The years *must* be 4-digit so we can tell them apart from just-plain-numbers
+    # The months can also be text "Sep" "September" etc.
     # There are two cases, alone on the line and as part of a comma-separated list
     # Year alone
     patterns=["^(\d{4}):(\d{1,2})\s*,", # Year:month comma-terminated
