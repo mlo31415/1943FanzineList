@@ -355,14 +355,14 @@ def StrNone(str):
 def FindInFSSList(fssList, fid):
     for fss in fssList:
         if fss.IssueSpecList is not None:
-            print("'"+ StrNone(fss.SeriesName).lower()+"'  <===>  '"+StrNone(fid.SeriesName).lower()+"'")
             if NamesMatch(fss.SeriesName, fid.SeriesName):
                 for isp in fss.IssueSpecList:
-                    print(StrNone(isp.Str())+"   <-->   "+StrNone(fid.FanzineIssueSpec.Str())+"  ==> "+str(isp == fid.FanzineIssueSpec))
                     if isp == fid.FanzineIssueSpec:
+                        print("'"+StrNone(fss.SeriesName).lower()+"'  <===>  '"+StrNone(fid.SeriesName).lower()+"'")
+                        print(StrNone(isp.Str())+"   <-->   "+StrNone(fid.FanzineIssueSpec.Str())+"  ==> "+str(isp == fid.FanzineIssueSpec))
                         print("Match: "+fss.SeriesName+" "+isp.Format())
                         return fss
-    print("Failed: '"+fid.DisplayName)
+    print("Failed: '"+fid.DisplayName+"'")
     return None
 #........................
 def LookupFSS(fssToFID, fss, iss):
