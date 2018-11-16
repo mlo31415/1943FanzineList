@@ -200,7 +200,8 @@ class FanzineIssueSpec:
         return self
 
     #.......................
-    def Str(self):  # Convert the IS into a debugging form
+    # Convert the IS into a debugging form
+    def Str(self):
         if self.UninterpretableText is not None:
             return "IS("+self.UninterpretableText+")"
 
@@ -266,6 +267,8 @@ class IssueSpecList:
             self._list.append(fanzineIssueSpec)
         elif isinstance(fanzineIssueSpec, IssueSpecList):
             self._list.extend(fanzineIssueSpec.List)
+        elif fanzineIssueSpec is None:
+            return
         else:
             print("****IssueSpecList.AppendIS() had strange input")
         return self
