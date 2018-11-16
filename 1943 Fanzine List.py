@@ -155,7 +155,7 @@ def InterpretIssueSpec(islText):
     # Year alone
     patterns=["^(\d{4})\s*,",       # Year comma-terminated
               "^(\d{4})",           # Year
-              "^(\d{4}):(\d+)\s*,"  # Year:month comma-terminated
+              "^(\d{4}):(\d+)\s*,", # Year:month comma-terminated
               "^(\d{4}):(\d+)",     # Year:month
               ]
     for pat in patterns:
@@ -164,12 +164,27 @@ def InterpretIssueSpec(islText):
             isl=IssueSpecList().AppendIS(FanzineIssueSpec().SetDate(t1, None))
             return isl, islText, True
 
-    # Now consider it as a simple list of whole numbers (perhaps with a trailing alphabetic character, e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
+    # Now consider it as a simple list of whole numbers with a trailing alphabetic character (e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
     # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
-    patterns=["^#?([0-9]+)([a-zA-Z]*)\s*,",         # <Integer>[alpha]<comma>
-              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*,", # <Decimal>[alpha]<comma>
-              "^#?([0-9]+)([a-zA-Z]*)\s*",          # <Integer>[alpha]
-              "^#?([0-9]+\.[0-9]+)([a-zA-Z]*)\s*"   # <Decimal>[alpha]
+    patterns=["^#?([0-9]+)([a-zA-Z])\s*,",  # <Integer>[alpha]<comma>
+              "^#?([0-9]+\.[0-9]+)([a-zA-Z])\s*,",  # <Decimal>[alpha]<comma>
+              "^#?([0-9]+)([a-zA-Z])\s*$",  # <Integer>[alpha] (if there's no comma, then we need to see line-end)
+              "^#?([0-9]+\.[0-9]+)([a-zA-Z])\s*$"  # <Decimal>[alpha] (if there's no comma, then we need to see line-end)
+              ]
+    for pat in patterns:
+        islText, t1, t2=MatchAndRemove(islText, pat)
+        if t1 is not None:
+            fis=FanzineIssueSpec(Whole=t1)
+            fis.TrailingGarbage=t2
+            isl=IssueSpecList(List=fis)
+            return isl, islText, True
+
+    # Finally consider it as a simple list of whole numbers with no trailing alphabetics (and perhaps with a # in front of the number, e.g., #2)
+    # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
+    patterns=["^#?([0-9]+)\s*,",         # <Integer><comma>
+              "^#?([0-9]+\.[0-9]+)\s*,", # <Decimal><comma>
+              "^#?([0-9]+)\s*$",          # <Integer> (if there's no comma, then we need to see line-end)
+              "^#?([0-9]+\.[0-9]+)\s*$"   # <Decimal> (if there's no comma, then we need to see line-end)
               ]
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
@@ -300,13 +315,11 @@ def ReadFanacFanzines(name):
         # This lets us use the existing issue spec recognizer.
 
         tokens=issueName.split()
-        index=len(tokens)-1
         isl=IssueSpecList()
-        leadingText=""
         # Try to greedily interpret the trailing text as a FanzineIssueSpec.
         # We do this by interpreting more and more tokens starting from the end until we have something that is no longer recognizable as a FanzineIssueSpec
         # The just-previous set of tokens constitutes the full IssueSpec, and the remaining leading tokens are the series name.
-        while index >= 0:
+        for index in range(len(tokens)-1, -1, -1):  # Ugly, but I need index to be the indexes of the tokens
             trailingText=" ".join(tokens[index:])
             leadingText=" ".join(tokens[:index])
             print("     index="+str(index)+"'   leading='"+leadingText+"    trailing='"+trailingText+"'")
@@ -315,9 +328,11 @@ def ReadFanacFanzines(name):
                 print("      ...failed")
                 break
             isl=trialIsl
-            index=index-1
+            goodLeadingText=leadingText
         for i in isl:
-            fanzinesFIDList.append(FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=leadingText, FanzineIssueSpec=i))
+            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
+            fanzinesFIDList.append(fid)
+            print(fid.Format())
 
     return fanzinesFIDList
 
