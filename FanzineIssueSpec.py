@@ -261,7 +261,7 @@ class FanzineIssueSpec:
 
         tg=""
         if self.TrailingGarbage is not None:
-            tg=self.TrailingGarbage
+            tg=" "+self.TrailingGarbage
 
         if self.Vol is not None and self.Num is not None:
             return "V"+str(self.Vol)+"#"+str(self.Num)+tg

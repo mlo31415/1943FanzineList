@@ -164,7 +164,7 @@ def InterpretIssueSpec(islText):
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
         if t1 is not None:
-            isl=IssueSpecList().AppendIS(FanzineIssueSpec().SetDate(t1, None))
+            isl=IssueSpecList().AppendIS(FanzineIssueSpec().SetDate(t1, t2))
             return isl, islText, True
 
     # Now consider it as a simple list of whole numbers with a trailing alphabetic character (e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
