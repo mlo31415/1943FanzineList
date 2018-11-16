@@ -524,6 +524,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 
 # And finally the table end and page end code
 f.write('</td>\n</tr>\n</table>')
+f.write('<center>Scanning by Joe Siclari and Mark Olson</p></center>')
 f.write('</ul></body>')
 f.flush()
 f.close()
