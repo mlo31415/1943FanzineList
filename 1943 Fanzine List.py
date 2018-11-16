@@ -329,10 +329,16 @@ def ReadFanacFanzines(name):
                 break
             isl=trialIsl
             goodLeadingText=leadingText
-        for i in isl:
-            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
+
+        if len(isl) == 0:
+            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec())
             fanzinesFIDList.append(fid)
             print(fid.Format())
+        else:
+            for i in isl:
+                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
+                fanzinesFIDList.append(fid)
+                print(fid.Format())
 
     return fanzinesFIDList
 
