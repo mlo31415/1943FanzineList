@@ -29,28 +29,28 @@ class FanzineSeriesSpec:
         if self.IssueSpecList is not None:
             isl=self.IssueSpecList.Format()
 
-        na="-"
+        sn="-"
         if self._SeriesName is not None:
-            na=self._SeriesName
+            sn=self._SeriesName
 
         ed="-"
         if self.Editor is not None:
             ed=self.Editor
 
-        no=""
+        nt=""
         if self.Notes is not None:
             for note in self.Notes:
-                if len(no) > 0:
-                    no+=" "
-                no+=note
-            if len(no) == 0:
-                no="-"
+                if len(nt) > 0:
+                    nt+=" "
+                nt+=note
+            if len(nt) == 0:
+                nt="-"
 
         el="-"
         if self.Eligible is not None:
             el="T" if self.Eligible else "F"
 
-        return "FSS(N:"+na+", Ed:"+ed+", No:"+no+", ISL:"+isl+", El:"+el+")"
+        return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+")"
 
 
     def Format(self):  # Pretty print the FSS
