@@ -366,9 +366,10 @@ def FindInFSSList(fssList, fid):
 def LookupFSS(fssToFID, fss, iss):
     if fss.SeriesName not in fssToFID.keys():
         return None
-    if iss.Format() not in fssToFID[fss.SeriesName].keys():
-        return None
-    return fssToFID[fss.SeriesName][iss.Format()]
+    for x in fssToFID[fss.SeriesName]:
+        if x[0] == iss:
+            return x[1]
+    return None
 #........................
 def LookupURLFromName(fidList, name):
     urllist=[f for f in fidList if f.SeriesName == name] # List of all fanac.org FID entries with this name
@@ -409,8 +410,8 @@ for fid in fanzinesFIDList:
     if fss is not None:
         lst=fssToFID.get(fid.SeriesName)
         if lst is None:
-            lst={}
-        lst[fid.FanzineIssueSpec.Format()]=fid
+            lst=[]
+        lst.append((fid.FanzineIssueSpec, fid))
         fssToFID[fid.SeriesName]=lst
 
 # Sort allFanzinesFSSList into alphabetic order
