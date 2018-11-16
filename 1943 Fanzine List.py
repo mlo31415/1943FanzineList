@@ -412,6 +412,21 @@ for fid in fanzinesFIDList:
         lst[fid.FanzineIssueSpec.Format()]=fid
         fssToFID[fid.SeriesName]=lst
 
+# Sort allFanzinesFSSList into alphabetic order
+def inverter(s, prefix):
+    if s.startswith(prefix):
+        return s[len(prefix):]+s[:len(prefix)]
+    return s
+def sorter(fss):
+    s=fss.SeriesName
+    s=s.lower()
+    s=inverter(s, "a ")
+    s=inverter(s, "an ")
+    s=inverter(s, "the ")
+    return s
+
+allFanzinesFSSList.sort(key=sorter)
+
 
 #============================================================================================
 # Write the HTML
