@@ -29,10 +29,6 @@ class FanzineIssueSpec:
     def __eq__(self, other):
         if other is None:
             return False
-        if self._Year != other._Year:
-            return False
-        if self._Month != other._Month:
-            return False
 
         # Now it gets a bit complicated.  We need either Vol/Num or Whole to match. The other must also match or be None on at least one side
         # So, ("-" is None) the following match:
@@ -71,6 +67,32 @@ class FanzineIssueSpec:
         if vnMatches and (wMatches or wOneIsNone or wIsNone):
             return True
         if wMatches and (vnMatches or vnOneIsNone or vnIsNone):
+            return True
+
+        # Now check for dates
+        yIsNone=False
+        if self._Year is None and other._Year is None:
+            yIsNone=True
+        yMatches=False
+        if self._Year == other._Year:
+            yMatches=True
+        yOneIsNone=False
+        if (self._Year is None and other._Year is not None) or \
+                (self._Year is not None and other._Year is None):
+            yOneIsNone=True
+
+        mIsNone=False
+        if self._Month is None and other._Month is None:
+            mIsNone=True
+        mMatches=False
+        if self._Month == other._Month:
+            mMatches=True
+        mOneIsNone=False
+        if (self._Month is None and other._Month is not None) or \
+                (self._Month is not None and other._Month is None):
+            mOneIsNone=True
+
+        if yMatches and (mMatches or mOneIsNone or mIsNone):
             return True
 
         return False
