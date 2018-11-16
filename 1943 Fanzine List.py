@@ -228,12 +228,8 @@ def ReadExternalLinks(filename):
         if len(t2) != 10:
             print("***Length error: Length is "+str(len(t2)))
             continue
-        elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName])
-        fis=FanzineIssueSpec()
-        fis.Num=t2[cNum]
-        fis.Vol=t2[cVol]
-        fis.Whole=t2[cWhole]
-        elFID.FanzineIssueSpec=fis
+        fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
+        elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
         externalLinks.append(elFID)
     print("----Done reading "+filename)
     return externalLinks
