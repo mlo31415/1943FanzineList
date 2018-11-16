@@ -1,25 +1,30 @@
+# Try to make the input numeric
 def Numeric(val):
-    if val is int or val is float:
+    if val == None:
+        return None
+
+    if isinstance(val, int) or isinstance(val, float):
         return val
+
     try:
         return int(val)
     except:
         try:
             return float(val)
         except:
-            return None
+            return val
 
 
 class FanzineIssueSpec:
 
     def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
-        self._Vol=Vol
-        self._Num=Num
-        self._Whole=Whole
-        self._Year=Year
-        self._Month=Month
-        self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
-        self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
+        self.Vol=Vol
+        self.Num=Num
+        self.Whole=Whole
+        self.Year=Year
+        self.Month=Month
+        self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
+        self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
     def __eq__(self, other):
         if other is None:
@@ -45,9 +50,11 @@ class FanzineIssueSpec:
             vnMatches=True
 
         vnOneIsNone=False
-        if self._Vol is None and other._Vol is not None and self._Num is None and other._Num is not None:
+        if (self._Vol is None and other._Vol is not None) or \
+                (self._Num is None and other._Num is not None):
             vnOneIsNone=True
-        if self._Vol is not None and other._Vol is None and self._Num is not None and other._Num is None:
+        if (self._Vol is not None and other._Vol is None) or \
+                (self._Num is not None and other._Num is None):
             vnOneIsNone=True
 
         wIsNone=False
@@ -57,7 +64,8 @@ class FanzineIssueSpec:
         if self._Whole == other._Whole:
             wMatches=True
         wOneIsNone=False
-        if (self._Whole is None and other._Whole is not None) or (self._Whole is not None and other._Whole is None):
+        if (self._Whole is None and other._Whole is not None) or \
+                (self._Whole is not None and other._Whole is None):
             wOneIsNone=True
 
         if vnMatches and (wMatches or wOneIsNone or wIsNone):
