@@ -37,62 +37,61 @@ class FanzineIssueSpec:
         # V1 N2 W3 matches V- N- W3
         # The following don't match:
         # V1 N2 W3 does not match V1 N2 W4
-        # V1 N2 W3 matches V2 N2 W3
-        vnMatches=False
-        vnIsNone=False
+        # V1 N2 W3 does not match V2 N2 W3
+        vnAreNone=False
         if self._Vol is None and other._Vol is None and self._Num is None and other._Num is None:
-            vnIsNone=True
-        if self._Vol == other._Vol and self._Num == other._Num:
+            vnAreNone=True
+        vnMatches=False
+        if self._Vol == other._Vol and self._Num == other._Num and not vnAreNone:
             vnMatches=True
 
         vnOneIsNone=False
-        if (self._Vol is None and other._Vol is not None) or \
+        if (self._Vol is None and other._Vol is not None) and \
                 (self._Num is None and other._Num is not None):
             vnOneIsNone=True
-        if (self._Vol is not None and other._Vol is None) or \
+        if (self._Vol is not None and other._Vol is None) and \
                 (self._Num is not None and other._Num is None):
             vnOneIsNone=True
+        vnDoesntMismatch=vnMatches or vnOneIsNone or vnAreNone  # There is no case of actual contradiction
 
-        wIsNone=False
+        wAreNone=False
         if self._Whole is None and other._Whole is None:
-            wIsNone=True
+            wAreNone=True
         wMatches=False
-        if self._Whole == other._Whole:
+        if self._Whole == other._Whole and not wAreNone:
             wMatches=True
         wOneIsNone=False
         if (self._Whole is None and other._Whole is not None) or \
                 (self._Whole is not None and other._Whole is None):
             wOneIsNone=True
+        wDoesntMismatch=wMatches or wOneIsNone or wAreNone
 
-        if vnMatches and (wMatches or wOneIsNone or wIsNone):
+        if vnMatches and wDoesntMismatch:
             return True
-        if wMatches and (vnMatches or vnOneIsNone or vnIsNone):
+        if wMatches and vnDoesntMismatch:
             return True
 
         # Now check for dates
-        yIsNone=False
+        yAreNone=False
         if self._Year is None and other._Year is None:
-            yIsNone=True
+            yAreNone=True
         yMatches=False
-        if self._Year == other._Year:
+        if self._Year == other._Year and not yAreNone:
             yMatches=True
-        yOneIsNone=False
-        if (self._Year is None and other._Year is not None) or \
-                (self._Year is not None and other._Year is None):
-            yOneIsNone=True
 
-        mIsNone=False
+        mAreNone=False
         if self._Month is None and other._Month is None:
-            mIsNone=True
+            mAreNone=True
         mMatches=False
-        if self._Month == other._Month:
+        if self._Month == other._Month and not mAreNone:
             mMatches=True
-        mOneIsNone=False
-        if (self._Month is None and other._Month is not None) or \
-                (self._Month is not None and other._Month is None):
-            mOneIsNone=True
 
-        if yMatches and (mMatches or mOneIsNone or mIsNone):
+        if yMatches and (mMatches or mAreNone):
+            return True
+
+        datesAreNone=yAreNone and mAreNone
+        datesMatch=(yMatches and mMatches) or (yMatches and mAreNone)
+        if datesMatch:
             return True
 
         return False
