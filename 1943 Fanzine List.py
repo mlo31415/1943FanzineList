@@ -325,7 +325,7 @@ def ReadFanacFanzines(name):
             print("     index="+str(index)+"'   leading='"+leadingText+"    trailing='"+trailingText+"'")
             trialIsl, leftover, success=InterpretIssueSpec(trailingText)
             if not success:       # Failed.  We've gone one too far. Quit trying and use what we found on the previous iteration
-                print("      ...failed")
+                print("      ...failed. ISL="+isl.Str())
                 break
             isl=trialIsl
             goodLeadingText=leadingText
