@@ -148,17 +148,17 @@
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || http://fanac.org/fanzines/Galaxy/Galaxy06-01.html ||
 || Ghu 1 || September 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle13-01.html ||
 || Golden Atom #10 || September 1943 || http://www.fanac.org/fanzines/Golden_Atom || GoldenAtom10-cv.html ||
-|| Guteto V2, #3 || June 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0203-01.html ||
-|| Guteto V2, #4 || September 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0204-01.html ||
-|| Guteto V3, #3 || December 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0303-01.html ||
+|| Guteto V2#3 || June 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0203-01.html ||
+|| Guteto V2#4 || September 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0204-01.html ||
+|| Guteto V3#3 || December 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0303-01.html ||
 || Have at Thee, Knaves || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc14-01.html ||
 || Horizons 15 || March 1943 || http://www.fanac.org/fanzines/Horizons || Horizons15-01.html ||
 || Horizons 16 || June 1943 || http://www.fanac.org/fanzines/Horizons || Horizons16-01.html ||
 || Horizons 17 || September 1943 || http://www.fanac.org/fanzines/Horizons || Horizons17-01.html ||
 || Howard Philips Lovecraft: A Tentative Bibliography || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc26-cv.html ||
-|| Inspiration V2, #2 || Summer 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir202-01.html ||
-|| Inspiration V2, #3 || Fall 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir203-01.html ||
-|| Inspiration V2, #4 || Winter 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir204-01.html ||
+|| Inspiration V2#2 || Summer 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir202-01.html ||
+|| Inspiration V2#3 || Fall 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir203-01.html ||
+|| Inspiration V2#4 || Winter 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir204-01.html ||
 || Jinx 5 || June 1943 || http://www.fanac.org/fanzines/Jinx || Jinx05-01.html ||
 || Le Zombie 53 || May 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom53-01.html ||
 || Le Zombie 54 || September 1943 || http://www.fanac.org/fanzines/Le_Zombie || lezom54-cv.html ||
@@ -211,7 +211,7 @@
 || Shangri-L'Affaires 8 || January 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires08-01.html ||
 || Silver Dusk || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc13-01.html ||
 || Society of Juridica || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc22-01.html ||
-|| Stef Nyaa-aa-a!! || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc23-01.html ||
+|| Stef Nyaa-aa-a!! 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc23-01.html ||
 || STEFNEWS Parody || December 1943 || http://www.fanac.org/fanzines/STEFNEWS || STEFNEWS82-03.html ||
 || Sustaining Program 17 || March 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain0343-cv.html ||
 || Sustaining Program 18 || Summer 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain0643-cv.html ||

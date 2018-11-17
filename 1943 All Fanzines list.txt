@@ -31,7 +31,7 @@ Chanticleer (Leibscher) 1
 Christian Stfan (Moffatt) 3
 Claude Degler & the FAPA (Shaw)
 Cluster (Karden) 1, 2
-Collected Verse (Chauvenet)
+Collected Verse - Fragments of a Broken Dream (Chauvenet)
 Colossus (Houston & Overton) 1
 Comic Circle Commentator (Laney) 1 {Cosmic Circle criticism}
 Convention Extra (uncredited) 2
@@ -77,7 +77,6 @@ Fantasy Fiction Field (Unger)  114-135, 135.5, 136-152  {ELIGIBLE} {Newszine}
 Fantasy Fiction Field Newsweek (Unger, Jenkins & Gilbert)
 Fantasy News (Sykora) 161, 162, 163, 165 {ELIGIBLE}
 Fanzine Yearbook -- 1942 (Tucker, Swisher, Pratt, & Ackerman)
-Flight Unknown 6 (Gergen)
 Fan-Tods (Stanley) 2, 3, 4, 5
 Fanzine Yearbook (Tucker) 1942 (in LeZ 56)
 FAPA Blotter (Perdue) 1
@@ -85,8 +84,9 @@ FAPA Correspondent (Warner) 2
 Fen (Kepner) 1
 The Fighting Fan (Widner) 1
 Flight Unknown (Brackney)
+Flight Unknown 6 (Gergen)
 Full Length Articles (Speer) 3 {In Memorium: Spirit of FooFoo}
-Fungi from Yuggoth (HPL/Evans)
+Fungi from Yuggoth by H.P. Lovecraft (Evans)
 Futurian Daily Planet (Stein) 1, 2
 Futurian War Digest  (Rosenblum) V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V4#1, V4#2 {UK}  {ELIGIBLE} {FIDO}
 Galaxy (Overton)  4, 5, 6, 7 {UK} {ELIGIBLE} {FWD}
@@ -97,7 +97,7 @@ Give Degler His Due (Futurian Society of NY)
 Golden Atom  (Farsaci) 10
 Le Grotesque (Semaj) 4 {ELIGIBLE}
 Guteto (Morojo [Myrtle Douglas]) V2#3, V2#4, V3#1, V3#2, V3#3 {FAPA} {ELIGIBLE}
-Have at Thee, Knanves  (Russell) 1 {sic}
+Have at Thee, Knaves  (Russell) 1 {written "Knanves"}
 History of the Future Index Cards (uncredited)
 Horizons (Warner) 15, 16, 17, 18 {ELIGIBLE} {V4#3-V5#2}
 Howard Philips Lovecraft: A Tentative Bibliography (Laney & Evans) {FAPA}
@@ -171,8 +171,8 @@ Songs with Certain Dissonances (Mayer & Joquel) 1943
 Staplecon (Ackerman) 1
 Starlit Fantasy (McNutt) 2
 Statement from Futurian Society of NY (FSNY) (aka Give Degler His Due) 1943:12
-The Stefan (Ashley) 1943:3
-Stef Nyaa-aa-a!! (Shaw) 1943:12
+The Stefan (Ashley) 1
+Stef Nyaa-aa-a!! (Shaw) 1
 Stefnews (Speer) 29
 Stellar Tales (Dunmire - Moffatt) 2
 Sustaining Program (Speer) 17,18,19,20 {Spr to Win} {ELIGIBLE}
@@ -180,7 +180,7 @@ A Tale of the 'Evans (Evans) #5 {aka Atote} {ELIGIBLE}
 Tellus (Smith) 4
 Toward Yesterday (Jike) 1
 Trends (Williams) 1
-The Trivial Triangle Troubadour (Schwartz) 1
+The Trivial Triangle Troubador (Schwartz) 1
 Uninhibited Electrode (Speer) 1943
 The Unknown Madman (Shaw) 1943:12
 Vision (Wright) 1
