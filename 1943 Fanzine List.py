@@ -517,6 +517,9 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     else:
         htm=htm+name
     htm=htm+"</i>&nbsp;&nbsp;("+editors+")"
+    if fz.Notes is not None:
+        for note in fz.Notes:
+            htm=htm+" {<i>"+note+"</i>}"
     if fz.Eligible:
         htm=htm+'<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
     htm=htm+"<br>"+issHtml
