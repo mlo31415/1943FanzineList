@@ -11,8 +11,8 @@ Around the World in ??? Days (Moffatt) 1
 Asteroid (Moffatt) 1, 2 {#1 is undated and unnumbered}
 Astra (Chidsey) 1
 Banshee (Shaw) 1, 2, 3
-Beyond (Parker) 4, 5, 6, 7, 8 {#5-#8 Are Undated} {ELIGIBLE}
-Beyond (Wright) 1
+Beyond [Parker] (Parker) 4, 5, 6, 7, 8 {#5-#8 Are Undated} {ELIGIBLE}
+Beyond [Wright] (Wright) 1
 Bibliophan (Medhurst) 3, 4 {Fido}
 Black Star   (Elsner) 1, 2, 3 {#s 1 and 3 are undated}
 Bonfire (Varies) 8, 9 {#8 is undated} {ELIGIBLE}
@@ -29,7 +29,6 @@ Caustic Square Bullshooter (Brown & Fern) 1
 Centauri (Anderson) 1
 Chanticleer (Leibscher) 1
 Christian Stfan (Moffatt) 3
-Claude Degler & the FAPA (Shaw)
 Cluster (Karden) 1, 2
 Collected Verse - Fragments of a Broken Dream (Chauvenet)
 Colossus (Houston & Overton) 1
@@ -38,7 +37,6 @@ Convention Extra (uncredited) 2
 Cosmic Bulletin (uncredited) 1, 2
 Cosmic Circle and Fandom (Speer) {Cosmic Circle criticism}
 Cosmic Circle Commentator (Rogers) 1-7, 8, 9-16 {a Cosmic Circle publication}
-Cosmic Circle Monthly (Rogers) 1  {a Cosmic Circle publication}
 Cosmic Cuts (Holbrow) V2#1, V2#2, V2#3, V2#4, V2#5, V2#6
 Cosmic Digest (Washington) 1 {also 1 bound as CC Monthly}  {a Cosmic Circle publication}
 Cosmic Dust (Kessel)  1,2,3
@@ -58,7 +56,7 @@ Elmurmurings (Perdue) 1
 En Garde (Ashley) 5, 6, 7, 8 {ELIGIBLE}
 Erebus (Marlow) 1, 2, 3, 4
 FAL-T Annex (Ashley) 2 {FA Lean-To Annex V1#2}
-FA Lean 3 (Fern & Kepner) 1
+FA Lean Three (Fern & Kepner) 1
 FA Lean-To (Ashley) V1#2, V1#3
 FA Lean-To Annex (Ashley) #1 {V1#1}
 Fandango (Laney) 1, 2, 3, 3A {ELIGIBLE}
@@ -86,7 +84,7 @@ The Fighting Fan (Widner) 1
 Flight Unknown (Brackney)
 Flight Unknown 6 (Gergen)
 Full Length Articles (Speer) 3 {In Memorium: Spirit of FooFoo}
-Fungi from Yuggoth by H.P. Lovecraft (Evans)
+Fungi From Yuggoth by H.P. Lovecraft (Evans)
 Futurian Daily Planet (Stein) 1, 2
 Futurian War Digest  (Rosenblum) V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V4#1, V4#2 {UK}  {ELIGIBLE} {FIDO}
 Galaxy (Overton)  4, 5, 6, 7 {UK} {ELIGIBLE} {FWD}

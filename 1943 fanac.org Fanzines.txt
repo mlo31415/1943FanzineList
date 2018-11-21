@@ -12,8 +12,8 @@
 || Banshee #1 || March 1943 || http://www.fanac.org/fanzines/Banshee || Banshee01-01.html ||
 || Banshee #2 || December 1943 || http://www.fanac.org/fanzines/Banshee || Banshee02-01.html ||
 || Banshee #3 || December 1943 || http://www.fanac.org/fanzines/Banshee || Banshee03-01.html ||
-|| Beyond #1 || December 1943 || http://www.fanac.org/fanzines/Beyond || Beyond01-cv.html ||
-|| Booklist PG 4 || April 1943 || http://www.fanac.org/fanzines/Booklist || Booklist04-01.html ||
+|| Beyond [Wright] #1 || December 1943 || http://www.fanac.org/fanzines/Beyond || Beyond01-cv.html ||
+|| Booklist || April 1943 || http://www.fanac.org/fanzines/Booklist || Booklist04-01.html ||
 || Bring Bob Tucker to Shangri-LA || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc30-01.html ||
 || British Fantasy Society Bulletin 10 || August 14, 1943 || http://www.fanac.org/fanzines/Brit_Fantasy_Soc_Bulletin || Brit_Fantasy_Soc10-01.html ||
 || Browsing #1 || June 1943 || http://www.fanac.org/fanzines/Browsing || Browsing01-01.html ||
@@ -24,7 +24,7 @@
 || Caliban 4 || Winter 1943 || http://www.fanac.org/fanzines/Caliban || Caliban04-01.html ||
 || CAPA Mailing 1 || September 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle03-01.html ||
 || Card || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc16-01.html ||
-|| Caustic Square Bullshooter || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc37-01.html ||
+|| Caustic Square Bullshooter 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc37-01.html ||
 || Collected Verse - Fragments of a Broken Dream || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc08-01.html ||
 || Comic Circle Commentator || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc34-01.html ||
 || Comic Circle Commentator || December 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/FAPA-Misc/FAPA-Misc34-01.html ||
@@ -142,7 +142,7 @@
 || Fen #1 || December 1943 || http://www.fanac.org/fanzines/Fen || Fen01-01.html ||
 || Flight Unknown || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc07-01.html ||
 || Full Length Articles #3 || December 1943 || http://www.fanac.org/fanzines/Full_Length_Articles || FullLength03-01.html ||
-|| Fungi From Yuggoth || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc11-01.html ||
+|| Fungi From Yuggoth by H.P. Lovecraft || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc11-01.html ||
 || Futurian War Digest V3, #5 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || Futurian_War0305-01.html ||
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Galaxy || Galaxy06-01.html ||
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || http://fanac.org/fanzines/Galaxy/Galaxy06-01.html ||
@@ -180,21 +180,21 @@
 || Nebula 19 || November 15, 1943 || http://www.fanac.org/fanzines/Nebula || Nebula19-01.html ||
 || Nebula 20 || December 17, 1943 || http://www.fanac.org/fanzines/Nebula || Nebula20-01.html ||
 || Nova #3 || Winter 1943 || http://www.fanac.org/fanzines/Nova || Nova3-cv.html ||
-|| Nucleus V4,#1 || March 1943 || http://www.fanac.org/fanzines/Nucleus || Nucleus0401-01.html ||
-|| Nucleus V4,#2 || September 1943 || http://www.fanac.org/fanzines/Nucleus || Nucleus0402-01.html ||
+|| Nucleus V4#1 || March 1943 || http://www.fanac.org/fanzines/Nucleus || Nucleus0401-01.html ||
+|| Nucleus V4#2 || September 1943 || http://www.fanac.org/fanzines/Nucleus || Nucleus0402-01.html ||
 || Pegasus 2 || June 1943 || http://www.fanac.org/fanzines/Pegasus || Pegasus02-cv.html ||
 || People Stories 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc27-01.html ||
-|| Phanny V2,#3 || Fall 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0203-cv.html ||
-|| Phanny V2,#4 || December 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0204-cv.html ||
-|| Pogorus V1, #2 || June 1943 || http://www.fanac.org/fanzines/Pogorus || Pogorus02-cv.html ||
+|| Phanny V2#3 || Fall 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0203-cv.html ||
+|| Phanny V2#4 || December 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0204-cv.html ||
+|| Pogorus V1 #2 || June 1943 || http://www.fanac.org/fanzines/Pogorus || Pogorus02-cv.html ||
 || Presenting FAPA Blotter || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc17-01.html ||
 || Presentng Ronald Clyne || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc19-01.html ||
 || Rahuun Ta-Ka 1 || June 1943 || http://www.fanac.org/fanzines/Rahuun || Rahuun01-01.html ||
 || Rahuun Ta-Ka 2 || September 1943 || http://www.fanac.org/fanzines/Rahuun || Rahuun02-01.html ||
 || Ray #1 || January 1943 || http://www.fanac.org/fanzines/Ray || Ray01-01.html ||
 || Ray #2 || November 1943 || http://www.fanac.org/fanzines/Ray || Ray02-01.html ||
-|| Reader and Collector V3, #2 || June 1943 || http://www.fanac.org/fanzines/Reader_Collector || Reader0302-01.html ||
-|| Reader and Collector V3, #2 || June 1943 || http://www.fanac.org/fanzines/Reader_Collector || Reader0302-01.pdf ||
+|| Reader and Collector V3 #2 || June 1943 || http://www.fanac.org/fanzines/Reader_Collector || Reader0302-01.html ||
+|| Reader and Collector V3 #2 || June 1943 || http://www.fanac.org/fanzines/Reader_Collector || Reader0302-01.pdf ||
 || Report to Science Fiction Fandom: The Cosmic Circle || 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle22-01.html ||
 || Review Section 5 || April 1943 || http://www.fanac.org/fanzines/ReviewSection || ReviewSection05-01.html ||
 || Review Section 5 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || http://fanac.org/fanzines/ReviewSection/ReviewSection05-01.html ||
@@ -219,7 +219,7 @@
 || Sustaining Program 20 || December 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain1243-cv.html ||
 || The Cosmic Circle and Fandom || December 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle23-01.html ||
 || The Cruise of the Foo Foo Special Jr || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc21-01.html ||
-|| The FA Lean 3 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc36-01.html ||
+|| The FA Lean Three || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc36-01.html ||
 || The Fighting Fan || January 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc05-01.html ||
 || The Peace Witness || October-November 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc31-01.html ||
 || The Phantagraph 45 || May 1943 || http://www.fanac.org/fanzines/Phantagraph || Phanta45-cv.html ||
@@ -235,7 +235,7 @@
 || Walt's Wramblings 6 || Fall 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings06-01.html ||
 || Walt's Wramblings 7 || Fall 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings07-01.html ||
 || Walt's Wramblings 8 || Winter 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings08-01.html ||
-|| We Just Had To Do It V1, #1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc20-01.html ||
+|| We Just Had To Do It V1 #1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc20-01.html ||
 || Whoopdoodle 1943:6 || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc09-01.html ||
 || Wowzy Wamblings! 1943:6 || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc10-01.html ||
 || Wudgy Tales #1 || March 1943 || http://www.fanac.org/fanzines/Wudgy_Tales || Wudgy01-01.html ||
