@@ -50,7 +50,7 @@
 || En Garde 6 || Summer 1943 || http://www.fanac.org/fanzines/EnGarde || EnGarde06-cv.html ||
 || En Garde 7 || September 1943 || http://www.fanac.org/fanzines/EnGarde || EnGarde07-cv.html ||
 || En Garde 8 || December 1943 || http://www.fanac.org/fanzines/EnGarde || EnGarde08-cv.html ||
-|| FA Lean 3 || December 12, 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/FAPA-Misc/FAPA-Misc36-01.html ||
+|| FA Lean Three 1 || December 12, 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/FAPA-Misc/FAPA-Misc36-01.html ||
 || Fan Slants #1 || September 1943 || http://www.fanac.org/fanzines/Fan_Slants || fans1-01.html ||
 || FAN-Dango 3A || December 12, 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/Fan-Dango/fanda035-01.html ||
 || Fan-Notes || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc18-01.html ||
@@ -96,10 +96,10 @@
 || FAL-T Annex 2 || July 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06045-01.html ||
 || FA Lean-To V1 #2 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06036-01.html ||
 || FA Lean-To V1 #3 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06046-01.html ||
-|| Fantasy Amateur V6, #3 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0603-cv.html ||
-|| Fantasy Amateur V6, #4 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0604-cv.html ||
-|| Fantasy Amateur V7, #1 || September 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0701-01.html ||
-|| Fantasy Amateur V7, #2 || December 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0702-01.html ||
+|| Fantasy Amateur V6 #3 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0603-cv.html ||
+|| Fantasy Amateur V6 #4 || June 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0604-cv.html ||
+|| Fantasy Amateur V7 #1 || September 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0701-01.html ||
+|| Fantasy Amateur V7 #2 || December 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa0702-01.html ||
 || Fantasy Commentator 1 || 1943 || http://www.fanac.org/fanzines/Fantasy_Comment ||  ||
 || Fantasy Fiction Field 114 || January 6, 1943 || http://www.fanac.org/fanzines/Fantasy_Fiction_Field || FanFic_Field114-01.html ||
 || Fantasy Fiction Field 115 || January 20, 1943 || http://www.fanac.org/fanzines/Fantasy_Fiction_Field || FanFic_Field115-01.html ||
