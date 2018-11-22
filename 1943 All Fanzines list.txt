@@ -1,8 +1,9 @@
 8-Ball (Taylor) 1, 2, 3
-A Decimal Classification of Fantastic Fiction (Russell)
+A Decimal Classification of Fantastic Fiction (Russell) 1
 A  (Speer) #2
 AAGH! (Schwartz) 1
 Acolyte (Laney & Rimel) 3, 4, 5
+Ad for "Coventry" (Joquell) 1
 Adulux Beskan (Wollheim) 1, 2
 Agenbite of Inwit (Lowndes) 2, 3
 Apollo (Hensley) 1, 2
@@ -18,19 +19,21 @@ Black Star   (Elsner) 1, 2, 3 {#s 1 and 3 are undated}
 Bonfire (Varies) 8, 9 {#8 is undated} {ELIGIBLE}
 Booklist (Rosenblum) {ELIGIBLE}
 Braggadocio (Laney) 1
+Bring Bob Tucker to Shangri-LA (many) 1
 British Fantasy Society Bulletin  (Smith) 8,9,10,11,12,13  {Fido} {ELIGIBLE}
 British Fantasy Society Library List (FIDO) 1, 2 {#s1-2 are undated, #2 is uncredited} {ELIGIBLE}
 Browsing (Rosenblum) 1, 2, 3 {ELIGIBLE}
 Caliban (Shaw) 2,3,4 {ELIGIBLE}
 Canadian Fandom (Taylor) 4,5 {ELIGIBLE}
 CAPA Mailing (Rogers) 1 {a Cosmic Circle publication}
+Card (Unknown) 1
 Catalyst (Chamberlain) 1
 Caustic Square Bullshooter (Brown & Fern) 1
 Centauri (Anderson) 1
 Chanticleer (Leibscher) 1
 Christian Stfan (Moffatt) 3
 Cluster (Karden) 1, 2
-Collected Verse - Fragments of a Broken Dream (Chauvenet)
+Collected Verse - Fragments of a Broken Dream (Chauvenet) 1
 Colossus (Houston & Overton) 1
 Comic Circle Commentator (Laney) 1 {Cosmic Circle criticism}
 Convention Extra (uncredited) 2
@@ -42,7 +45,7 @@ Cosmic Digest (Washington) 1 {also 1 bound as CC Monthly}  {a Cosmic Circle publ
 Cosmic Dust (Kessel)  1,2,3
 Cosmos (Rennison) 5
 Cranfan (Birchby) 1
-The Cruise of the Foo Foo Special Jr (Shaw & Widner)
+The Cruise of the Foo Foo Special Jr (Shaw & Widner) 1
 Cthulhu the Mighty (Dunmire) 3
 Damned Degler (Degler) 1  {a Cosmic Circle publication}
 Dawn (Wright) 1
@@ -51,7 +54,7 @@ Decimal Classification - Fantasy (Speer)
 Delerium Tremens (Tucker, D.) 7, 8, 9, 10, 11, 12 {ELIGIBLE}
 Directory of Fandom (Daugherty) 1
 Dream Dust (Wynburn) 1
-Dreams of Yith (Rimel & Laney)
+Dreams of Yith (Rimel & Laney) 1
 Elmurmurings (Perdue) 1
 En Garde (Ashley) 5, 6, 7, 8 {ELIGIBLE}
 Erebus (Marlow) 1, 2, 3, 4
@@ -68,7 +71,7 @@ Fanfare (Widner - Paro) 10 {ELIGIBLE}
 Fan-Notes (Bronson) 1
 Fan Slants (Brown) 1
 Fantasite (Bronson) #11 {V2#5} {ELIGIBLE}
-Fanta Snide (Ackerman)
+Fanta Snide (Ackerman) 1
 Fantasy Amateur (FAPA OO) V6#3, V6#4, V7#1, V7#2
 Fantasy Commentator (Searles) 1
 Fantasy Fiction Field (Unger)  114-135, 135.5, 136-152  {ELIGIBLE} {Newszine}
@@ -81,10 +84,10 @@ FAPA Blotter (Perdue) 1
 FAPA Correspondent (Warner) 2
 Fen (Kepner) 1
 The Fighting Fan (Widner) 1
-Flight Unknown (Brackney)
-Flight Unknown 6 (Gergen)
+Flight Unknown [Brackney] (Brackney) 1
+Flight Unknown [Gergen] (Gergen) 6
 Full Length Articles (Speer) 3 {In Memorium: Spirit of FooFoo}
-Fungi From Yuggoth by H.P. Lovecraft (Evans)
+Fungi From Yuggoth by H.P. Lovecraft (Evans) 1
 Futurian Daily Planet (Stein) 1, 2
 Futurian War Digest  (Rosenblum) V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V4#1, V4#2 {UK}  {ELIGIBLE} {FIDO}
 Galaxy (Overton)  4, 5, 6, 7 {UK} {ELIGIBLE} {FWD}
@@ -95,10 +98,10 @@ Give Degler His Due (Futurian Society of NY)
 Golden Atom  (Farsaci) 10
 Le Grotesque (Semaj) 4 {ELIGIBLE}
 Guteto (Morojo [Myrtle Douglas]) V2#3, V2#4, V3#1, V3#2, V3#3 {FAPA} {ELIGIBLE}
-Have at Thee, Knaves  (Russell) 1 {written "Knanves"}
+Have at Thee, Knaves  (Russell) 1 {written "Knanves"} 1
 History of the Future Index Cards (uncredited)
 Horizons (Warner) 15, 16, 17, 18 {ELIGIBLE} {V4#3-V5#2}
-Howard Philips Lovecraft: A Tentative Bibliography (Laney & Evans) {FAPA}
+Howard Philips Lovecraft: A Tentative Bibliography (Laney & Evans) {FAPA} 1
 Imagi-Music (Ackerman) 2
 Inspiration (Bridges) V2#1, V2#2, V2#3, V2#4 {ELIGIBLE}
 Jinx (Jenkins) 5 {ELIGIBLE}
@@ -113,7 +116,7 @@ Lovecraft & Benefit Street (Walter & Cook)
 Love, Elmer (Perdue)
 Madman of Mars (Ackerman) 4 {ELIGIBLE}
 Matters of Opinion (Speer) 13,14,15 {ELIGIBLE}
-Meet FAPA (Ashley)
+Meet FAPA (Ashley) 1
 Memo Sheet (OO of Cosmos Club) 1943:4
 Mephisto (Child) 1,2
 Merritt brochure (Dunkelberger)
@@ -121,7 +124,7 @@ Metalo-Mag (Ackerman)1943:3
 MFS Bulletin (various) V3#1, V3#2, V3#3, V3#4, V3#5, V3#6, V3#7, V3#8, V3#9, V3#10, V3#11 {ELIGIBLE}
 Michicon (Ashley) 1943
 Midge (Kepner) 1,2,3
-Midgiconsensus ("Picostar")
+Midgiconsensus ("Picostar") 1
 Midlands S-F Con (Johnson) 1,2,3
 Midvention Booklet (Williams) 1943:4
 Midvention Report (Johnson) 1943
@@ -133,14 +136,14 @@ Nebula (Shaw)  17, 18, 19, 20 {ELIGIBLE} {Newszine}
 Nova (Ashley) 3 {Win}
 Nucleus (Kuslan) V4#1, V4#2
 Paradox (Wilimczyk) V1#4, V2#1, V2#2 {ELIGIBLE}
-The Peace Witness (Joquell) {FAPA}
+The Peace Witness (Joquell) {FAPA} 1
 Pegasus (Jones) 2 {V2#1}
 People Stories (Brown & Fern) 1
 Phanny (Thompson) V2#2, V2#3, V2#4  {ELIGIBLE}
 The Phantagraph (Wollheim) 44, 45, 46 {V10#3, V11#1-2} {ELIGIBLE}
 Please Lay This Aside (Speer)
 Pogorus (Wood) V1#2
-Presenting FAPA Blotter
+Presenting FAPA Blotter (unknwon) 1
 Presenting Ronald Clyne (Freehafer) 1
 PSFS News (Train)
 Rahuun Ta-Ka (Ackerman) 1,2
@@ -158,12 +161,12 @@ Satyric (Martin) 2 {mis# 1}
 Science Fiction Fandom (Carnell) 1943
 Science Fiction Savant (Washington) 1  {a Cosmic Circle publication}
 S-F Variety (Tucker) 8 {ELIGIBLE}
-The S-F Republican (Speer)
+The S-F Republican (Speer) 1
 Selene (Wilninszyk) 1
 S-F Republican (Speer) 1943:Dec
 Shangri-L'Affaires (various) 8,9,10,11,12 {ELIGIBLE} {series B}
-Silver Dusk (Chauvenet)
-Society of Juridica (Unknown)
+Silver Dusk (Chauvenet) 1
+Society of Juridica (Unknown) 1
 Songs with Certain Dissonances (Mayer & Joquel) 1943
 Staplecon (Ackerman) 1
 Starlit Fantasy (McNutt) 2
