@@ -1,9 +1,9 @@
 || 8-Ball #3 || July 1943 || http://www.fanac.org/fanzines/EightBall || EightBall03-01.html ||
 || A #2 || December 1943 || http://www.fanac.org/fanzines/A || A02-01.html ||
-|| A Decimal Classification of Fantastic Fiction || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc24-01.html ||
+|| A Decimal Classification of Fantastic Fiction 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc24-01.html ||
 || A Tale of the 'Evans 5 || December 1943 || http://www.fanac.org/fanzines/Tale_Evans || Evans05-01.html ||
 || AAGH! #1 || June 1943 || http://www.fanac.org/fanzines/AAGH || AAGH01-cv.html ||
-|| Ad for "Coventry" || December 17, 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc35-01.html ||
+|| Ad for "Coventry" 1 || December 17, 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc35-01.html ||
 || Adulux Beskan 1 || June 1943 || http://www.fanac.org/fanzines/Adulux_Beskan || Adulux01-01.html ||
 || Adulux Beskan 2 || December 1943 || http://www.fanac.org/fanzines/Adulux_Beskan || Adulux02-01.html ||
 || Agenbite of Inwit #2 || Summer 1943 || http://www.fanac.org/fanzines/Agenbite_Inwit || Agenbite02-01.html ||
@@ -14,7 +14,7 @@
 || Banshee #3 || December 1943 || http://www.fanac.org/fanzines/Banshee || Banshee03-01.html ||
 || Beyond [Wright] #1 || December 1943 || http://www.fanac.org/fanzines/Beyond || Beyond01-cv.html ||
 || Booklist || April 1943 || http://www.fanac.org/fanzines/Booklist || Booklist04-01.html ||
-|| Bring Bob Tucker to Shangri-LA || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc30-01.html ||
+|| Bring Bob Tucker to Shangri-LA 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc30-01.html ||
 || British Fantasy Society Bulletin 10 || August 14, 1943 || http://www.fanac.org/fanzines/Brit_Fantasy_Soc_Bulletin || Brit_Fantasy_Soc10-01.html ||
 || Browsing #1 || June 1943 || http://www.fanac.org/fanzines/Browsing || Browsing01-01.html ||
 || Browsing #2 || September 1943 || http://www.fanac.org/fanzines/Browsing || Browsing02-01.html ||
@@ -23,10 +23,10 @@
 || Caliban 3 || September 1943 || http://www.fanac.org/fanzines/Caliban || Caliban03-01.html ||
 || Caliban 4 || Winter 1943 || http://www.fanac.org/fanzines/Caliban || Caliban04-01.html ||
 || CAPA Mailing 1 || September 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle03-01.html ||
-|| Card || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc16-01.html ||
+|| Card 1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc16-01.html ||
 || Caustic Square Bullshooter 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc37-01.html ||
-|| Collected Verse - Fragments of a Broken Dream || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc08-01.html ||
-|| Comic Circle Commentator || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc34-01.html ||
+|| Collected Verse - Fragments of a Broken Dream 1 || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc08-01.html ||
+|| Comic Circle Commentator 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc34-01.html ||
 || Comic Circle Commentator || December 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/FAPA-Misc/FAPA-Misc34-01.html ||
 || Cosmic Bulletin 2 || Fall 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle04-01.html ||
 || Cosmic Circle Commentator || 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/Cosmic_Commentator/ ||
@@ -46,14 +46,14 @@
 || Cosmic Circle Commentator 8 || 1943 || http://www.fanac.org/fanzines/Cosmic_Commentator || Cosmic_Com08-02.html ||
 || Cosmic Circle Commentator 9 || 1943 || http://www.fanac.org/fanzines/Cosmic_Commentator || Cosmic_Com09-01.html ||
 || Damned Degler 1 || Winter 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle06-01.html ||
-|| Dreams of Yith || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc15-cv.html ||
+|| Dreams of Yith 1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc15-cv.html ||
 || En Garde 6 || Summer 1943 || http://www.fanac.org/fanzines/EnGarde || EnGarde06-cv.html ||
 || En Garde 7 || September 1943 || http://www.fanac.org/fanzines/EnGarde || EnGarde07-cv.html ||
 || En Garde 8 || December 1943 || http://www.fanac.org/fanzines/EnGarde || EnGarde08-cv.html ||
 || FA Lean Three 1 || December 12, 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/FAPA-Misc/FAPA-Misc36-01.html ||
 || Fan Slants #1 || September 1943 || http://www.fanac.org/fanzines/Fan_Slants || fans1-01.html ||
 || FAN-Dango 3A || December 12, 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || http://www.fanac.org/fanzines/Fan-Dango/fanda035-01.html ||
-|| Fan-Notes || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc18-01.html ||
+|| Fan-Notes 1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc18-01.html ||
 || FAN-TODS 2 || March 1943 || http://www.fanac.org/fanzines/FAN-TODS || FAN-TODS02-01.html ||
 || FAN-TODS 3 || June 1943 || http://www.fanac.org/fanzines/FAN-TODS || FAN-TODS03-01.html ||
 || FAN-TODS 4 || September 1943 || http://www.fanac.org/fanzines/FAN-TODS || FAN-TODS04-01.html ||
@@ -90,7 +90,7 @@
 || Fanewscard 8 || August 21, 1943 || http://www.fanac.org/fanzines/FanewsCard || Fanews008.html ||
 || Fanewscard 9 || August 28, 1943 || http://www.fanac.org/fanzines/FanewsCard || Fanews009.html ||
 || Fanfare 10 || December 1943 || http://www.fanac.org/fanzines/Fanfare || Fanfare10-01.html ||
-|| Fanta Snide || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc25-01.html ||
+|| Fanta Snide 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc25-01.html ||
 || Fantasite 11 || May 1943 || http://www.fanac.org/fanzines/Fantasite || Fantasite11-01.html ||
 || FA Lean-To Annex #1 || March 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06035-01.html ||
 || FAL-T Annex 2 || July 1943 || http://www.fanac.org/fanzines/FantasyAmateur || fapa06045-01.html ||
@@ -140,9 +140,9 @@
 || FAPA 26 || December 1943 || http://www.fanac.org/fanzines/FAPA_Mailings || FAPA26-00.html ||
 || FAPA Correspondent 2 || December 1943 || http://www.fanac.org/fanzines/FAPA_Correspondent || FAPA_Correspondent02-01.html ||
 || Fen #1 || December 1943 || http://www.fanac.org/fanzines/Fen || Fen01-01.html ||
-|| Flight Unknown || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc07-01.html ||
+|| Flight Unknown [Brackney] 1 || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc07-01.html ||
 || Full Length Articles #3 || December 1943 || http://www.fanac.org/fanzines/Full_Length_Articles || FullLength03-01.html ||
-|| Fungi From Yuggoth by H.P. Lovecraft || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc11-01.html ||
+|| Fungi From Yuggoth by H.P. Lovecraft 1 || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc11-01.html ||
 || Futurian War Digest V3, #5 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || Futurian_War0305-01.html ||
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Galaxy || Galaxy06-01.html ||
 || Galaxy 6 || April 1943 || http://www.fanac.org/fanzines/Futurian_War_Digest || http://fanac.org/fanzines/Galaxy/Galaxy06-01.html ||
@@ -151,11 +151,11 @@
 || Guteto V2#3 || June 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0203-01.html ||
 || Guteto V2#4 || September 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0204-01.html ||
 || Guteto V3#3 || December 1943 || http://www.fanac.org/fanzines/Guteto || Guteto0303-01.html ||
-|| Have at Thee, Knaves || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc14-01.html ||
+|| Have at Thee, Knaves 1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc14-01.html ||
 || Horizons 15 || March 1943 || http://www.fanac.org/fanzines/Horizons || Horizons15-01.html ||
 || Horizons 16 || June 1943 || http://www.fanac.org/fanzines/Horizons || Horizons16-01.html ||
 || Horizons 17 || September 1943 || http://www.fanac.org/fanzines/Horizons || Horizons17-01.html ||
-|| Howard Philips Lovecraft: A Tentative Bibliography || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc26-cv.html ||
+|| Howard Philips Lovecraft: A Tentative Bibliography 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc26-cv.html ||
 || Inspiration V2#2 || Summer 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir202-01.html ||
 || Inspiration V2#3 || Fall 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir203-01.html ||
 || Inspiration V2#4 || Winter 1943 || http://www.fanac.org/fanzines/Inspiration || Inspir204-01.html ||
@@ -169,9 +169,9 @@
 || Matters of Opinion 13 || March 1943 || http://www.fanac.org/fanzines/Matters_Opinion || mat13-01.html ||
 || Matters of Opinion 14 || June 1943 || http://www.fanac.org/fanzines/Matters_Opinion || mat14-01.html ||
 || Matters of Opinion 15 || December 1943 || http://www.fanac.org/fanzines/Matters_Opinion || mat15-01.html ||
-|| Meet FAPA || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc29-01.html ||
+|| Meet FAPA 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc29-01.html ||
 || Midge 1 || March 1943 || http://www.fanac.org/fanzines/Midge || Midge01-01.html ||
-|| Midgiconsensus || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc12-01.html ||
+|| Midgiconsensus 1 || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc12-01.html ||
 || Milty's Mag 12 || March 1943 || http://www.fanac.org/fanzines/Miltys_Mag || Milty0343-01.html ||
 || Milty's Mag 13 || December 1943 || http://www.fanac.org/fanzines/Miltys_Mag || Milty1243-01.html ||
 || Moonshine 3 || June 1943 || http://www.fanac.org/fanzines/Moonshine || Moonshine03-cv.html ||
@@ -187,8 +187,8 @@
 || Phanny V2#3 || Fall 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0203-cv.html ||
 || Phanny V2#4 || December 1943 || http://www.fanac.org/fanzines/Phanny || Phanny0204-cv.html ||
 || Pogorus V1 #2 || June 1943 || http://www.fanac.org/fanzines/Pogorus || Pogorus02-cv.html ||
-|| Presenting FAPA Blotter || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc17-01.html ||
-|| Presentng Ronald Clyne || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc19-01.html ||
+|| Presenting FAPA Blotter 1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc17-01.html ||
+|| Presentng Ronald Clyne 1 || September 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc19-01.html ||
 || Rahuun Ta-Ka 1 || June 1943 || http://www.fanac.org/fanzines/Rahuun || Rahuun01-01.html ||
 || Rahuun Ta-Ka 2 || September 1943 || http://www.fanac.org/fanzines/Rahuun || Rahuun02-01.html ||
 || Ray #1 || January 1943 || http://www.fanac.org/fanzines/Ray || Ray01-01.html ||
@@ -209,8 +209,8 @@
 || Shangri-L'Affaires 11 || August 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires11-01.html ||
 || Shangri-L'Affaires 12 || September 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires12-01.html ||
 || Shangri-L'Affaires 8 || January 1943 || http://www.fanac.org/fanzines/Shangri-laffaires || Shangri-laffaires08-01.html ||
-|| Silver Dusk || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc13-01.html ||
-|| Society of Juridica || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc22-01.html ||
+|| Silver Dusk 1 || June 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc13-01.html ||
+|| Society of Juridica 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc22-01.html ||
 || Stef Nyaa-aa-a!! 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc23-01.html ||
 || STEFNEWS Parody || December 1943 || http://www.fanac.org/fanzines/STEFNEWS || STEFNEWS82-03.html ||
 || Sustaining Program 17 || March 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain0343-cv.html ||
@@ -218,18 +218,18 @@
 || Sustaining Program 19 || Fall 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain0943-cv.html ||
 || Sustaining Program 20 || December 1943 || http://www.fanac.org/fanzines/Sustaining_Prog || Sustain1243-cv.html ||
 || The Cosmic Circle and Fandom || December 1943 || http://www.fanac.org/fanzines/Cosmic_Circle_Pubs || Cosmic_Circle23-01.html ||
-|| The Cruise of the Foo Foo Special Jr || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc21-01.html ||
-|| The FA Lean Three || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc36-01.html ||
-|| The Fighting Fan || January 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc05-01.html ||
-|| The Peace Witness || October-November 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc31-01.html ||
+|| The Cruise of the Foo Foo Special Jr 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc21-01.html ||
+|| The FA Lean Three 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc36-01.html ||
+|| The Fighting Fan 1 || January 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc05-01.html ||
+|| The Peace Witness 1 || October-November 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc31-01.html ||
 || The Phantagraph 45 || May 1943 || http://www.fanac.org/fanzines/Phantagraph || Phanta45-cv.html ||
 || The Stefan 1943:3 || March 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc06-01.html ||
-|| The Trivial Triangle Troubador || October 17, 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc38-01.html ||
-|| The Unknown Madman || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc32-01.html ||
+|| The Trivial Triangle Troubador 1 || October 17, 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc38-01.html ||
+|| The Unknown Madman 1943:12 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc32-01.html ||
 || Toward Yesterday #1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc28-01.html ||
 || Voice of the Imagi-Nation 27 || September 1943 || http://www.fanac.org/fanzines/VOM || vom27-01.html ||
 || Voice of the Imagi-Nation 28 || November 1943 || http://www.fanac.org/fanzines/VOM || vom28-01.html ||
-|| The S-F Republican || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc33-01.html ||
+|| The S-F Republican 1 || December 1943 || http://www.fanac.org/fanzines/FAPA-Misc || FAPA-Misc33-01.html ||
 || Walt's Wramblings 4 || March 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings04-01.html ||
 || Walt's Wramblings 5 || Summer 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings05-01.html ||
 || Walt's Wramblings 6 || Fall 1943 || http://www.fanac.org/fanzines/Walts_Wramblings || Wramblings06-01.html ||
