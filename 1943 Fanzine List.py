@@ -1,4 +1,5 @@
 import re as Regex
+import os
 from os import path
 from FanzineIssueSpec import FanzineIssueSpec, IssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
@@ -36,7 +37,7 @@ def DecodeIssueList(issuesText):
     # The intention is that we come back to the start of the look each time we have disposed of a chunk of characters, so that the next character should start a new issue designation
     # The intention is that we come back to the start of the look each time we have disposed of a chunk of characters, so that the next character should start a new issue designation
     # There are four basic patterns to be seen in Joe's data:
-    #   A comma-separated list of issue whole numners
+    #   A comma-separated list of issue whole numbers
     #   A list of Volumes and numbers (many delimiter patterns!)
     #   A range of whole numbers
     #   A list of year:issue pairs
@@ -210,6 +211,9 @@ def ReadExternalLinks(filename):
     # It is organized as a table, with the first row a ';'-delimited list of column headers
     #    and the remaining rows are each a ';'-delimited pointer to an exteral fanzine
     # First read the header line which names the columns.  The headers are separated from ';", so we need to remove these.
+    if not os.path.exists(filename):
+        print("ReadExternalLinks: "+filename+" not found.")
+        return []
     with open(filename) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
@@ -240,14 +244,16 @@ def ReadExternalLinks(filename):
 
 
 #**************************************************************************************************************************************
-# Read the master file of all 1943 fanzines
-def Read1943AllFanzines(name):
-    # Read the list of 1943 fanzines and parse them
+# Read the master file of all fanzines for the specified year
+def ReadAllYearsFanzines(name):
+    # Read the list of the year's fanzines and parse them
     # The format of a line is: <series name> (<editor> [& <editor>...]) >comma-separated list of issues> {comment 1} {comment 2}
     # the name and editor are always present
     with open(name) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
+    # Ignore all lines beginning with "#"
+    lines=[l for l in lines if not (len(l) > 0 and l[0] == "#") ]
     allFanzinesFSSList=[]
     for line in lines:
         print("\n"+line)
@@ -257,7 +263,7 @@ def Read1943AllFanzines(name):
         # Begin by recognizing them and removingt hem from the line
         notes=Regex.findall("{(.+?)}", line)  # Find all the comments
         line=Regex.sub("{(.+?)}", "", line)   # Delete all comment text by replacing them with empty strings
-        if "ELIGIBLE" in notes:               # "ELIGIBLE" is a special case and means that it's eligible for thh Retro Hugo for 1943 fanzines.  We store that flag separately.
+        if "ELIGIBLE" in notes:               # "ELIGIBLE" is a special case and means that it's eligible for the Retro Hugo for fanzines.  We store that flag separately.
             fss.Eligible=True
             notes.remove("ELIGIBLE")
         fss.Notes=notes
@@ -277,7 +283,7 @@ def Read1943AllFanzines(name):
         allFanzinesFSSList.append(fss)
 
     # List the fanzines found (a debugging aid)
-    print("\n\n\n\n\n\n\nList of all fanzines found in list of all 1943 fanzines")
+    print("\n\n\n\n\n\n\nList of all fanzines found in list of all "+theYear+" fanzines")
     for fss in allFanzinesFSSList:
         print(fss.Format())
 
@@ -286,7 +292,7 @@ def Read1943AllFanzines(name):
 
 #**************************************************************************************************************
 def ReadFanacFanzines(name):
-    print("\n\n\n\n\nNow read the file of 1943 fanzines issues on fanac.org")
+    print("\n\n\n\n\nNow read the file of "+theYear+" fanzines issues on fanac.org")
     with open(name) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
@@ -394,24 +400,26 @@ def LookupURLFromName(fidList, name):
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #  Main
 
-# Read the master list of all 1943 fanzines
-allFanzinesFSSList=Read1943AllFanzines("1943 All Fanzines list.txt")
+theYear="1944"
+
+# Read the master list of all the year's fanzines
+allFanzinesFSSList=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
-fanzinesFIDList=ReadFanacFanzines("1943 Fanac.org Fanzines.txt")
+fanzinesFIDList=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 
 for fid in fanzinesFIDList:
     print(fid.Format())
 
 # Now cross-reference them.
-# First go through the 1943 fanzines we have on fanac.org and see if they're on the list of all 1943 Fanzines
+# First go through the the years fanzines we have on fanac.org and see if they're on the list of all the year's Fanzines
 # For each one that is, add a tuple to
-print("\n\n\n\nAttempt to match fanac.org's 1943 fanzines to the list of all fanzines published in 1943")
+print("\n\n\n\nAttempt to match fanac.org's "+theYear+" fanzines to the list of all fanzines published in "+theYear+"")
 
 # Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
-fanzinesFIDList.extend(ReadExternalLinks("1943 External Fanzine Links.txt"))
+fanzinesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
 
-# Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all 1943 fanzines
+# Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all the year's fanzines
 # Create a dictionary keyed by fanzine name. The value is a dictionary keyed by FanzineIssueSpec names.  The value of *those* is the IssueData for the link we need
 fssToFID={}
 for fid in fanzinesFIDList:
@@ -444,19 +452,43 @@ allFanzinesFSSList.sort(key=sorter)
 # Write the HTML
 #============================================================================================
 print("----Begin generating the HTML")
-f=open("1943.html", "w")
+f=open(theYear+".html", "w")
+f.write('<!doctype html>\n')
+f.write('<html lang="en">\n')
+f.write('\n')
+f.write('<head>\n')
+f.write('  <!-- Required meta tags -->\n')
+f.write('  <meta charset="utf-8">\n')
+f.write('  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">\n')
+f.write('\n')
+f.write('  <!-- Bootstrap CSS -->\n')
+f.write('  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"\n')
+f.write('    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">\n')
+f.write('\n')
+f.write('    <style>\n')
+f.write('      .narrowLeft {\n')
+f.write('        max-width: 900px;\n')
+f.write('        margin-left: 10px\n')
+f.write('        }\n')
+f.write('    </style>\n')
+f.write('	<style>\n')
+f.write('	a:link {color: Blue}\n')
+f.write('    </style>\n')
+f.write('<title>'+theYear+' Fanzines and the Retro Hugos\n')
+f.write('</title></head\n')
 f.write("<body>\n")
 f.write('<style>\n')
 f.write('<!--\n')
 f.write('p            { line-height: 100%; margin-top: 0; margin-bottom: 0 }\n')
 f.write('-->\n')
 f.write('</style>\n')
-f.write("<center><h3>The 2019 Worldcon, Dublin 2019, will award the 2019 Retro Hugos for works published in 1943. <p>Here is the list of fanzines from that year, with links to the issues available on-line.  <p>This list will be updated as we are able to get more 1943 fanzines on-line, so keep checking! </p>We hope that having access to the original source material will help nominators to select worthy candidates for the Retro Fanzine, Fan Writer and Fan Artist awards.</h3></center>")
-f.write('<table border="0" cellspacing="0" cellpadding="0" style="margin-top: 0; margin-bottom: 0">\n')
-f.write('<tr>\n')
-f.write('<td valign="top" align="left" width="50%">\n')
-f.write('<ul>\n')
+f.write('<div  class="container narrowLeft">\n')
+f.write('<h3><center>'+theYear+' Fanzines and the Retro Hugos</center></h3>\n')
 
+f.write("<h6>The 2019 Worldcon, Dublin 2019, will award the 2019 Retro Hugos for works published in 1943. <p>Here is the list of fanzines from that year, with links to the issues available on-line.  This list will be updated as we are able to get more 1943 fanzines on-line, so keep checking! </p>We hope that having access to the original source material will help nominators to select worthy candidates for the Retro Fanzine, Fan Writer and Fan Artist awards.</h6>")
+f.write('<div class="row border">\n')
+f.write('   <div class=col-md-6>\n')
+f.write('      <ul>')
 
 # We want to produce a two-column page, with well-balanced columns. Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
 listoftitles=set()
@@ -491,8 +523,8 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     editors=fz.Editor
 
     # There are three cases:
-    #   Case 1: We have online copies of one or more 1943 issues for this fanzine
-    #   Case 2: We don't have any 1943 issue online, but we do have issues from other years
+    #   Case 1: We have online copies of one or more the year's issues for this fanzine
+    #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
 
     # Create a list of FIDs to parallel the fanzine's ISS list.
@@ -528,15 +560,19 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     if not fz.SeriesName in listoftitles:
         listoftitles.append(fz.SeriesName)
     if round(numTitles/2) == len(listoftitles):
-        f.write('</td>\n<td valign="top" align="left" width="50%">\n<ul>')
+        f.write('      </ul>')
+        f.write('   </div>\n')
+        f.write('   <div class=col-md-6>\n')
+        f.write('      <ul>')
 
     if htm is not None:
         print(htm)
-        f.write('<li><p>\n')
-        f.write(htm+'</li>\n')
+        f.write("   <li>"+htm+'\n')
 
 # And finally the table end and page end code
-f.write('</td>\n</tr>\n</table>')
+f.write('      </ul>')
+f.write('   </div>\n')
+f.write('</div>\n')
 f.write('<center>Scanning by Joe Siclari and Mark Olson</p></center>')
 f.write('</ul></body>')
 f.flush()
