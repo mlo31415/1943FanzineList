@@ -230,10 +230,14 @@ def ReadExternalLinks(filename):
     cURL=externalLinksColNames.index("URL")
 
     # Now read the rest of the data.
+    # It's a series of lines, each of which is ten ';'-separated fields
     for line in lines:  # Each remaining line is a link to an external fanzine
-        if len(line.strip()) == 0:      # Skip empty lines
+        line=line.strip()
+        if len(line) == 0:      # Skip empty lines
             continue
-        print("   line="+line.strip())
+        if line[0] == "#":
+            continue            # Skip comment lines
+        print("   line="+line)
         t2=[t.strip() for t in line.split(";")]
         if len(t2) != 10:       # There should be exactly ten items in each line
             print("***External fanzine link length error: Length should be 10 but is "+str(len(t2)))
