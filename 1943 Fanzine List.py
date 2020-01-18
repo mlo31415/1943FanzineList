@@ -242,6 +242,7 @@ def ReadExternalLinks(filename):
         if len(t2) != 10:       # There should be exactly ten items in each line
             print("***External fanzine link length error: Length should be 10 but is "+str(len(t2)))
             continue
+        # Create the FIS and FID and append it to the external links list
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
         elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
         externalLinks.append(elFID)
@@ -262,6 +263,8 @@ def ReadAllYearsFanzines(name):
     lines=[l for l in lines if not (len(l) > 0 and l[0] == "#") ]
     allFanzinesFSSList=[]
     for line in lines:
+        if len(line.strip()) == 0:
+            continue;
         print("\n"+line)
         fss=FanzineSeriesSpec()
 
@@ -278,7 +281,7 @@ def ReadAllYearsFanzines(name):
         # the series name and editor is mandatory; the issuespecs are not when the fanzine is a one-shot
         m=Regex.match("(.*)\((.*)\)(.*)$", line)    # We're using the parenthesis around the editor(s) to delimit the three sections of the line.
         if m is None:
-            print("No match: "+line)
+            print("****No match: "+line)
             continue
         print(str(m.groups()))
 
@@ -402,26 +405,30 @@ def LookupURLFromName(fidList, name):
 #........................
 
 
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#  Main
+##############################################################################
+##############################################################################
+###############################  Main  #######################################
+##############################################################################
 
 theYear="1944"
 
 # Read the master list of all the year's fanzines
+print("\nRead "+theYear+"'s master list of all fanzines published\n")
 allFanzinesFSSList=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
+print("\nRead what's on fanac.org for "+theYear+"\n")
 fanzinesFIDList=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 
 for fid in fanzinesFIDList:
     print(fid.Format())
 
 # Now cross-reference them.
+print("\n\n\n\nAttempt to match fanac.org's "+theYear+" fanzines to the list of all fanzines published in "+theYear+"\n")
+
+# TODO: What's this?
 # First go through the the years fanzines we have on fanac.org and see if they're on the list of all the year's Fanzines
 # For each one that is, add a tuple to
-print("\n\n\n\nAttempt to match fanac.org's "+theYear+" fanzines to the list of all fanzines published in "+theYear+"")
 
 # Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
 fanzinesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
