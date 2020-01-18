@@ -280,7 +280,6 @@ class FanzineIssueSpec:
 #================================================================================
 class IssueSpecList:
     def __init__(self, List=None):
-        self._list=None
         self.List=List
 
     def AppendIS(self, fanzineIssueSpec):
@@ -337,7 +336,7 @@ class IssueSpecList:
             return self
         if isinstance(val, IssueSpecList):
             self._list=val.List
-        print("****IssueSpecList.setter() had strange input")
+        print("****IssueSpecList.List setter() had strange input")
         return self
 
     @List.getter
