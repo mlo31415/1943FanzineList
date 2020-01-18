@@ -231,10 +231,12 @@ def ReadExternalLinks(filename):
 
     # Now read the rest of the data.
     for line in lines:  # Each remaining line is a link to an external fanzine
+        if len(line.strip()) == 0:      # Skip empty lines
+            continue
         print("   line="+line.strip())
         t2=[t.strip() for t in line.split(";")]
-        if len(t2) != 10:
-            print("***Length error: Length is "+str(len(t2)))
+        if len(t2) != 10:       # There should be exactly ten items in each line
+            print("***External fanzine link length error: Length should be 10 but is "+str(len(t2)))
             continue
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
         elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
@@ -377,6 +379,7 @@ def FindInFSSList(fssList, fid):
                         return fss
     print("Failed: '"+fid.DisplayName+"'")
     return None
+
 #........................
 def LookupFSS(fssToFID, fss, iss):
     if fss.SeriesName not in fssToFID.keys():
@@ -425,10 +428,10 @@ fssToFID={}
 for fid in fanzinesFIDList:
     fss=FindInFSSList(allFanzinesFSSList, fid)
     if fss is not None:
-        lst=fssToFID.get(fid.SeriesName)
+        lst=fssToFID.get(fid.SeriesName)    # Get a list of (issue spec, fid) tuples
         if lst is None:
             lst=[]
-        lst.append((fid.FanzineIssueSpec, fid))
+        lst.append((fid.FanzineIssueSpec, fid))     # And append a final tuple which
         fssToFID[fid.SeriesName]=lst
 
 # Sort allFanzinesFSSList into alphabetic order
@@ -532,14 +535,11 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 
     # Create a list of FIDs to parallel the fanzine's ISS list.
     # Determine if any were found
+    fidList=None
     if fz.IssueSpecList is not None:
         fidList=[]
         for iss in fz.IssueSpecList:
             fidList.append(LookupFSS(fssToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
-        oneOrMoreFound=any(fidList)
-    else:
-        fidList=None
-        oneOrMoreFound=False
 
     issHtml=""
     if fz.IssueSpecList is not None:
