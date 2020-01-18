@@ -502,10 +502,10 @@ f.write('</style>\n')
 f.write('<div  class="container narrowLeft">\n')
 f.write('<h3><center>'+theYear+' Fanzines and the Retro Hugos</center></h3>\n')
 
-f.write("<h6>The 2019 Worldcon, Dublin 2019, will award the 2019 Retro Hugos for works published in 1943. <p>Here is the list of fanzines from that year, with links to the issues available on-line.  This list will be updated as we are able to get more 1943 fanzines on-line, so keep checking! </p>We hope that having access to the original source material will help nominators to select worthy candidates for the Retro Fanzine, Fan Writer and Fan Artist awards.</h6>")
+f.write("<h6>The 2019 Worldcon, Dublin 2019, will award the 2019 Retro Hugos for works published in 1943. <p>Here is the list of fanzines from that year, with links to the issues available on-line.  This list will be updated as we are able to get more 1943 fanzines on-line, so keep checking! </p>We hope that having access to the original source material will help nominators to select worthy candidates for the Retro Fanzine, Fan Writer and Fan Artist awards.</h6>\n")
 f.write('<div class="row border">\n')
 f.write('   <div class=col-md-6>\n')
-f.write('      <ul>')
+f.write('      <ul>\n')
 
 # We want to produce a two-column page, with well-balanced columns. Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
 listoftitles=set()
@@ -584,10 +584,10 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
         f.write("   <li>"+htm+'\n')
 
 # And finally the table end and page end code
-f.write('      </ul>')
+f.write('      </ul>\n')
 f.write('   </div>\n')
 f.write('</div>\n')
-f.write('<center>Scanning by Joe Siclari and Mark Olson</p></center>')
+f.write('<center>Scanning by Joe Siclari and Mark Olson</p></center>\n')
 f.write('</ul></body>')
 f.flush()
 f.close()
