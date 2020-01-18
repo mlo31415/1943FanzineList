@@ -16,10 +16,10 @@ def DecodeIssueList(issuesText):
     if len(issuesText.strip()) == 0: # Skip if it's all whitespace
         return None
 
-    # Turn all multiple spaces into a single space
-    issuesText=issuesText.replace("  ", " ").replace("  ", " ").replace("  ", " ").strip()   # Hopefully there's never more than 8 spaces in succession...
+    # Turn all multiple spaces into a single space. (Split splits on whitespace; then rejoin fragments with single space; This also strips line.)
+    issuesText=' '.join(issuesText.split())
 
-    isl=IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting stuff
+    isl=IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting issuesText
 
     # Cases:
     #   1,2,3,4
@@ -445,15 +445,15 @@ for fid in fanzinesFIDList:
         lst.append((fid.FanzineIssueSpec, fid))     # And append a final tuple which
         fssToFID[fid.SeriesName]=lst
 
-# Sort allFanzinesFSSList into alphabetic order
-# We move A, An and The to the end for sorting purposes
+# Sort allFanzinesFSSList into alphabetic order.
+# We move A, An and The to the end for sorting purposes.
+# (These two functions are used only in the sort.)
 def inverter(s, prefix):
     if s.startswith(prefix):
         return s[len(prefix):]+s[:len(prefix)]
     return s
 def sorter(fss):
-    s=fss.SeriesName
-    s=s.lower()
+    s=fss.SeriesName.lower()
     s=inverter(s, "a ")
     s=inverter(s, "an ")
     s=inverter(s, "the ")
