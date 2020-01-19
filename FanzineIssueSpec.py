@@ -54,7 +54,6 @@ class FanzineIssueSpec:
             return True
         return False
 
-
     def __eq__(self, other):
         if other is None:
             return False
@@ -212,6 +211,18 @@ class FanzineIssueSpec:
     def TrailingGarbage(self):
         return self._TrailingGarbage
 
+    # .....................
+    def SetWhole(self, t1, t2):
+        self.Whole=t1
+        if t2 is None:
+            return self
+        if len(t2) == 1 and t2.isalpha():  # E.g., 7a
+            self.WSuffix=t2
+        elif len(t2) == 2 and t2[0] == '.' and t2[1].isnumeric():  # E.g., 7.1
+            self.WSuffix=t2
+        else:
+            self.TrailingGarbage=t2
+        return self
 
     # .....................
     def SetDate(self, y, m):
@@ -231,10 +242,13 @@ class FanzineIssueSpec:
         n="-"
         if self.Num is not None:
             n=str(self.Num)
+            if self.NumSuffix is not None:
+                n=n+str(self.NumSuffix)
         w="-"
         if self.Whole is not None:
             w=str(self.Whole)
-
+            if self.WSuffix is not None:
+                n=n+str(self.WSuffix)
         d=""
         if self.Year is not None:
             d=str(self.Year)
@@ -261,17 +275,34 @@ class FanzineIssueSpec:
         if self.TrailingGarbage is not None:
             tg=" "+self.TrailingGarbage
 
+        if self.Vol is not None and self.Num is not None and self.Whole is not None:
+            s="V"+str(self.Vol)+"#"+str(self.Num)
+            if self.NumSuffix is not None:
+                s+=str(self.NumSuffix)
+            s+=" (#"+str(self.Whole)
+            if self.WSuffix is not None:
+                s+=str(self.WSuffix)
+            s+=")"
+            return s+tg
+
         if self.Vol is not None and self.Num is not None:
-            return "V"+str(self.Vol)+"#"+str(self.Num)+tg
+            s="V"+str(self.Vol)+"#"+str(self.Num)
+            if self.NumSuffix is not None:
+                s+=str(self.NumSuffix)
+            return s+tg
 
         if self.Whole is not None:
-            return "#"+str(self.Whole)+tg
+            s="#"+str(self.Whole)
+            if self.WSuffix is not None:
+                s+=str(self.WSuffix)
+            return s+tg
 
         if self.Year is not None:
             if self.Month is None:
                 return str(self.Year)+tg
             else:
                 return str(self.Year)+":"+str(self.Month)+tg
+
 
         return tg
 

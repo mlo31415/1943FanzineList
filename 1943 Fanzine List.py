@@ -180,8 +180,7 @@ def InterpretIssueSpec(islText):
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
         if t1 is not None:
-            fis=FanzineIssueSpec(Whole=t1)
-            fis.TrailingGarbage=t2
+            fis=FanzineIssueSpec().SetWhole(t1, t2)
             isl=IssueSpecList(List=fis)
             return isl, islText, True
 
@@ -195,8 +194,7 @@ def InterpretIssueSpec(islText):
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
         if t1 is not None:
-            fis=FanzineIssueSpec(Whole=t1)
-            fis.TrailingGarbage=t2
+            fis=FanzineIssueSpec().SetWhole(t1, t2)
             isl=IssueSpecList(List=fis)
             return isl, islText, True
 
