@@ -1,4 +1,5 @@
 # Try to make the input numeric
+# Note that if it fails, it returns what came in.
 def Numeric(val):
     if val == None:
         return None
@@ -17,83 +18,53 @@ def Numeric(val):
 
 class FanzineIssueSpec:
 
-    def __init__(self, Vol=None, Num=None, Whole=None, Year=None, Month=None):
-        self.Vol=Vol
-        self.Num=Num
-        self.Whole=Whole
-        self.Year=Year
-        self.Month=Month
-        self.UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
-        self.TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
+    def __init__(self, Vol=None, Num=None, NumSuffix=None, Whole=None, WSuffix=None, Year=None, Month=None):
+        self._Vol=Vol
+        self._Num=Num
+        self._NumSuffix=NumSuffix  # For things like issue '17a'
+        self._Whole=Whole
+        self._WSuffix=WSuffix
+        self._Year=Year
+        self._Month=Month
+        self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
+        self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
+
+    # Are the Num fields equal?
+    # Both could be None; otherwise both must be equal
+    def __NumEq__(self, other):
+        return self._Num == other._Num and self._NumSuffix == other._NumSuffix
+
+    def __VolEq__(self, other):
+        return self._Vol == other._Vol
+
+    def __WEq__(self, other):
+        return self._Whole == other._Whole and self._WSuffix == other._WSuffix
+
+    def __VNEq__(self, other):
+        return self.__VolEq__(other) and self.__NumEq__(other)
+
+    # Two issue designations are deemed to be equal if they are identical or if the VN matches while at least on of the Wholes in None or
+    # is the Whole matches and at least one of the Vs and Ns is None.  (We would allow match of (W13, V3, N2) with (W13), etc.)
+    def __IssueEQ__(self, other):
+        if self.__VNEq__(other) and self.__WEq__(other):
+            return True
+        if (self._Whole is None or other._Whole is None) and self.__VNEq__(self):
+            return True
+        if (self._Num is None or self._Vol is None or other._Num is None or other._Vol is None) and self.__WEq__(other):
+            return True
+        return False
+
 
     def __eq__(self, other):
         if other is None:
             return False
 
-        # Now it gets a bit complicated.  We need either Vol/Num or Whole to match. The other must also match or be None on at least one side
-        # So, ("-" is None) the following match:
-        # V1 N2 W3 matches V1 N2 W3
-        # V1 N2 W3 matches V1 N2 W-
-        # V1 N2 W3 matches V- N- W3
-        # The following don't match:
-        # V1 N2 W3 does not match V1 N2 W4
-        # V1 N2 W3 does not match V2 N2 W3
-        vnAreNone=False
-        if self._Vol is None and other._Vol is None and self._Num is None and other._Num is None:
-            vnAreNone=True
-        vnMatches=False
-        if self._Vol == other._Vol and self._Num == other._Num and not vnAreNone:
-            vnMatches=True
-
-        vnOneIsNone=False
-        if (self._Vol is None and other._Vol is not None) and \
-                (self._Num is None and other._Num is not None):
-            vnOneIsNone=True
-        if (self._Vol is not None and other._Vol is None) and \
-                (self._Num is not None and other._Num is None):
-            vnOneIsNone=True
-        vnDoesntMismatch=vnMatches or vnOneIsNone or vnAreNone  # There is no case of actual contradiction
-
-        wAreNone=False
-        if self._Whole is None and other._Whole is None:
-            wAreNone=True
-        wMatches=False
-        if self._Whole == other._Whole and not wAreNone:
-            wMatches=True
-        wOneIsNone=False
-        if (self._Whole is None and other._Whole is not None) or \
-                (self._Whole is not None and other._Whole is None):
-            wOneIsNone=True
-        wDoesntMismatch=wMatches or wOneIsNone or wAreNone
-
-        if vnMatches and wDoesntMismatch:
-            return True
-        if wMatches and vnDoesntMismatch:
-            return True
+        if not self.__IssueEQ__(other):
+            return False
 
         # Now check for dates
-        yAreNone=False
-        if self._Year is None and other._Year is None:
-            yAreNone=True
-        yMatches=False
-        if self._Year == other._Year and not yAreNone:
-            yMatches=True
-
-        mAreNone=False
-        if self._Month is None and other._Month is None:
-            mAreNone=True
-        mMatches=False
-        if self._Month == other._Month and not mAreNone:
-            mMatches=True
-
-        if yMatches and (mMatches or mAreNone):
+        if self._Year == other._Year and self._Month == other._Month:
             return True
-
-        datesAreNone=yAreNone and mAreNone
-        datesMatch=(yMatches and mMatches) or (yMatches and mAreNone)
-        if datesMatch:
-            return True
-
         return False
 
     def __ne__(self, other):
@@ -102,7 +73,9 @@ class FanzineIssueSpec:
     def Copy(self, other):
         self._Vol=other.Vol
         self._Num=other.Num
+        self._NumSuffix=other.NumSuffix
         self._Whole=other.Whole
+        self._WSuffix=other.WSuffix
         self._Year=other.Year
         self._Month=other.Month
         self._UninterpretableText=other.UninterpretableText
@@ -134,6 +107,19 @@ class FanzineIssueSpec:
     def Num(self):
         return self._Num
 
+    # .....................
+    @property
+    def NumSuffix(self):
+        return self._NumSuffix
+
+    @NumSuffix.setter
+    def NumSuffix(self, val):
+        self._NumSuffix=val
+
+    @NumSuffix.getter
+    def NumSuffix(self):
+        return self._NumSuffix
+
     #.....................
     @property
     def Whole(self):
@@ -146,6 +132,19 @@ class FanzineIssueSpec:
     @Whole.getter
     def Whole(self):
         return self._Whole
+
+    # .....................
+    @property
+    def WSuffix(self):
+        return self._WSuffix
+
+    @WSuffix.setter
+    def WSuffix(self, val):
+        self._WSuffix=val
+
+    @WSuffix.getter
+    def WSuffix(self):
+        return self._WSuffix
 
     #.....................
     @property
