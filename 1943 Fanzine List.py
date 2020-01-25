@@ -252,12 +252,31 @@ def ReadExternalLinks(filename):
 #**************************************************************************************************************************************
 # Read the master file of all fanzines for the specified year
 def ReadAllYearsFanzines(name):
-    # Read the list of the year's fanzines and parse them
-    # The format of a line is: <series name> (<editor> [& <editor>...]) >comma-separated list of issues> {comment 1} {comment 2}
-    # the name and editor are always present
+
+    # Read the contents of the file and strip leading and traling whitespace
     with open(name) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
+
+    # Look for a block of text that begins "<top matter" and ends "</top matter>".  This will be the header of the HTML file
+    # "<top matter"> begins a line, and "</top matter>" ends a subsequent line
+    # Once we've located the top matter, weeliminate those lines from further processing.for i in range(0, len(lines)
+    start=None
+    end=None
+    for i in range(0, len(lines)):
+        if lines[i].startswith("<top matter>"):
+            start=i
+        if lines[i].endswith("</top matter>"):
+            end=i
+    topmatter=None
+    if start is not None and end is not None and start <= end:
+        topmatter=lines[start:end+1]
+        topmatter=" ".join(topmatter)
+        topmatter=topmatter[12:-13]
+        del lines[start:end+1]
+
+    # The format of a line is: <series name> (<editor> [& <editor>...]) >comma-separated list of issues> {comment 1} {comment 2}
+    # the name and editor are always present
     # Ignore all lines beginning with "#"
     lines=[l for l in lines if not (len(l) > 0 and l[0] == "#") ]
     allFanzinesFSSList=[]
@@ -295,7 +314,7 @@ def ReadAllYearsFanzines(name):
     for fss in allFanzinesFSSList:
         print(fss.Format())
 
-    return allFanzinesFSSList
+    return allFanzinesFSSList, topmatter
 
 
 #**************************************************************************************************************
@@ -418,7 +437,7 @@ theYear="1944"
 
 # Read the master list of all the year's fanzines
 print("\nRead "+theYear+"'s master list of all fanzines published\n")
-allFanzinesFSSList=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
+allFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
 print("\nRead what's on fanac.org for "+theYear+"\n")
@@ -505,7 +524,8 @@ f.write('-->\n')
 f.write('</style>\n')
 f.write('<div  class="container narrowLeft">\n')
 f.write('<h3><center>'+theYear+' Fanzines and the Retro Hugos</center></h3>\n')
-f.write("<h6>This is a list of fanzines from the year 1944, primarily from the Pavlat-Evans Index with supplemental research from Joe Siclari's collection, other bibliographies, and reviews. It is probably not complete but does include most, if not all of the major zines.The zines provided here can be used as reading material for nominations in the Retro-Hugo Award categories. Zines that qualify for Best Fanzine will be marked with red letters as (Eligible). The fanzine title is linked to the fanzine's <a href=http://fanac.org>FANAC.ORG<a> index page if we have one, even if there are no 1944 issues available on FANAC.ORG. The individual issue links will take you to the individual issues, both on FANAC.ORG and on several other websites. If you know of other sites with relevant fanzines, please let us know. Software for this integrated list by Mark Olson. Thanks Mark!</h6>\n")
+if topmatter is not None:
+    f.write(topmatter+"\n")
 f.write('<div class="row border">\n')
 f.write('   <div class=col-md-6>\n')
 f.write('      <ul>\n')
