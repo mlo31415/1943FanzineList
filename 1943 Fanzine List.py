@@ -329,7 +329,7 @@ def ReadFanacFanzines(name):
         # This lets us use the existing issue spec recognizer.
 
         tokens=issueName.split()
-        isl=IssueSpecList()
+        isl=IssueSpecList() # This is a list of ISLs that we have found.
         # Try to greedily interpret the trailing text as a FanzineIssueSpec.
         # We do this by interpreting more and more tokens starting from the end until we have something that is no longer recognizable as a FanzineIssueSpec
         # The just-previous set of tokens constitutes the full IssueSpec, and the remaining leading tokens are the series name.
@@ -345,10 +345,13 @@ def ReadFanacFanzines(name):
             goodLeadingText=leadingText
 
         if len(isl) == 0:
+            print("no issue number found")
             fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec())
             fanzinesFIDList.append(fid)
             print(fid.Format())
         else:
+            if len(isl) > 1:    # This happens when an ISL is something like "4-7"
+                print(str(len(isl))+" ISLs found")
             for i in isl:
                 fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
                 fanzinesFIDList.append(fid)
