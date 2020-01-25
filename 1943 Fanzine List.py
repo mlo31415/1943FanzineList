@@ -339,23 +339,25 @@ def ReadFanacFanzines(name):
             print("     index="+str(index)+"   leading='"+leadingText+"'    trailing='"+trailingText+"'")
             trialIsl, leftover, success=InterpretIssueSpec(trailingText)
             if not success:       # Failed.  We've gone one too far. Quit trying and use what we found on the previous iteration
-                print("      ...backtracking. ISL="+isl.Str())
+                print("     ...backtracking. ISL="+isl.Str())
                 break
             isl=trialIsl
             goodLeadingText=leadingText
 
         if len(isl) == 0:
-            print("no issue number found")
+            print("     no issue number found")
             fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec())
             fanzinesFIDList.append(fid)
             print(fid.Format())
         else:
             if len(isl) > 1:    # This happens when an ISL is something like "4-7"
-                print(str(len(isl))+" ISLs found")
+                print("     "+str(len(isl))+" ISLs found")
             for i in isl:
                 fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
                 fanzinesFIDList.append(fid)
                 print(fid.Format())
+
+        print("")
 
     return fanzinesFIDList
 
