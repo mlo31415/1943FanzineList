@@ -336,7 +336,7 @@ def ReadFanacFanzines(name):
         for index in range(len(tokens)-1, -1, -1):  # Ugly, but I need index to be the indexes of the tokens
             trailingText=" ".join(tokens[index:])
             leadingText=" ".join(tokens[:index])
-            print("     index="+str(index)+"'   leading='"+leadingText+"    trailing='"+trailingText+"'")
+            print("     index="+str(index)+"   leading='"+leadingText+"'    trailing='"+trailingText+"'")
             trialIsl, leftover, success=InterpretIssueSpec(trailingText)
             if not success:       # Failed.  We've gone one too far. Quit trying and use what we found on the previous iteration
                 print("      ...backtracking. ISL="+isl.Str())
