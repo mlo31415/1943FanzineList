@@ -48,7 +48,7 @@ class FanzineIssueSpec:
     def __IssueEQ__(self, other):
         if self.__VNEq__(other) and self.__WEq__(other):
             return True
-        if (self._Whole is None or other._Whole is None) and self.__VNEq__(self):
+        if (self._Whole is None or other._Whole is None) and self.__VNEq__(other):
             return True
         if (self._Num is None or self._Vol is None or other._Num is None or other._Vol is None) and self.__WEq__(other):
             return True
@@ -58,11 +58,11 @@ class FanzineIssueSpec:
         if other is None:
             return False
 
-        if not self.__IssueEQ__(other):
-            return False
+        if self.__IssueEQ__(other):
+            return True
 
         # Now check for dates
-        if self._Year == other._Year and self._Month == other._Month:
+        if self._Year is not None and self._Year == other._Year and self._Month is not None and self._Month == other._Month:
             return True
         return False
 
