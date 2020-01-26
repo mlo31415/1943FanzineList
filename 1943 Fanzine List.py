@@ -385,7 +385,15 @@ def ReadFanacFanzines(name):
 def NamesMatch(name1, name2):
     if name1 is None and name2 is None:
         return True
-    if name1 is not None and name2 is not None and name1.lower() == name2.lower():
+    if name1 is None or name2 is None:
+        return False
+    name1=name1.lower()
+    if name1.startswith("the "):
+        name1=name1[4:]+", the"
+    name2=name2.lower()
+    if name2.startswith("the "):
+        name2=name2[4:]+", the"
+    if name1 == name2:
         return True
     return False
 
@@ -403,21 +411,27 @@ def FindInFSSList(fssList, fid):
             if NamesMatch(fss.SeriesName, fid.SeriesName):
                 for isp in fss.IssueSpecList:
                     if isp == fid.FanzineIssueSpec:
-                        print("'"+StrNone(fss.SeriesName).lower()+"'  <===>  '"+StrNone(fid.SeriesName).lower()+"'")
+                        print("'"+StrNone(fss.SeriesName.lower())+"'  <===>  '"+StrNone(fid.SeriesName.lower())+"'")
                         print(StrNone(isp.Str())+"   <-->   "+StrNone(fid.FanzineIssueSpec.Str())+"  ==> "+str(isp == fid.FanzineIssueSpec))
                         print("Match: "+fss.SeriesName+" "+isp.Format())
                         return fss
-    print("Failed: '"+fid.DisplayName+"'")
+    print("Failed: '"+fss.SeriesName+"'")
     return None
 
 #........................
 def LookupFSS(fssToFID, fss, iss):
-    if fss.SeriesName not in fssToFID.keys():
+    match=None
+    for name in fssToFID.keys():
+        if NamesMatch(fss.SeriesName, name):
+            match=name
+            break
+    if match is None:
         return None
-    for x in fssToFID[fss.SeriesName]:
+    for x in fssToFID[match]:
         if x[0] == iss:
             return x[1]
     return None
+
 #........................
 def LookupURLFromName(fidList, name):
     urllist=[f for f in fidList if f.SeriesName == name] # List of all fanac.org FID entries with this name
@@ -441,7 +455,8 @@ allFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.t
 
 # Read what's on fanac.org
 print("\nRead what's on fanac.org for "+theYear+"\n")
-fanzinesFIDList=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
+fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
+fanzinesFIDList=fanacFanzines
 
 for fid in fanzinesFIDList:
     print(fid.Format())
