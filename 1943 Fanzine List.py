@@ -1,7 +1,8 @@
 import re as Regex
 import os
 from os import path
-from FanzineIssueSpec import FanzineIssueSpec, IssueSpecList
+from FanzineIssueSpec import FanzineIssueSpec
+from FanzineIssueSpecList import FanzineIssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
 from FanzineIssueData import FanzineIssueData
 
@@ -20,7 +21,7 @@ def DecodeIssueList(issuesText):
     issuesText=' '.join(issuesText.split())
 
     # Create am empty IssueSpecList
-    isl=IssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting issuesText
+    isl=FanzineIssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting issuesText
 
     # Cases:
     #   1,2,3,4
@@ -105,7 +106,7 @@ def InterpretIssueSpec(islText):
         iList=m.groups()[1]+m.groups()[2]
         islText=m.groups()[3]
         iList=iList.replace(" ", "").replace(";", ",").split(",")  # Split on either ',' or ':'
-        isl=IssueSpecList()
+        isl=FanzineIssueSpecList()
         for i in iList:
             if len(i) == 0:
                 continue
@@ -138,14 +139,14 @@ def InterpretIssueSpec(islText):
     # Look at two cases, (1) a range all by itself and (2) A range in a list (i.e., followed by a comma)
     m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
     if m is not None and len(m.groups()) == 2:
-        isl=IssueSpecList()
+        isl=FanzineIssueSpecList()
         for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
             isl.AppendIS(FanzineIssueSpec(Whole=k))
         return isl, "", True    # By definition the line is now empty
 
     islText, g0, g1=MatchAndRemove(islText, "^(\d+)\s*[\-–]\s*(\d+),")
     if g0 is not None and g1 is not None:
-        isl=IssueSpecList()
+        isl=FanzineIssueSpecList()
         for k in range(int(g0), int(g1)+1):
             isl.AppendIS(FanzineIssueSpec(Whole=k))
         return isl, islText, True
@@ -167,7 +168,7 @@ def InterpretIssueSpec(islText):
     for pat in patterns:
         islText, t1, t2=MatchAndRemove(islText, pat)
         if t1 is not None:
-            isl=IssueSpecList().AppendIS(FanzineIssueSpec().SetDate(t1, t2))
+            isl=FanzineIssueSpecList().AppendIS(FanzineIssueSpec().SetDate(t1, t2))
             return isl, islText, True
 
     # Now consider it as a simple list of whole numbers with a trailing alphabetic character (e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
@@ -181,7 +182,7 @@ def InterpretIssueSpec(islText):
         islText, t1, t2=MatchAndRemove(islText, pat)
         if t1 is not None:
             fis=FanzineIssueSpec().SetWhole(t1, t2)
-            isl=IssueSpecList(List=fis)
+            isl=FanzineIssueSpecList(List=fis)
             return isl, islText, True
 
     # Finally consider it as a simple list of whole numbers with no trailing alphabetics (and perhaps with a # in front of the number, e.g., #2)
@@ -195,7 +196,7 @@ def InterpretIssueSpec(islText):
         islText, t1, t2=MatchAndRemove(islText, pat)
         if t1 is not None:
             fis=FanzineIssueSpec().SetWhole(t1, t2)
-            isl=IssueSpecList(List=fis)
+            isl=FanzineIssueSpecList(List=fis)
             return isl, islText, True
 
     return None, islText, False
@@ -348,7 +349,7 @@ def ReadFanacFanzines(name):
         # This lets us use the existing issue spec recognizer.
 
         tokens=issueName.split()
-        isl=IssueSpecList() # This is a list of ISLs that we have found.
+        isl=FanzineIssueSpecList() # This is a list of ISLs that we have found.
         # Try to greedily interpret the trailing text as a FanzineIssueSpec.
         # We do this by interpreting more and more tokens starting from the end until we have something that is no longer recognizable as a FanzineIssueSpec
         # The just-previous set of tokens constitutes the full IssueSpec, and the remaining leading tokens are the series name.
