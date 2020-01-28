@@ -3,7 +3,7 @@
 class FanzineSeriesSpec:
 
     def __init__(self):
-        self.IssueSpecList=None     # A list of FanzineIssueSpecs
+        self.FanzineIssueSpecList=None     # A list of FanzineIssueSpecs
         self._SeriesName=None
         self.Editor=None
         self.Eligible=None
@@ -26,8 +26,8 @@ class FanzineSeriesSpec:
 
     def Str(self):  # Convert the FSS into a debugging form
         isl="-"
-        if self.IssueSpecList is not None:
-            isl=self.IssueSpecList.Format()
+        if self.FanzineIssueSpecList is not None:
+            isl=self.FanzineIssueSpecList.Format()
 
         sn="-"
         if self._SeriesName is not None:
@@ -65,8 +65,8 @@ class FanzineSeriesSpec:
             for n in self.Notes:
                 out=out+"   {"+n+"}"
 
-        if self.IssueSpecList is not None and len(self.IssueSpecList) > 0:
-            out=out+"  "+self.IssueSpecList.Format()
+        if self.FanzineIssueSpecList is not None and len(self.FanzineIssueSpecList) > 0:
+            out=out+"  "+self.FanzineIssueSpecList.Format()
 
         if self.Eligible:
             out=out+"   Eligible!"

@@ -307,7 +307,7 @@ def ReadAllYearsFanzines(name):
         # Decode and store the data.
         fss.SeriesName=m.groups()[0].strip()
         fss.Editor=m.groups()[1].strip()
-        fss.IssueSpecList=DecodeIssueList(m.groups()[2])
+        fss.FanzineIssueSpecList=DecodeIssueList(m.groups()[2])
         allFanzinesFSSList.append(fss)
 
     # List the fanzines found (a debugging aid)
@@ -586,14 +586,14 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     # Create a list of FIDs to parallel the fanzine's ISlist.
     # Determine if any were found
     fidList=None
-    if fz.IssueSpecList is not None:
+    if fz.FanzineIssueSpecList is not None:
         fidList=[]
-        for isl in fz.IssueSpecList:
+        for isl in fz.FanzineIssueSpecList:
             fidList.append(LookupFSS(fssToFID, fz, isl))   # Create a list of FIDs corresponding to the IS list in fz.  Some or all will be None.
 
     issHtml=""
-    if fz.IssueSpecList is not None:
-        issHtml=FormatISLAsHtml(fz.IssueSpecList, fidList)
+    if fz.FanzineIssueSpecList is not None:
+        issHtml=FormatISLAsHtml(fz.FanzineIssueSpecList, fidList)
 
     seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
     htm="<i>"
