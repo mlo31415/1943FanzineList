@@ -552,12 +552,6 @@ for fss in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     listoftitles.add(fss.SeriesName)
 numTitles=len(listoftitles)
 
-#........................
-def FormatLink(name, url):
-    return '<a href='+url+'>'+name+'</a>'
-#........................
-
-
 # Create the HTML table rows
 listoftitles=[]     # Empty it so we can again add titles to it as we find them
 for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
@@ -574,6 +568,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 
     # Create a list of FIDs to parallel the fanzine's ISlist.
     # Determine if any were found
+
     issHtml=""
     if fz.FanzineIssueSpecList is not None:
         for isl in fz.FanzineIssueSpecList:
@@ -583,12 +578,12 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             if fid is None:
                 issHtml=issHtml+isl.Format()
             else:
-                issHtml=issHtml+FormatLink(isl.Format(), fid.URL)
+                issHtml=issHtml+'<a href='+fid.URL+'>'+isl.Format()+'</a>'
 
     seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
     htm="<i>"
     if seriesURL is not None:
-        htm=htm+FormatLink(name, seriesURL)
+        htm=htm+'<a href='+seriesURL+'>'+name+'</a>'
     else:
         htm=htm+name
     htm=htm+"</i>&nbsp;&nbsp;("+editors+")"
