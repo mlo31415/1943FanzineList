@@ -546,14 +546,15 @@ f.write('<div class="row border">\n')
 f.write('   <div class=col-md-6>\n')
 f.write('      <ul>\n')
 
-# We want to produce a two-column page, with well-balanced columns. Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
-listoftitles=set()
+# We want to produce a two-column page, with well-balanced columns.
+# Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
+setoftitles=set()
 for fss in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
-    listoftitles.add(fss.SeriesName)
-numTitles=len(listoftitles)
+    setoftitles.add(fss.SeriesName)
+numTitles=len(setoftitles)
 
 # Create the HTML table rows
-listoftitles=[]     # Empty it so we can again add titles to it as we find them
+countOfTitles=0
 for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     print("   Writing HTML for: "+fz.Str())
 
@@ -591,11 +592,9 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 
     htm=htm+"<br>"+issHtml
 
-    if not fz.SeriesName in listoftitles:
-        listoftitles.append(fz.SeriesName)
-
     # When half the fanzines titles have been processed, insert the column end, new column start HTML
-    if round(numTitles/2) == len(listoftitles):
+    countOfTitles+=1
+    if countOfTitles == round(numTitles/2):
         f.write('      </ul>')
         f.write('   </div>\n')
         f.write('   <div class=col-md-6>\n')
