@@ -3,8 +3,8 @@ import FanzineIssueSpec
 #================================================================================
 # A Fanzine issue spec list contains the information to handle a list of issues of a single fanzine.
 # It includes the series name, editors(s), and a list of Fanzine Issue specs.
-#TODO: This can be profitable extended by changing the ISS class to include specific names and editors for each issue, since sometimes
-#TODO: a series does not have a consistant set throughout.
+#TODO: This can be profitably extended by changing the ISL class to include specific names and editors for each issue, since sometimes
+#TODO: a series does not have a consistent set throughout.
 
 class FanzineIssueSpecList:
     def __init__(self, List=None):

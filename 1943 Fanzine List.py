@@ -556,7 +556,7 @@ numTitles=len(listoftitles)
 def FormatLink(name, url):
     return '<a href='+url+'>'+name+'</a>'
 #........................
-def FormatISSListAsHtml(issList, fidList):
+def FormatISLAsHtml(issList, fidList):
     s=""
     for iss, fid in zip(issList, fidList):
         if len(s) > 0:
@@ -583,17 +583,17 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
 
-    # Create a list of FIDs to parallel the fanzine's ISS list.
+    # Create a list of FIDs to parallel the fanzine's ISlist.
     # Determine if any were found
     fidList=None
     if fz.IssueSpecList is not None:
         fidList=[]
-        for iss in fz.IssueSpecList:
-            fidList.append(LookupFSS(fssToFID, fz, iss))   # Create a list of FIDs corresponding to the ISS list in fz.  Some or all will be None.
+        for isl in fz.IssueSpecList:
+            fidList.append(LookupFSS(fssToFID, fz, isl))   # Create a list of FIDs corresponding to the IS list in fz.  Some or all will be None.
 
     issHtml=""
     if fz.IssueSpecList is not None:
-        issHtml=FormatISSListAsHtml(fz.IssueSpecList, fidList)
+        issHtml=FormatISLAsHtml(fz.IssueSpecList, fidList)
 
     seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
     htm="<i>"
