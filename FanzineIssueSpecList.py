@@ -18,7 +18,7 @@ class FanzineIssueSpecList:
         elif fanzineIssueSpec is None:
             return
         else:
-            print("****IssueSpecList.AppendIS() had strange input")
+            print("****FanzineIssueSpecList.AppendIS() had strange input")
         return self
 
     def Extend(self, isl):
@@ -33,7 +33,7 @@ class FanzineIssueSpecList:
             if i is not None:
                 s=s+i.Str()
             else:
-                s=s+"Missing ISlist"
+                s=s+"Missing ISList"
         if len(s) == 0:
             s="Empty ISlist"
         return s
@@ -64,7 +64,7 @@ class FanzineIssueSpecList:
             return self
         if isinstance(val, FanzineIssueSpecList):
             self._list=val.List
-        print("****IssueSpecList.List setter() had strange input")
+        print("****FanzineIssueSpecList.List setter() had strange input")
         return self
 
     @List.getter
