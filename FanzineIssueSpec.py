@@ -273,6 +273,11 @@ class FanzineIssueSpec:
         return s
 
     #.......................
+    def IsEmpty(self):
+        return self._Whole is None and self._Num is None and self._WSuffix is None and self._NumSuffix is None and self._Month is None and self._UninterpretableText and \
+            self._TrailingGarbage is None and self._Vol is None and self._Year is None
+
+    #.......................
     def Format(self):   # Convert the IS into a pretty string
         if self.UninterpretableText is not None:
             return self.UninterpretableText
@@ -308,6 +313,5 @@ class FanzineIssueSpec:
                 return str(self.Year)+tg
             else:
                 return str(self.Year)+":"+str(self.Month)+tg
-
 
         return tg

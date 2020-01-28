@@ -1,3 +1,9 @@
+# class FanzineIssueData holds information about a specific issue of a fanzine.
+#   Its display name (the name used to display this particular issue), e.g., File770 #34
+#   Its URL (on fanac.org or elsewhere)
+#   Its FanzineIssueSpec (e.g., WholeNum=34)
+#   Its series name (the name of the fanzine series to which it belongs), e.g., File770.
+
 class FanzineIssueData:
 
     def __init__(self, DisplayName=None, URL=None, FanzineIssueSpec=None, SeriesName=None):
@@ -6,11 +12,11 @@ class FanzineIssueData:
         self.FanzineIssueSpec=FanzineIssueSpec
         self._SeriesName=SeriesName
 
-    def Format(self):
+    def Format(self):   #TODO: Note that this will wrongly name issues with special, variant names
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName
-        if self.FanzineIssueSpec is not None:
+        if self.FanzineIssueSpec is not None and not self.FanzineIssueSpec.IsEmpty():
             out=out+" "+self.FanzineIssueSpec.Format()
         if self.URL is not None:
             out=out+" "+self.URL
