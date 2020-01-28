@@ -561,14 +561,24 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     name=fz.SeriesName
     editors=fz.Editor
 
+    seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
+    htm="<i>"
+    if seriesURL is not None:
+        htm=htm+'<a href='+seriesURL+'>'+name+'</a>'
+    else:
+        htm=htm+name
+    htm=htm+"</i>&nbsp;&nbsp;("+editors+")"
+
+    if fz.Notes is not None:
+        for note in fz.Notes:
+            htm=htm+" {<i>"+note+"</i>}"
+    if fz.Eligible:
+        htm=htm+'<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
+
     # There are three cases:
     #   Case 1: We have online copies of one or more the year's issues for this fanzine
     #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
-
-    # Create a list of FIDs to parallel the fanzine's ISlist.
-    # Determine if any were found
-
     issHtml=""
     if fz.FanzineIssueSpecList is not None:
         for isl in fz.FanzineIssueSpecList:
@@ -580,18 +590,6 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             else:
                 issHtml=issHtml+'<a href='+fid.URL+'>'+isl.Format()+'</a>'
 
-    seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
-    htm="<i>"
-    if seriesURL is not None:
-        htm=htm+'<a href='+seriesURL+'>'+name+'</a>'
-    else:
-        htm=htm+name
-    htm=htm+"</i>&nbsp;&nbsp;("+editors+")"
-    if fz.Notes is not None:
-        for note in fz.Notes:
-            htm=htm+" {<i>"+note+"</i>}"
-    if fz.Eligible:
-        htm=htm+'<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
     htm=htm+"<br>"+issHtml
 
     # Insert the column end, new column start HTML when half the fanzines titles have been processed.
