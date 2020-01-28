@@ -556,17 +556,6 @@ numTitles=len(listoftitles)
 def FormatLink(name, url):
     return '<a href='+url+'>'+name+'</a>'
 #........................
-def FormatISLAsHtml(issList, fidList):
-    s=""
-    for iss, fid in zip(issList, fidList):
-        if len(s) > 0:
-            s=s+", &nbsp;&nbsp;&nbsp;"
-        if fid is None:
-            s=s+iss.Format()
-        else:
-            s=s+FormatLink(iss.Format(), fid.URL)
-    return s
-#........................
 
 
 # Create the HTML table rows
@@ -585,15 +574,16 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 
     # Create a list of FIDs to parallel the fanzine's ISlist.
     # Determine if any were found
-    fidList=None
-    if fz.FanzineIssueSpecList is not None:
-        fidList=[]
-        for isl in fz.FanzineIssueSpecList:
-            fidList.append(LookupFSS(fssToFID, fz, isl))   # Create a list of FIDs corresponding to the IS list in fz.  Some or all will be None.
-
     issHtml=""
     if fz.FanzineIssueSpecList is not None:
-        issHtml=FormatISLAsHtml(fz.FanzineIssueSpecList, fidList)
+        for isl in fz.FanzineIssueSpecList:
+            if len(issHtml) > 0:
+                issHtml=issHtml+", &nbsp;&nbsp;&nbsp;"
+            fid=LookupFSS(fssToFID, fz, isl)
+            if fid is None:
+                issHtml=issHtml+isl.Format()
+            else:
+                issHtml=issHtml+FormatLink(isl.Format(), fid.URL)
 
     seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
     htm="<i>"
