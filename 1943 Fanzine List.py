@@ -591,9 +591,10 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 
     htm=htm+"<br>"+issHtml
 
-    # Insert the column end, new column start HTML when half the fanzines titles have been processed.
     if not fz.SeriesName in listoftitles:
         listoftitles.append(fz.SeriesName)
+
+    # When half the fanzines titles have been processed, insert the column end, new column start HTML
     if round(numTitles/2) == len(listoftitles):
         f.write('      </ul>')
         f.write('   </div>\n')
