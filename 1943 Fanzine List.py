@@ -557,7 +557,6 @@ listoftitles=[]     # Empty it so we can again add titles to it as we find them
 for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     print("   Writing HTML for: "+fz.Str())
 
-    htm=None
     name=fz.SeriesName
     editors=fz.Editor
 
