@@ -238,7 +238,7 @@ class FanzineIssueSpec:
 
     #.......................
     # Convert the IS into a debugging form
-    def Str(self):
+    def __str__(self):
         if self.UninterpretableText is not None:
             return "IS("+self.UninterpretableText+")"
 

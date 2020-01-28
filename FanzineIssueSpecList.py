@@ -8,7 +8,7 @@ import FanzineIssueSpec
 
 class FanzineIssueSpecList:
     def __init__(self, List=None):
-        self.List=List
+        self.List=List  # Use setter
 
     def AppendIS(self, fanzineIssueSpec):
         if isinstance(fanzineIssueSpec, FanzineIssueSpec.FanzineIssueSpec):
@@ -25,13 +25,13 @@ class FanzineIssueSpecList:
         self._list.extend(isl)
         return self
 
-    def Str(self):      # Print out the ISL for debugging
+    def __str__(self):      # Print out the ISL for debugging
         s=""
         for i in self._list:
             if len(s) > 0:
                 s=s+",  "
             if i is not None:
-                s=s+i.Str()
+                s=s+str(i)
             else:
                 s=s+"Missing ISList"
         if len(s) == 0:

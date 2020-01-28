@@ -55,7 +55,7 @@ def DecodeIssueList(issuesText):
         iss, issuesText, success=InterpretIssueSpec(issuesText)
         isl.AppendIS(iss)
 
-    print("   "+isl.Str())
+    print("   "+str(isl))
     return isl
 
 
@@ -359,7 +359,7 @@ def ReadFanacFanzines(name):
             print("     index="+str(index)+"   leading='"+leadingText+"'    trailing='"+trailingText+"'")
             trialIsl, leftover, success=InterpretIssueSpec(trailingText)
             if not success:       # Failed.  We've gone one too far. Quit trying and use what we found on the previous iteration
-                print("     ...backtracking. ISL="+isl.Str())
+                print("     ...backtracking. ISL="+str(isl))
                 break
             isl=trialIsl
             goodLeadingText=leadingText
@@ -408,12 +408,12 @@ def StrNone(str):
 # Return with None or the fss matched
 def FindInFSSList(fssList, fid):
     for fss in fssList:
-        if fss.IssueSpecList is not None:
+        if fss.FanzineIssueSpecList is not None:
             if NamesMatch(fss.SeriesName, fid.SeriesName):
-                for isp in fss.IssueSpecList:
+                for isp in fss.FanzineIssueSpecList:
                     if isp == fid.FanzineIssueSpec:
                         print("'"+StrNone(fss.SeriesName.lower())+"'  <===>  '"+StrNone(fid.SeriesName.lower())+"'")
-                        print(StrNone(isp.Str())+"   <-->   "+StrNone(fid.FanzineIssueSpec.Str())+"  ==> "+str(isp == fid.FanzineIssueSpec))
+                        print(StrNone(str(isp))+"   <-->   "+StrNone(str(fid.FanzineIssueSpec))+"  ==> "+str(isp == fid.FanzineIssueSpec))
                         print("Match: "+fss.SeriesName+" "+isp.Format())
                         return fss
     print("Failed: '"+fss.SeriesName+"'")
