@@ -398,40 +398,6 @@ def NamesMatch(name1, name2):
         return True
     return False
 
-def StrNone(str):
-    if str is None:
-        return "<None>"
-    return str
-
-#...........................................
-# Locate an fid in the all fanzines FSS list
-# Return with None or the fss matched
-def FindInFSSList(fssList, fid):
-    for fss in fssList:
-        if fss.FanzineIssueSpecList is not None:
-            if NamesMatch(fss.SeriesName, fid.SeriesName):
-                for isp in fss.FanzineIssueSpecList:
-                    if isp == fid.FanzineIssueSpec:
-                        print("'"+StrNone(fss.SeriesName.lower())+"'  <===>  '"+StrNone(fid.SeriesName.lower())+"'")
-                        print(StrNone(str(isp))+"   <-->   "+StrNone(str(fid.FanzineIssueSpec))+"  ==> "+str(isp == fid.FanzineIssueSpec))
-                        print("Match: "+fss.SeriesName+" "+isp.Format())
-                        return fss
-    print("Failed: '"+fss.SeriesName+"'")
-    return None
-
-#........................
-def LookupFSS(fssToFID, fss, iss):
-    match=None
-    for name in fssToFID.keys():
-        if NamesMatch(fss.SeriesName, name):
-            match=name
-            break
-    if match is None:
-        return None
-    for x in fssToFID[match]:
-        if x[0] == iss:
-            return x[1]
-    return None
 
 #........................
 def LookupURLFromName(fidList, name):
@@ -452,37 +418,18 @@ theYear="1944"
 
 # Read the master list of all the year's fanzines
 print("\nRead "+theYear+"'s master list of all fanzines published\n")
-allFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
+allYearsFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
 print("\nRead what's on fanac.org for "+theYear+"\n")
 fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
-fanzinesFIDList=fanacFanzines
+allKnownIssuesFIDList=fanacFanzines
 
-for fid in fanzinesFIDList:
+for fid in allKnownIssuesFIDList:
     print(fid.Format())
 
-# Now cross-reference them.
-print("\n\n\n\nAttempt to match fanac.org's "+theYear+" fanzines to the list of all fanzines published in "+theYear+"\n")
-
-# TODO: What's this?
-# First go through the the years fanzines we have on fanac.org and see if they're on the list of all the year's Fanzines
-# For each one that is, add a tuple to
-
 # Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
-fanzinesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
-
-# Build a dictionary of matches between FIDs in fanac.org and elsewhere and FSSs in the list of all the year's fanzines
-# Create a dictionary keyed by fanzine name. The value is a dictionary keyed by FanzineIssueSpec names.  The value of *those* is the IssueData for the link we need
-fssToFID={}
-for fid in fanzinesFIDList:
-    fss=FindInFSSList(allFanzinesFSSList, fid)
-    if fss is not None:
-        lst=fssToFID.get(fid.SeriesName)    # Get a list of (issue spec, fid) tuples
-        if lst is None:
-            lst=[]
-        lst.append((fid.FanzineIssueSpec, fid))     # And append a final tuple which
-        fssToFID[fid.SeriesName]=lst
+allKnownIssuesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
 
 # Sort allFanzinesFSSList into alphabetic order.
 # We move A, An and The to the end for sorting purposes.
@@ -498,7 +445,7 @@ def sorter(fss):
     s=inverter(s, "the ")
     return s
 
-allFanzinesFSSList.sort(key=sorter)
+allYearsFanzinesFSSList.sort(key=sorter)
 
 
 #============================================================================================
@@ -549,19 +496,19 @@ f.write('      <ul>\n')
 # We want to produce a two-column page, with well-balanced columns.
 # Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
 setoftitles=set()
-for fss in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
+for fss in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     setoftitles.add(fss.SeriesName)
 numTitles=len(setoftitles)
 
 # Create the HTML table rows
-countOfTitles=0
-for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
+countOfTitlesInCol=0
+for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     print("   Writing HTML for: "+fz.Str())
 
     name=fz.SeriesName
     editors=fz.Editor
 
-    seriesURL=LookupURLFromName(fanzinesFIDList, fz.SeriesName)
+    seriesURL=LookupURLFromName(allKnownIssuesFIDList, fz.SeriesName)
     htm="<i>"
     if seriesURL is not None:
         htm=htm+'<a href='+seriesURL+'>'+name+'</a>'
@@ -572,6 +519,7 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     if fz.Notes is not None:
         for note in fz.Notes:
             htm=htm+" {<i>"+note+"</i>}"
+
     if fz.Eligible:
         htm=htm+'<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
 
@@ -584,17 +532,19 @@ for fz in allFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
         for isl in fz.FanzineIssueSpecList:
             if len(issHtml) > 0:
                 issHtml=issHtml+", &nbsp;&nbsp;&nbsp;"
-            fid=LookupFSS(fssToFID, fz, isl)
-            if fid is None:
-                issHtml=issHtml+isl.Format()
-            else:
-                issHtml=issHtml+'<a href='+fid.URL+'>'+isl.Format()+'</a>'
+            # Find the entry in all known issues where the seriesName and iss match
+            newHtml=isl.Format()
+            for fidInAll in allKnownIssuesFIDList:
+                if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
+                    newHtml='<a href='+fid.URL+'>'+isl.Format()+'</a>'
+                    break
+            issHtml=issHtml+newHtml
 
     htm=htm+"<br>"+issHtml
 
     # When half the fanzines titles have been processed, insert the column end, new column start HTML
-    countOfTitles+=1
-    if countOfTitles == round(numTitles/2):
+    countOfTitlesInCol+=1
+    if countOfTitlesInCol == round(numTitles/2):
         f.write('      </ul>')
         f.write('   </div>\n')
         f.write('   <div class=col-md-6>\n')
