@@ -53,7 +53,7 @@ class FanzineSeriesSpec:
         return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+")"
 
 
-    def Format(self):  # Pretty print the FSS
+    def __str__(self):  # Pretty print the FSS
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName

@@ -314,7 +314,7 @@ def ReadAllYearsFanzines(name):
     # List the fanzines found (a debugging aid)
     print("\n\n\n\n\n\n\nList of all fanzines found in list of all "+theYear+" fanzines")
     for fss in allFanzinesFSSList:
-        print(fss.Format())
+        print(str(fss))
 
     return allFanzinesFSSList, topmatter
 
