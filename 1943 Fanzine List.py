@@ -509,20 +509,34 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     name=fz.SeriesName
     editors=fz.Editor
 
+    # The first thing to generate in the line containing the fanzine name -- the SeriesSpec.
+    # But, there's a complication: If the fanzine is a one-off, there's probably no issue list.
+    # If there is no issue list, the fanzine name links directly to the issue;
+    # If there *is* an issue list, and it's a fanac.org fanzine, the fanzine name links to the series index page and
+    # the issue list links to the individual issues
     seriesURL=LookupURLFromName(allKnownIssuesFIDList, fz.SeriesName)
     htm="<i>"
-    if seriesURL is not None:
-        htm=htm+'<a href='+seriesURL+'>'+name+'</a>'
+    if fz.FanzineIssueSpecList is not None:
+        if seriesURL is not None:
+            htm+='<a href='+seriesURL+'>'+name+'</a>'
+        else:
+            htm+=name
     else:
-        htm=htm+name
-    htm=htm+"</i>&nbsp;&nbsp;("+editors+")"
+        newHtml=None
+        for fidInAll in allKnownIssuesFIDList:
+            if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
+                newHtml='<a href='+fidInAll.URL+'>'+name+'</a>'
+        if newHtml is None:
+            newHtml=name
+        htm+=newHtml
+    htm+="</i>&nbsp;&nbsp;("+editors+")"
 
     if fz.Notes is not None:
         for note in fz.Notes:
-            htm=htm+" {<i>"+note+"</i>}"
+            htm+=" {<i>"+note+"</i>}"
 
     if fz.Eligible:
-        htm=htm+'<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
+        htm+='<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
 
     # There are three cases:
     #   Case 1: We have online copies of one or more the year's issues for this fanzine
@@ -532,14 +546,14 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     if fz.FanzineIssueSpecList is not None:
         for isl in fz.FanzineIssueSpecList:
             if len(issHtml) > 0:
-                issHtml=issHtml+", &nbsp;&nbsp;&nbsp;"
+                issHtml+=", &nbsp;&nbsp;&nbsp;"
             # Find the entry in all known issues where the seriesName and iss match
             newHtml=str(isl)
             for fidInAll in allKnownIssuesFIDList:
                 if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
                     newHtml='<a href='+fidInAll.URL+'>'+str(isl)+'</a>'
                     break
-            issHtml=issHtml+newHtml
+            issHtml+=newHtml
 
     htm=htm+"<br>"+issHtml
 
