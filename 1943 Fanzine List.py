@@ -369,14 +369,14 @@ def ReadFanacFanzines(name):
             print("     no issue number found")
             fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec())
             fanzinesFIDList.append(fid)
-            print(fid.Format())
+            print(str(fid))
         else:
             if len(isl) > 1:    # This happens when an ISL is something like "4-7"
                 print("     "+str(len(isl))+" ISLs found")
             for i in isl:
                 fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
                 fanzinesFIDList.append(fid)
-                print(fid.Format())
+                print(str(fid))
 
         print("")
 
@@ -427,7 +427,7 @@ fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 allKnownIssuesFIDList=fanacFanzines
 
 for fid in allKnownIssuesFIDList:
-    print(fid.Format())
+    print(str(fid))
 
 # Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
 allKnownIssuesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))

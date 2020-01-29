@@ -12,7 +12,7 @@ class FanzineIssueData:
         self.FanzineIssueSpec=FanzineIssueSpec
         self._SeriesName=SeriesName
 
-    def Format(self):   #TODO: Note that this will wrongly name issues with special, variant names
+    def __str__(self):   #TODO: Note that this will wrongly name issues with special, variant names
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName
