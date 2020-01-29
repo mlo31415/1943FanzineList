@@ -367,14 +367,14 @@ def ReadFanacFanzines(name):
 
         if len(isl) == 0:
             print("     no issue number found")
-            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec())
+            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec(), Fanac=True)
             fanzinesFIDList.append(fid)
             print(str(fid))
         else:
             if len(isl) > 1:    # This happens when an ISL is something like "4-7"
                 print("     "+str(len(isl))+" ISLs found")
             for i in isl:
-                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i)
+                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i, Fanac=True)
                 fanzinesFIDList.append(fid)
                 print(str(fid))
 
@@ -502,7 +502,7 @@ for fss in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 numTitles=len(setoftitles)
 
 # Create the HTML table rows
-countOfTitlesInCol=0
+countOfTitlesInCol=0    # We want to put the first half of the fanzines in column 1 and the rest in col 2.  We need to know when to switch cols.
 for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     print("   Writing HTML for: "+fz.DebugStr())
 

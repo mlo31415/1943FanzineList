@@ -6,11 +6,12 @@
 
 class FanzineIssueData:
 
-    def __init__(self, DisplayName=None, URL=None, FanzineIssueSpec=None, SeriesName=None):
+    def __init__(self, DisplayName=None, URL=None, FanzineIssueSpec=None, SeriesName=None, Fanac=False):
         self.DisplayName=DisplayName   # Includes issue number/date/whatever
         self.URL=URL
         self.FanzineIssueSpec=FanzineIssueSpec
         self._SeriesName=SeriesName
+        self.Fanac=Fanac
 
     def __str__(self):   #TODO: Note that this will wrongly name issues with special, variant names
         out=""
