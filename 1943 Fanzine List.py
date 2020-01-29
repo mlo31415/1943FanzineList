@@ -504,7 +504,7 @@ numTitles=len(setoftitles)
 # Create the HTML table rows
 countOfTitlesInCol=0
 for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
-    print("   Writing HTML for: "+fz.Str())
+    print("   Writing HTML for: "+fz.DebugStr())
 
     name=fz.SeriesName
     editors=fz.Editor

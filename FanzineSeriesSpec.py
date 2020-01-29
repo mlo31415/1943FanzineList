@@ -24,7 +24,7 @@ class FanzineSeriesSpec:
     def SeriesName(self):
         return self._SeriesName
 
-    def Str(self):  # Convert the FSS into a debugging form
+    def DebugStr(self):  # Convert the FSS into a debugging form
         isl="-"
         if self.FanzineIssueSpecList is not None:
             isl=self.FanzineIssueSpecList.Format()
