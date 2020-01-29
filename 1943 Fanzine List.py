@@ -56,7 +56,7 @@ def DecodeIssueList(issuesText):
         iss, issuesText, success=InterpretIssueSpec(issuesText)
         isl.AppendIS(iss)
 
-    print("   "+str(isl))
+    print("   "+isl.DebugStr())
     return isl
 
 
@@ -360,7 +360,7 @@ def ReadFanacFanzines(name):
             print("     index="+str(index)+"   leading='"+leadingText+"'    trailing='"+trailingText+"'")
             trialIsl, leftover, success=InterpretIssueSpec(trailingText)
             if not success:       # Failed.  We've gone one too far. Quit trying and use what we found on the previous iteration
-                print("     ...backtracking. ISL="+str(isl))
+                print("     ...backtracking. ISL="+isl.DebugStr())
                 break
             isl=trialIsl
             goodLeadingText=leadingText
@@ -534,10 +534,10 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             if len(issHtml) > 0:
                 issHtml=issHtml+", &nbsp;&nbsp;&nbsp;"
             # Find the entry in all known issues where the seriesName and iss match
-            newHtml=isl.Format()
+            newHtml=str(isl)
             for fidInAll in allKnownIssuesFIDList:
                 if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
-                    newHtml='<a href='+fidInAll.URL+'>'+isl.Format()+'</a>'
+                    newHtml='<a href='+fidInAll.URL+'>'+str(isl)+'</a>'
                     break
             issHtml=issHtml+newHtml
 

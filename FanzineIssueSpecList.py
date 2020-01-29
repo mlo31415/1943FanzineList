@@ -25,26 +25,26 @@ class FanzineIssueSpecList:
         self._list.extend(isl)
         return self
 
-    def __str__(self):      # Print out the ISL for debugging
+    def DebugStr(self):
         s=""
         for i in self._list:
             if len(s) > 0:
                 s=s+",  "
             if i is not None:
-                s=s+str(i)
+                s=s+i.DebugStr()
             else:
                 s=s+"Missing ISList"
         if len(s) == 0:
             s="Empty ISlist"
         return s
 
-    def Format(self):   # Format the ISL for pretty
+    def __str__(self):   # Format the ISL for pretty
         s=""
         for i in self._list:
             if i is not None:
                 if len(s) > 0:
                     s=s+", "
-                s=s+i.Format()
+                s=s+str(i)
         return s
 
     def __len__(self):

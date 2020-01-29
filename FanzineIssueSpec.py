@@ -220,7 +220,7 @@ class FanzineIssueSpec:
 
     #.......................
     # Convert the IS into a debugging form
-    def __str__(self):
+    def DebugStr(self):
         if self.UninterpretableText is not None:
             return "IS("+self.UninterpretableText+")"
 
@@ -260,7 +260,7 @@ class FanzineIssueSpec:
             self._TrailingGarbage is None and self._Vol is None and self._Year is None
 
     #.......................
-    def Format(self):   # Convert the IS into a pretty string
+    def __str__(self):   # Convert the IS into a pretty string
         if self.UninterpretableText is not None:
             return self.UninterpretableText
 

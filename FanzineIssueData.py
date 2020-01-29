@@ -17,7 +17,7 @@ class FanzineIssueData:
         if self.SeriesName is not None:
             out=self.SeriesName
         if self.FanzineIssueSpec is not None and not self.FanzineIssueSpec.IsEmpty():
-            out=out+" "+self.FanzineIssueSpec.Format()
+            out=out+" "+str(self.FanzineIssueSpec)
         if self.URL is not None:
             out=out+" "+self.URL
         return out

@@ -27,7 +27,7 @@ class FanzineSeriesSpec:
     def DebugStr(self):  # Convert the FSS into a debugging form
         isl="-"
         if self.FanzineIssueSpecList is not None:
-            isl=self.FanzineIssueSpecList.Format()
+            isl=self.FanzineIssueSpecList.DebugStr()
 
         sn="-"
         if self._SeriesName is not None:
@@ -66,7 +66,7 @@ class FanzineSeriesSpec:
                 out=out+"   {"+n+"}"
 
         if self.FanzineIssueSpecList is not None and len(self.FanzineIssueSpecList) > 0:
-            out=out+"  "+self.FanzineIssueSpecList.Format()
+            out=out+"  "+str(self.FanzineIssueSpecList)
 
         if self.Eligible:
             out=out+"   Eligible!"
