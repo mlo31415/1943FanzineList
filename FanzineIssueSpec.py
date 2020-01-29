@@ -2,25 +2,7 @@
 #  V1#2, #3, #2a, Dec 1967, etc.
 # It can be a volume+number or a whole numer or a date. (It can be more than one of these, also, and all are retained.)
 
-#-----------------------------
-# Helper function
-# Try to make the input numeric
-# Note that if it fails, it returns what came in.
-def Numeric(val):
-    if val == None:
-        return None
-
-    if isinstance(val, int) or isinstance(val, float):
-        return val
-
-    try:
-        return int(val)
-    except:
-        try:
-            return float(val)
-        except:
-            return val
-
+from Helpers import ToNumeric
 
 class FanzineIssueSpec:
 
@@ -93,7 +75,7 @@ class FanzineIssueSpec:
 
     @Vol.setter
     def Vol(self, val):
-        self._Vol=Numeric(val)
+        self._Vol=ToNumeric(val)
 
     @Vol.getter
     def Vol(self):
@@ -106,7 +88,7 @@ class FanzineIssueSpec:
 
     @Num.setter
     def Num(self, val):
-        self._Num=Numeric(val)
+        self._Num=ToNumeric(val)
 
     @Num.getter
     def Num(self):
@@ -132,7 +114,7 @@ class FanzineIssueSpec:
 
     @Whole.setter
     def Whole(self, val):
-        self._Whole=Numeric(val)
+        self._Whole=ToNumeric(val)
 
     @Whole.getter
     def Whole(self):
@@ -158,7 +140,7 @@ class FanzineIssueSpec:
 
     @Year.setter
     def Year(self, val):
-        self._Year=Numeric(val)
+        self._Year=ToNumeric(val)
 
     @Year.getter
     def Year(self):
@@ -171,7 +153,7 @@ class FanzineIssueSpec:
 
     @Month.setter
     def Month(self, val):
-        self._Month=Numeric(val)
+        self._Month=ToNumeric(val)
 
     @Month.getter
     def Month(self):
@@ -232,8 +214,8 @@ class FanzineIssueSpec:
 
     # .....................
     def SetDate(self, y, m):
-        self.Year=Numeric(y)
-        self.Month=Numeric(m)
+        self.Year=ToNumeric(y)
+        self.Month=ToNumeric(m)
         return self
 
     #.......................
