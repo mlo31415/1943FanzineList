@@ -201,6 +201,24 @@ def InterpretIssueSpec(islText):
 
     return None, islText, False
 
+#-----------------------------
+# Helper function
+# Try to make the input numeric
+# Note that if it fails, it returns what came in.
+def Numeric(val):
+    if val == None:
+        return None
+
+    if isinstance(val, int) or isinstance(val, float):
+        return val
+
+    try:
+        return int(val)
+    except:
+        try:
+            return float(val)
+        except:
+            return val
 
 #**************************************************************************************************************************************
 import collections
@@ -243,7 +261,7 @@ def ReadExternalLinks(filename):
             print("***External fanzine link length error: Length should be 10 but is "+str(len(t2)))
             continue
         # Create the FIS and FID and append it to the external links list
-        fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
+        fis=FanzineIssueSpec(Num=Numeric(t2[cNum]), Vol=Numeric(t2[cVol]), Whole=Numeric(t2[cWhole]))
         elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
         externalLinks.append(elFID)
     print("----Done reading "+filename)
@@ -536,7 +554,7 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             newHtml=isl.Format()
             for fidInAll in allKnownIssuesFIDList:
                 if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
-                    newHtml='<a href='+fid.URL+'>'+isl.Format()+'</a>'
+                    newHtml='<a href='+fidInAll.URL+'>'+isl.Format()+'</a>'
                     break
             issHtml=issHtml+newHtml
 
