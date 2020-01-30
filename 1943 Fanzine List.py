@@ -402,7 +402,7 @@ def NamesMatch(name1, name2):
 
 #........................
 def LookupURLFromName(fidList, name):
-    urllist=[f for f in fidList if f.SeriesName == name] # List of all fanac.org FID entries with this name
+    urllist=[f for f in fidList if NamesMatch(f.SeriesName, name)] # List of all fanac.org FID entries with this name
     if urllist == None or len(urllist) == 0:
         return None
     # Need to remove filename to get just path
