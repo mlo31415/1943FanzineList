@@ -17,16 +17,23 @@ class FanzineIssueSpec:
         self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
+    def CaseInsensitiveCompare(self, s1, s2):
+        if s1 == s2:
+            return True
+        if s1 is None or s2 is None:
+            return False    # We already know that s1 and s2 are different
+        return s1.lower() == s2.lower()
+
     # Are the Num fields equal?
     # Both could be None; otherwise both must be equal
     def __NumEq__(self, other):
-        return self._Num == other._Num and self._NumSuffix == other._NumSuffix
+        return self._Num == other._Num and self.CaseInsensitiveCompare(self._NumSuffix, other._NumSuffix)
 
     def __VolEq__(self, other):
         return self._Vol == other._Vol
 
     def __WEq__(self, other):
-        return self._Whole == other._Whole and self._WSuffix == other._WSuffix
+        return self._Whole == other._Whole and self.CaseInsensitiveCompare(self._WSuffix, other._WSuffix)
 
     def __VNEq__(self, other):
         return self.__VolEq__(other) and self.__NumEq__(other)
