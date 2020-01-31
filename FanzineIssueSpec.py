@@ -7,13 +7,13 @@ from Helpers import ToNumeric
 class FanzineIssueSpec:
 
     def __init__(self, Vol=None, Num=None, NumSuffix=None, Whole=None, WSuffix=None, Year=None, Month=None):
-        self._Vol=Vol
-        self._Num=Num
+        self._Vol=ToNumeric(Vol)
+        self._Num=ToNumeric(Num)
         self._NumSuffix=NumSuffix  # For things like issue '17a'
-        self._Whole=Whole
+        self._Whole=ToNumeric(Whole)
         self._WSuffix=WSuffix
-        self._Year=Year
-        self._Month=Month
+        self._Year=ToNumeric(Year)
+        self._Month=ToNumeric(Month)
         self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
