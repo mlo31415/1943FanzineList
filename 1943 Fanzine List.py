@@ -501,6 +501,18 @@ for fss in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
 numTitles=len(setoftitles)
 
 # Create the HTML table rows
+# Get a pretty good estimate of the number of lines in the table. This will be used to balance the two columns.
+def EstSize(fz):
+    estimatedCountOfLines=1
+    if fz.FanzineIssueSpecList is not None and len(fz.FanzineIssueSpecList) >= 9:
+        estimatedCountOfLines+=len(fz.FanzineIssueSpecList)/9
+    return estimatedCountOfLines
+
+estimatedCountOfLines=0
+for fz in allYearsFanzinesFSSList:
+    estimatedCountOfLines+=EstSize(fz)
+
+# Now generate the table
 countOfTitlesInCol=0    # We want to put the first half of the fanzines in column 1 and the rest in col 2.  We need to know when to switch cols.
 for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     print("   Writing HTML for: "+fz.DebugStr())
@@ -557,8 +569,10 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     htm=htm+"<br>"+issHtml
 
     # When half the fanzines titles have been processed, insert the column end, new column start HTML
-    countOfTitlesInCol+=1
-    if countOfTitlesInCol == round(numTitles/2):
+    countOfTitlesInCol+=EstSize(fz)
+
+    if estimatedCountOfLines != -1 and  countOfTitlesInCol > estimatedCountOfLines/2:
+        estimatedCountOfLines=-1
         f.write('      </ul>')
         f.write('   </div>\n')
         f.write('   <div class=col-md-6>\n')
