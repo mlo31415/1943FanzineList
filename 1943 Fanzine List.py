@@ -5,7 +5,6 @@ from FanzineIssueSpec import FanzineIssueSpec
 from FanzineIssueSpecList import FanzineIssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
 from FanzineIssueData import FanzineIssueData
-from Helpers import ToNumeric
 
 
 #**************************************************************************************************************************************
@@ -244,7 +243,7 @@ def ReadExternalLinks(filename):
             print("***External fanzine link length error: Length should be 10 but is "+str(len(t2)))
             continue
         # Create the FIS and FID and append it to the external links list
-        fis=FanzineIssueSpec(Num=ToNumeric(t2[cNum]), Vol=ToNumeric(t2[cVol]), Whole=ToNumeric(t2[cWhole]))
+        fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
         elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
         externalLinks.append(elFID)
     print("----Done reading "+filename)
