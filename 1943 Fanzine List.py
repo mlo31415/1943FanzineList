@@ -414,7 +414,7 @@ allYearsFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines l
 print("\nRead what's on fanac.org for "+theYear+"\n")
 fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 
-# For Fanac fanzines, fill in the series URL in the FSS
+# For Fanac fanzines (and for Fanac fanzines only) fill in the series URL in the FSS
 for fz in allYearsFanzinesFSSList:
     seriesName=fz.SeriesName
     for ff in fanacFanzines:
