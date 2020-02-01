@@ -528,6 +528,7 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     #    E.g., Tucker's "1943 Fanzine Yearbook" is a one-off which is listed as part of Le Zombie, and there's no issue number
     #    The issue needs to be linked to the fanzine name.
     # For now, we're going to ignore it and just let the name link to the index page.
+    #TODO: Deal with this, maybe?
     htm="<i>"
     if fz.LenFIS() > 0:
         if fz.SeriesURL is not None:
