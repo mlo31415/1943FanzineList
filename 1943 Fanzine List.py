@@ -1,7 +1,7 @@
 import re as Regex
 import os
 from os import path
-from time import gmtime, strftime
+from time import localtime, strftime
 from FanzineIssueSpec import FanzineIssueSpec
 from FanzineIssueSpecList import FanzineIssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
@@ -204,7 +204,6 @@ def InterpretIssueSpec(islText):
 
 
 #**************************************************************************************************************************************
-import collections
 def ReadExternalLinks(filename):
     externalLinks=[]
     print("\n\n----Begin reading "+filename)
@@ -284,7 +283,7 @@ def ReadAllYearsFanzines(name):
     allFanzinesFSSList=[]
     for line in lines:
         if len(line.strip()) == 0:
-            continue;
+            continue
         print("\n"+line)
         fss=FanzineSeriesSpec()
 
@@ -488,7 +487,7 @@ f.write('<div  class="container narrowLeft">\n')
 f.write('<h3><center>'+theYear+' Fanzines and the Retro Hugos</center></h3>\n')
 if topmatter is not None:
     f.write(topmatter+"\n")
-f.write("Indexed as of "+strftime("%Y-%m-%d %H:%M:%S", gmtime())+" UTC")
+f.write("Indexed as of "+strftime("%Y-%m-%d %H:%M:%S", localtime())+" EST")
 f.write('<div class="row border">\n')
 f.write('   <div class=col-md-6>\n')
 f.write('      <ul>\n')
@@ -523,7 +522,7 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     # The first thing to generate in the line containing the fanzine name -- the SeriesSpec.
     # But, there's a complication: If the fanzine is a one-off, there's probably no issue list.
     # If there is no issue list, the fanzine name links directly to the issue;
-    # If there *is* an issue list, and it's a fanac.org fanzine, the fanzine name links to the series index page and
+    # If there *is* an issue list, and the FSS has a series URL, the fanzine name links to the series URL page and
     # the issue list links to the individual issues
     htm="<i>"
     if fz.FanzineIssueSpecList is not None:
