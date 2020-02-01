@@ -503,7 +503,7 @@ numTitles=len(setoftitles)
 # Get a pretty good estimate of the number of lines in the table. This will be used to balance the two columns.
 def EstSize(fz):
     estimatedCountOfLines=1
-    if fz.FanzineIssueSpecList is not None and len(fz.FanzineIssueSpecList) >= 9:
+    if fz.LenFIS() > 0 and len(fz.FanzineIssueSpecList) >= 9:
         estimatedCountOfLines+=len(fz.FanzineIssueSpecList)/9
     return estimatedCountOfLines
 
@@ -523,9 +523,12 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     # But, there's a complication: If the fanzine is a one-off, there's probably no issue list.
     # If there is no issue list, the fanzine name links directly to the issue;
     # If there *is* an issue list, and the FSS has a series URL, the fanzine name links to the series URL page and
-    # the issue list links to the individual issues
+    #    the issue list links to the individual issues
+    # There's a third case (which seems rare) where there is no issue list, but the fanzine is on an index page with a series name which differs
+    #    E.g., Tucker's "1943 Fanzine Yearbook" is a one-off which is listed as part of Le Zombie, and there's no issue number
+    #    The issue needs to be linked to the fanzine name.
     htm="<i>"
-    if fz.FanzineIssueSpecList is not None:
+    if fz.LenFIS() > 0:
         if fz.SeriesURL is not None:
             htm+='<a href='+fz.SeriesURL+'>'+name+'</a>'
         else:

@@ -25,9 +25,14 @@ class FanzineSeriesSpec:
     def SeriesName(self):
         return self._SeriesName
 
+    def LenFIS(self):
+        if self.FanzineIssueSpecList is None:
+            return 0
+        return len(self.FanzineIssueSpecList)
+
     def DebugStr(self):  # Convert the FSS into a debugging form
         isl="-"
-        if self.FanzineIssueSpecList is not None:
+        if self.LenFIS() > 0:
             isl=self.FanzineIssueSpecList.DebugStr()
 
         sn="-"
@@ -70,7 +75,7 @@ class FanzineSeriesSpec:
             for n in self.Notes:
                 out=out+"   {"+n+"}"
 
-        if self.FanzineIssueSpecList is not None and len(self.FanzineIssueSpecList) > 0:
+        if self.LenFIS() > 0:
             out=out+"  "+str(self.FanzineIssueSpecList)
 
         if self.Eligible:
