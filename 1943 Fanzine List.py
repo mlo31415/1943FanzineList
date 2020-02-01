@@ -490,8 +490,7 @@ f.write('<div  class="container narrowLeft">\n')
 f.write('<h3><center>'+theYear+' Fanzines and the Retro Hugos</center></h3>\n')
 if topmatter is not None:
     f.write(topmatter+"\n")
-timestamp="Indexed as of "+strftime("%Y-%m-%d %H:%M:%S", gmtime())+" UTC"
-f.write(timestamp)
+f.write("Indexed as of "+strftime("%Y-%m-%d %H:%M:%S", gmtime())+" UTC")
 f.write('<div class="row border">\n')
 f.write('   <div class=col-md-6>\n')
 f.write('      <ul>\n')
