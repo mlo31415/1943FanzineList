@@ -532,9 +532,8 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             htm+=name
     else:
         newHtml=None
-        for fidInAll in allKnownIssuesFIDList:
-            if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
-                newHtml='<a href='+fidInAll.URL+'>'+name+'</a>'
+        if fz.SeriesURL is not None and len(fz.SeriesURL) > 0:
+            newHtml='<a href='+fz.SeriesURL+'>'+name+'</a>'
         if newHtml is None:
             newHtml=name
         htm+=newHtml
