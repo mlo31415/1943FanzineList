@@ -382,7 +382,6 @@ def ReadFanacFanzines(name):
 
     return fanzinesFIDList
 
-
 #..........................................
 def NamesMatch(name1, name2):
     if name1 is None and name2 is None:
@@ -400,16 +399,6 @@ def NamesMatch(name1, name2):
     return False
 
 
-#........................
-def LookupURLFromName(fidList, name):
-    urllist=[f for f in fidList if NamesMatch(f.SeriesName, name)] # List of all fanac.org FID entries with this name
-    if urllist == None or len(urllist) == 0:
-        return None
-    # Need to remove filename to get just path
-    return path.split(urllist[0].URL)[0]
-#........................
-
-
 ##############################################################################
 ##############################################################################
 ###############################  Main  #######################################
@@ -424,6 +413,15 @@ allYearsFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines l
 # Read what's on fanac.org
 print("\nRead what's on fanac.org for "+theYear+"\n")
 fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
+
+# For Fanac fanzines, fill in the series URL in the FSS
+for fz in allYearsFanzinesFSSList:
+    seriesName=fz.SeriesName
+    for ff in fanacFanzines:
+        if NamesMatch(seriesName, ff.SeriesName):
+            if ff.URL is not None and len(ff.URL) > 0:
+                fz.SeriesURL=path.split(ff.URL)[0]            # Need to remove filename to get just path
+
 allKnownIssuesFIDList=fanacFanzines
 
 for fid in allKnownIssuesFIDList:
@@ -527,11 +525,10 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     # If there is no issue list, the fanzine name links directly to the issue;
     # If there *is* an issue list, and it's a fanac.org fanzine, the fanzine name links to the series index page and
     # the issue list links to the individual issues
-    seriesURL=LookupURLFromName(allKnownIssuesFIDList, fz.SeriesName)
     htm="<i>"
     if fz.FanzineIssueSpecList is not None:
-        if seriesURL is not None:
-            htm+='<a href='+seriesURL+'>'+name+'</a>'
+        if fz.SeriesURL is not None:
+            htm+='<a href='+fz.SeriesURL+'>'+name+'</a>'
         else:
             htm+=name
     else:

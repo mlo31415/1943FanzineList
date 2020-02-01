@@ -8,6 +8,7 @@ class FanzineSeriesSpec:
         self.Editor=None
         self.Eligible=None
         self.Notes=None
+        self.SeriesURL=None
 
     # .....................
     @property
@@ -50,7 +51,11 @@ class FanzineSeriesSpec:
         if self.Eligible is not None:
             el="T" if self.Eligible else "F"
 
-        return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+")"
+        u="-"
+        if self.SeriesURL is not None:
+            u=self.SeriesURL
+
+        return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+" URL="+u+")"
 
 
     def __str__(self):  # Pretty print the FSS
