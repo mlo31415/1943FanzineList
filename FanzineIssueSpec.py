@@ -1,4 +1,4 @@
-# A FanzineIssueSpec contains the information for one fanzine issue specification, e.g.:
+# A FanzineIssueSpec contains the information for one fanzine issue's specification, e.g.:
 #  V1#2, #3, #2a, Dec 1967, etc.
 # It can be a volume+number or a whole numer or a date. (It can be more than one of these, also, and all are retained.)
 
@@ -6,24 +6,26 @@ from Helpers import ToNumeric
 
 class FanzineIssueSpec:
 
-    def __init__(self, Vol=None, Num=None, NumSuffix=None, Whole=None, WSuffix=None, Year=None, Month=None, Day=None):
+    def __init__(self, Vol=None, Num=None, NumSuffix=None, Whole=None, WSuffix=None, Year=None, Month=None, MonthText=None, Day=None, DayText=None):
         self._Vol=ToNumeric(Vol)
         self._Num=ToNumeric(Num)
-        self._NumSuffix=NumSuffix  # For things like issue '17a'
+        self._NumSuffix=NumSuffix       # For things like issue '17a'
         self._Whole=ToNumeric(Whole)
         self._WSuffix=WSuffix
         self._Year=ToNumeric(Year)
         self._Month=ToNumeric(Month)
+        self._MonthText=MonthText       # In case the month is specified using something other than a month name, we save the special text here
         self._Day=ToNumeric(Day)
+        self._DayText=DayText           # In case the day is specified using something other than a numer (E.g., "Christmas Day"), we save the special text here
         self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
-    def CaseInsensitiveCompare(self, s1, s2):
+    def CaseInsensitiveCompare(self, s1: str, s2: str):
         if s1 == s2:
             return True
         if s1 is None or s2 is None:
             return False    # We already know that s1 and s2 are different
-        return s1.lower() == s2.lower()
+        return s1.lower() == s2.lower() # Now that we know that neither is None, we can do the lower case compare
 
     # Are the Num fields equal?
     # Both could be None; otherwise both must be equal
@@ -67,10 +69,11 @@ class FanzineIssueSpec:
         # If we're checking against a null input, it's not equal
         if other is None:
             return False
-        # If the issue numnbers exist and match, it's equal even if other stuff doesn't match
+        # If the issue numbers exist and match, it's equal even if other stuff doesn't match
         if self.__IssueEQ__(other):
             return True
         # All that's left that might match is the date
+        # Note that we ignore MonthText and DayText for purposes of checking equality
         return self.__DateEq__(other)
 
 
@@ -85,7 +88,9 @@ class FanzineIssueSpec:
         self._WSuffix=other.WSuffix
         self._Year=other.Year
         self._Month=other.Month
+        self._MonthText=other.MonthText
         self._Day=other.Day
+        self._DayText=other.DayText
         self._UninterpretableText=other.UninterpretableText
         self._TrailingGarbage=other.TrailingGarbage
 
@@ -175,10 +180,25 @@ class FanzineIssueSpec:
     @Month.setter
     def Month(self, val):
         self._Month=ToNumeric(val)
+        self._MonthText=None    # If we set a numeric month, any text month gets blown away as no longer relevant
 
     @Month.getter
     def Month(self):
         return self._Month
+
+    #.....................
+    @property
+    def MonthText(self):
+        return self._MonthText
+
+    @MonthText.setter
+    def MonthText(self, val):
+        self._MonthText=val
+        #TODO: Compute the real month and save it in _Month
+
+    @MonthText.getter
+    def MonthText(self):
+        return self._MonthText
 
     #.....................
     @property
@@ -188,10 +208,25 @@ class FanzineIssueSpec:
     @Day.setter
     def Day(self, val):
         self._Day=ToNumeric(val)
+        self._DayText=None   # If we set a numeric month, any text month gets blown away as no longer relevant
 
     @Day.getter
     def Day(self):
         return self._Day
+
+    # .....................
+    @property
+    def DayText(self):
+        return self._DayText
+
+    @DayText.setter
+    def DayText(self, val):
+        self._DayText=val
+        #TODO: Compute the real day and save it in _Day
+
+    @DayText.getter
+    def DayText(self):
+        return self._DayText
 
     #.....................
     @property
@@ -234,16 +269,16 @@ class FanzineIssueSpec:
         return self._TrailingGarbage
 
     # .....................
-    def SetWhole(self, t1, t2):
-        self.Whole=t1
-        if t2 is None:
+    def SetWhole(self, num: int, suffix: str):
+        self.Whole=num
+        if suffix is None:
             return self
-        if len(t2) == 1 and t2.isalpha():  # E.g., 7a
-            self.WSuffix=t2
-        elif len(t2) == 2 and t2[0] == '.' and t2[1].isnumeric():  # E.g., 7.1
-            self.WSuffix=t2
+        if len(suffix) == 1 and suffix.isalpha():  # E.g., 7a
+            self.WSuffix=suffix
+        elif len(suffix) == 2 and suffix[0] == '.' and suffix[1].isnumeric():  # E.g., 7.1
+            self.WSuffix=suffix
         else:
-            self.TrailingGarbage=t2
+            self.TrailingGarbage=suffix
         return self
 
     # .....................
@@ -253,7 +288,7 @@ class FanzineIssueSpec:
         return self
 
     #.......................
-    # Convert the IS into a debugging form
+    # Convert the FanzineIssueSpec into a debugging form
     def DebugStr(self):
         if self.UninterpretableText is not None:
             return "IS("+self.UninterpretableText+")"
@@ -276,8 +311,12 @@ class FanzineIssueSpec:
             d=str(self.Year)
         if self.Month is not None:
             d=d+":"+str(self.Month)
+        if self.MonthText is not None:
+            d=d+":"+self.MonthText()
         if self.Day is not None:
             d=d+"::"+str(self.Day)
+        if self.DayText is not None:
+            d=d+"::"+self.DayText()
         if d == "":
             d="-"
 
@@ -292,11 +331,12 @@ class FanzineIssueSpec:
 
     #.......................
     def IsEmpty(self):
-        return self._Whole is None and self._Num is None and self._WSuffix is None and self._NumSuffix is None and self._Month is None and self._UninterpretableText and \
-            self._TrailingGarbage is None and self._Vol is None and self._Year is None
+        return self._Whole is None and self._Num is None and self._WSuffix is None and self._NumSuffix is None and self._Month is None and self._MonthText is None \
+            and self._Day is None and self._DayText is none and self._UninterpretableText and self._TrailingGarbage is None and self._Vol is None and self._Year is None
 
     #.......................
-    def __str__(self):   # Convert the IS into a pretty string
+    # Convert the FanzineIssueSpec into a pretty string for display or printing
+    def __str__(self):
         if self.UninterpretableText is not None:
             return self.UninterpretableText
 
@@ -326,10 +366,15 @@ class FanzineIssueSpec:
                 s+=str(self.WSuffix)
             return s+tg
 
+        # We don't treat a day without a month and year or a month without a year as valid and printable
         if self.Year is not None:
             if self.Month is None:
-                return str(self.Year)+tg
-            else:
-                return str(self.Year)+":"+str(self.Month)+tg
+                return str(self.Year)+" "+tg
+            if self._MonthText is not None:
+                return self._MonthText+" "+str(self._Year)+" "+tg  # There's never a monthtext+day combination
+            if self._DayText is not None:
+                return self._DayText+ " "+str(self._Year)+" "+tg
+            return str(self._Day)+ " "+str(self._Month)+" "+str(self._Year)+" "+tg
+                #TODO: Conver to 3-character month
 
         return tg
