@@ -6,7 +6,7 @@ from Helpers import ToNumeric
 
 class FanzineIssueSpec:
 
-    def __init__(self, Vol=None, Num=None, NumSuffix=None, Whole=None, WSuffix=None, Year=None, Month=None):
+    def __init__(self, Vol=None, Num=None, NumSuffix=None, Whole=None, WSuffix=None, Year=None, Month=None, Day=None):
         self._Vol=ToNumeric(Vol)
         self._Num=ToNumeric(Num)
         self._NumSuffix=NumSuffix  # For things like issue '17a'
@@ -14,6 +14,7 @@ class FanzineIssueSpec:
         self._WSuffix=WSuffix
         self._Year=ToNumeric(Year)
         self._Month=ToNumeric(Month)
+        self._Day=ToNumeric(Day)
         self._UninterpretableText=None   # Ok, I give up.  Just hold the text as text.
         self._TrailingGarbage=None       # The uninterpretable stuff following the interpretable spec held in this instance
 
@@ -49,20 +50,32 @@ class FanzineIssueSpec:
             return True
         return False
 
-    def __eq__(self, other):
+    def __DateEq__(self, other):
+        # If we're checking against a null input, it's not equal
         if other is None:
             return False
+        # If either date is entirely None, its not equal
+        if self._Year is None and self._Month is None and self._Day is None:
+            return None
+        if other._Year is None and other._Month is None and other._Day is None:
+            return None
+        # OK, we know that both self and other have a non-None date element, so just check for equality
+        return self._Year == other._Year and self._Month == other._Month and self._Day == other._Day
 
+    # Class equality check.
+    def __eq__(self, other):
+        # If we're checking against a null input, it's not equal
+        if other is None:
+            return False
+        # If the issue numnbers exist and match, it's equal even if other stuff doesn't match
         if self.__IssueEQ__(other):
             return True
+        # All that's left that might match is the date
+        return self.__DateEq__(other)
 
-        # Now check for dates
-        if self._Year is not None and self._Year == other._Year and self._Month is not None and self._Month == other._Month:
-            return True
-        return False
 
     def __ne__(self, other):
-        return not self == other
+        return not self.__eq__(other)
 
     def Copy(self, other):
         self._Vol=other.Vol
@@ -72,6 +85,7 @@ class FanzineIssueSpec:
         self._WSuffix=other.WSuffix
         self._Year=other.Year
         self._Month=other.Month
+        self._Day=other.Day
         self._UninterpretableText=other.UninterpretableText
         self._TrailingGarbage=other.TrailingGarbage
 
@@ -168,6 +182,19 @@ class FanzineIssueSpec:
 
     #.....................
     @property
+    def Day(self):
+        return self._Day
+
+    @Day.setter
+    def Day(self, val):
+        self._Day=ToNumeric(val)
+
+    @Day.getter
+    def Day(self):
+        return self._Day
+
+    #.....................
+    @property
     def UninterpretableText(self):
         return self._UninterpretableText
 
@@ -249,6 +276,8 @@ class FanzineIssueSpec:
             d=str(self.Year)
         if self.Month is not None:
             d=d+":"+str(self.Month)
+        if self.Day is not None:
+            d=d+"::"+str(self.Day)
         if d == "":
             d="-"
 
