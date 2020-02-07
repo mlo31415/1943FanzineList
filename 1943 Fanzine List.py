@@ -1,3 +1,4 @@
+import Helpers
 import re as Regex
 import os
 from os import path
@@ -535,13 +536,13 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     htm="<i>"
     if fz.LenFIS() > 0:
         if fz.SeriesURL is not None:
-            htm+='<a href='+fz.SeriesURL+'>'+name+'</a>'
+            htm+=Helpers.FormatLink(fz.SeriesURL, name)
         else:
             htm+=name
     else:
         newHtml=None
         if fz.SeriesURL is not None and len(fz.SeriesURL) > 0:
-            newHtml='<a href='+fz.SeriesURL+'>'+name+'</a>'
+            newHtml=Helpers.FormatLink(fz.SeriesURL, name)
         if newHtml is None:
             newHtml=name
         htm+=newHtml
@@ -567,7 +568,7 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             newHtml=str(isl)
             for fidInAll in allKnownIssuesFIDList:
                 if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
-                    newHtml='<a href='+fidInAll.URL+'>'+str(isl)+'</a>'
+                    newHtml=Helpers.FormatLink(fidInAll.URL, str(isl))
                     break
             issHtml+=newHtml
 
