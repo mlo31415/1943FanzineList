@@ -1,12 +1,13 @@
-import Helpers
-import re as Regex
 import os
+import re as Regex
 from os import path
 from time import localtime, strftime
-from FanzineIssueSpec import FanzineIssueSpec
-from FanzineIssueSpecList import FanzineIssueSpecList
-from FanzineSeriesSpec import FanzineSeriesSpec
+
+from HelpersPackage import FormatLink
+from FanzineIssueSpecPackage import FanzineIssueSpec
+from FanzineIssueSpecPackage import FanzineIssueSpecList
 from FanzineIssueData import FanzineIssueData
+from FanzineSeriesSpec import FanzineSeriesSpec
 
 
 #**************************************************************************************************************************************
@@ -536,13 +537,13 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     htm="<i>"
     if fz.LenFIS() > 0:
         if fz.SeriesURL is not None:
-            htm+=Helpers.FormatLink(fz.SeriesURL, name)
+            htm+=FormatLink(fz.SeriesURL, name)
         else:
             htm+=name
     else:
         newHtml=None
         if fz.SeriesURL is not None and len(fz.SeriesURL) > 0:
-            newHtml=Helpers.FormatLink(fz.SeriesURL, name)
+            newHtml=FormatLink(fz.SeriesURL, name)
         if newHtml is None:
             newHtml=name
         htm+=newHtml
@@ -568,7 +569,7 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             newHtml=str(isl)
             for fidInAll in allKnownIssuesFIDList:
                 if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
-                    newHtml=Helpers.FormatLink(fidInAll.URL, str(isl))
+                    newHtml=FormatLink(fidInAll.URL, str(isl))
                     break
             issHtml+=newHtml
 
