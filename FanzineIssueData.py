@@ -1,3 +1,5 @@
+from typing import TextIO, List, Tuple, Optional, Callable
+
 # class FanzineIssueData holds information about a specific issue of a fanzine.
 #   Its display name (the name used to display this particular issue), e.g., File770 #34
 #   Its URL (on fanac.org or elsewhere)
@@ -6,14 +8,14 @@
 
 class FanzineIssueData:
 
-    def __init__(self, DisplayName=None, URL=None, FanzineIssueSpec=None, SeriesName=None, Fanac=False):
+    def __init__(self, DisplayName=None, URL=None, FanzineIssueSpec=None, SeriesName=None, Fanac=False) -> None:
         self.DisplayName=DisplayName   # Includes issue number/date/whatever
         self.URL=URL
         self.FanzineIssueSpec=FanzineIssueSpec
         self._SeriesName=SeriesName
         self.Fanac=Fanac
 
-    def __str__(self):   #TODO: Note that this will wrongly name issues with special, variant names
+    def __str__(self) -> str:   #TODO: Note that this will wrongly name issues with special, variant names
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName
@@ -25,16 +27,16 @@ class FanzineIssueData:
 
     # .....................
     @property
-    def SeriesName(self):
+    def SeriesName(self) -> str:
         return self._SeriesName
 
     @SeriesName.setter
-    def SeriesName(self, val):
+    def SeriesName(self, val: Optional[str]) -> None:
         if val is not None:
             val=val.strip()
         self._SeriesName=val
 
-    @SeriesName.getter
-    def SeriesName(self):
-        return self._SeriesName
+    # @SeriesName.getter
+    # def SeriesName(self):
+    #     return self._SeriesName
 

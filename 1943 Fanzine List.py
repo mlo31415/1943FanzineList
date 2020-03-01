@@ -2,10 +2,14 @@ import os
 import re as Regex
 from os import path
 from time import localtime, strftime
+from typing import List, Tuple, Optional
 
 from HelpersPackage import FormatLink
-from FanzineIssueSpecPackage import FanzineIssueSpec
-from FanzineIssueSpecPackage import FanzineIssueSpecList
+from HelpersPackage import Match2AndRemove, CompareTitles
+
+from Log import LogOpen, Log
+
+from FanzineIssueSpecPackage import FanzineSerial, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList
 from FanzineIssueData import FanzineIssueData
 from FanzineSeriesSpec import FanzineSeriesSpec
 
@@ -14,7 +18,7 @@ from FanzineSeriesSpec import FanzineSeriesSpec
 # The input is text which consists of one or more FanzineIssueSpecs.
 # We decode it by calling InterpretIssueSpec repeatedly until it fails to find a new FanzineIssueSpec.
 # The output is an IssueSpecList
-def DecodeIssueList(issuesText):
+def DecodeIssueList(issuesText: Optional[str]) -> Optional[FanzineIssueSpecList]:
     if issuesText is None:    # Skip empty stuff
         return None
     if len(issuesText.strip()) == 0: # Skip if it's all whitespace
@@ -24,7 +28,7 @@ def DecodeIssueList(issuesText):
     issuesText=' '.join(issuesText.split())
 
     # Create am empty IssueSpecList
-    isl=FanzineIssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting issuesText
+    fisl=FanzineIssueSpecList()   # This will be the list of IssueSpecs resulting from interpreting issuesText
 
     # Cases:
     #   1,2,3,4
@@ -55,25 +59,12 @@ def DecodeIssueList(issuesText):
         if issuesText[0] == ",":
             issuesText=issuesText[1:].strip()   # If the previous pass just took a piece of a comma-separated list, remove the leading comma and any associated whitespace
         # And try again
-        iss, issuesText, success=InterpretIssueSpec(issuesText)
-        isl.AppendIS(iss)
+        iss, issuesText, success=InterpretIssueSpecList(issuesText)
+        if success:
+            fisl.AppendIS(iss)
 
-    print("   "+isl.DebugStr())
-    return isl
-
-
-#.....................................
-# Nibble away at a line
-def MatchAndRemove(input, pattern):
-    m=Regex.match(pattern, input)         # Do we match the pattern?
-    if m is not None and len(m.groups()) > 0:
-        g0=m.groups()[0]                    # There may be either 1 or two groups, but we need to return two matches
-        g1=None
-        if len(m.groups()) > 1:
-            g1=m.groups()[1]
-        return Regex.sub(pattern, "", input), g0, g1  # And delete the matched text
-    return input, None, None
-# ........................
+    print("   "+fisl.DebugStr())
+    return fisl
 
 
 #**************************************************************************************************************************************
@@ -83,130 +74,40 @@ def MatchAndRemove(input, pattern):
 #   A IssueSpecList of one or more FanzineIssueSpecs
 #   The remaining text after whatever was matched has been removed
 #   True if at least one FanzineIssueSpec was found or False if none was found
-def InterpretIssueSpec(islText):
+def InterpretIssueSpecList(islText: str, strict: bool=False) -> Tuple[Optional[FanzineIssueSpecList], str, bool]:
     islText=islText.strip()
 
-    # OK, now try to decode the spec, update the isl, and return whatever text can't be handled this round
-    # We'll try several alteratives
+    # We'll start by trying to interpret it as a serial number and then as a date. We'll try multiple alternatives for each
+    fisl=FanzineIssueSpecList()
+    #TODO: Need to handle comma list
 
-    # First:
-    #   Vnn#nn
-    #   Vnn:nn
-    #   Vnn#nn,nn,nn
-    #   Vnn:nn,nn,nn
-    c_VnnNnn=Regex.compile(r"""^    # Start at the beginning
-                [vV](\d+\s*)        # Look for a V followed by 1 or more digits
-                [#:]\s*             # Then a '#' or a ':' followed by optional whitespace
-                ((?:\d+,\s*)*)      # Then a non-capturing group of one or more digits followed by a comma followed by optional whitespace
-                                    # this whole thing is a group that matches all but the last of the digit-comma-[space] thingies
-                (\d+[;,]?)(.*)      # Then a last group of digits which must be present followed by an optional comma followed by the rest of the line
-                                    # (We rely on greedy parsing here!)
-                """, Regex.X)
-    m=c_VnnNnn.match(islText)
-    if m is not None and len(m.groups()) == 4:
-        vol=int(m.groups()[0])
-        # Create iList, which is a list of issues associated with this volume number
-        iList=m.groups()[1]+m.groups()[2]
-        islText=m.groups()[3]
-        iList=iList.replace(" ", "").replace(";", ",").split(",")  # Split on either ',' or ':'
-        isl=FanzineIssueSpecList()
-        for i in iList:
-            if len(i) == 0:
-                continue
-            isl.AppendIS(FanzineIssueSpec(Vol=vol, Num=i))
+    fisl=FanzineIssueSpecList()
+    if fisl.Match(islText, strict=True):
+        Log("    InterpretIssueSpecList: "+islText+"  --> "+str(fisl))
+        return fisl, "", True
 
-        # Check to see if the last item was followed by a bracketed comment.  If so, add it to the last item.
-        if len(iList) > 0:
-            islText=islText.strip()
-            if len(islText) > 0:
-                if islText[0] == '[':
-                    m=Regex.compile("^(\[.*\])(.*)$").match(islText)
-                    if m is not None and len(m.groups()) == 2:
-                        fis=FanzineIssueSpec()
-                        fis.TrailingGarbage=m.groups()[0]
-                        islText=m.groups()[1].strip()
-                        if len(islText) > 0 and islText[0] == ",":
-                            islText=islText[1:].strip()  # If there was a trailing comma, delete it.
-                elif islText[0] == '(':
-                    m=Regex.match("^(\(.*\))(.*)$", islText)
-                    if m is not None and len(m.groups()) == 2:
-                        fis=FanzineIssueSpec()
-                        fis.TrailingGarbage=m.groups()[0]
-                        islText=m.groups()[1].strip()
-                        if len(islText) > 0 and islText[0] == ",":
-                            islText=islText[1:].strip()  # If there was a trailing comma, delete it.
+    fd=FanzineDate()
+    if fd.Match(islText, strict=strict):
+        fisl=FanzineIssueSpecList()
+        fis=FanzineIssueSpec()
+        fis.FD=fd
+        fisl.Append(fis)
+        Log("    InterpretIssueSpecList: "+islText+"  --> "+str(fd))
+        return fisl, "", True
 
-        return isl, islText, True
 
-    # Second, deal with a range of numbers, nnn-nnn
-    # Look at two cases, (1) a range all by itself and (2) A range in a list (i.e., followed by a comma)
-    m=Regex.match("^(\d+)\s*[\-–]\s*(\d+)$", islText)   # First, a range all by itself
-    if m is not None and len(m.groups()) == 2:
-        isl=FanzineIssueSpecList()
-        for k in range(int(m.groups()[0]), int(m.groups()[1])+1):
-            isl.AppendIS(FanzineIssueSpec(Whole=k))
-        return isl, "", True    # By definition the line is now empty
+    fisl=FanzineIssueSpecList()
+    if fisl.Match(islText):
+        Log("    InterpretIssueSpecList: "+islText+"  --> "+str(fisl))
+        return fisl, "", True
 
-    islText, g0, g1=MatchAndRemove(islText, "^(\d+)\s*[\-–]\s*(\d+),")
-    if g0 is not None and g1 is not None:
-        isl=FanzineIssueSpecList()
-        for k in range(int(g0), int(g1)+1):
-            isl.AppendIS(FanzineIssueSpec(Whole=k))
-        return isl, islText, True
 
-    # Next, consider a list of years or year-month pairs:
-    # yyyy[, yyyy]
-    # yyyy:mm[, yyyy:mm]
-    # The years *must* be 4-digit so we can tell them apart from just-plain-numbers
-    # The months can also be text "Sep" "September" etc.
-    # There are two cases, alone on the line and as part of a comma-separated list
-    # Year alone
-    patterns=["^(\d{4}):(\d{1,2})\s*,", # Year:month comma-terminated
-              "^(\d{4}):(\d{1,2})",     # Year:month
-              "^(\d{4}):([a-zA-Z]+),",  # Year:textmonth comma-terminated
-              "^(\d{4}):([a-zA-Z]+)",   # Year:textmonth
-              "^(\d{4})\s*,",  # Year comma-terminated
-              "^(\d{4})",  # Year
-              ]
-    for pat in patterns:
-        islText, t1, t2=MatchAndRemove(islText, pat)
-        if t1 is not None:
-            isl=FanzineIssueSpecList().AppendIS(FanzineIssueSpec().SetDate(t1, t2))
-            return isl, islText, True
-
-    # Now consider it as a simple list of whole numbers with a trailing alphabetic character (e.g, 24, 25, 25A, 26) (and perhaps with a # in front of the number, e.g., #2)
-    # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
-    patterns=["^#?([0-9]+)([a-zA-Z])\s*,",  # <Integer>[alpha]<comma>
-              "^#?([0-9]+\.[0-9]+)([a-zA-Z])\s*,",  # <Decimal>[alpha]<comma>
-              "^#?([0-9]+)([a-zA-Z])\s*$",  # <Integer>[alpha] (if there's no comma, then we need to see line-end)
-              "^#?([0-9]+\.[0-9]+)([a-zA-Z])\s*$"  # <Decimal>[alpha] (if there's no comma, then we need to see line-end)
-              ]
-    for pat in patterns:
-        islText, t1, t2=MatchAndRemove(islText, pat)
-        if t1 is not None:
-            fis=FanzineIssueSpec().SetWhole(t1, t2)
-            isl=FanzineIssueSpecList(List=fis)
-            return isl, islText, True
-
-    # Finally consider it as a simple list of whole numbers with no trailing alphabetics (and perhaps with a # in front of the number, e.g., #2)
-    # So we want to match <optional whitespace><digits><optional alphas><optional whitespace><comma>
-    patterns=["^#?([0-9]+)\s*,",         # <Integer><comma>
-              "^#?([0-9]+\.[0-9]+)\s*,", # <Decimal><comma>
-              "^#?([0-9]+)\s*$",          # <Integer> (if there's no comma, then we need to see line-end)
-              "^#?([0-9]+\.[0-9]+)\s*$"   # <Decimal> (if there's no comma, then we need to see line-end)
-              ]
-    for pat in patterns:
-        islText, t1, t2=MatchAndRemove(islText, pat)
-        if t1 is not None:
-            fis=FanzineIssueSpec().SetWhole(t1, t2)
-            isl=FanzineIssueSpecList(List=fis)
-            return isl, islText, True
-
+    Log("...Failed.")
     return None, islText, False
 
 
 #**************************************************************************************************************************************
-def ReadExternalLinks(filename):
+def ReadExternalLinks(filename: str) -> List[FanzineIssueData]:
     externalLinks=[]
     print("\n\n----Begin reading "+filename)
     # Now we read Links1942.txt, which contains links to issues of fanzines *outside* fanac.org.
@@ -247,6 +148,7 @@ def ReadExternalLinks(filename):
         # Create the FIS and FID and append it to the external links list
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
         elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
+        print("   "+str(elFID))
         externalLinks.append(elFID)
     print("----Done reading "+filename)
     return externalLinks
@@ -254,7 +156,7 @@ def ReadExternalLinks(filename):
 
 #**************************************************************************************************************************************
 # Read the master file of all fanzines for the specified year
-def ReadAllYearsFanzines(name):
+def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
 
     # Read the contents of the file and strip leading and traling whitespace
     with open(name) as f:
@@ -309,7 +211,10 @@ def ReadAllYearsFanzines(name):
         # Decode and store the data.
         fss.SeriesName=m.groups()[0].strip()
         fss.Editor=m.groups()[1].strip()
-        fss.FanzineIssueSpecList=DecodeIssueList(m.groups()[2])
+        fisl=FanzineIssueSpecList()
+        if fisl.Match(m.groups()[2]):
+            fss.FanzineIssueSpecList=fisl
+        Log("   " +str(fss))
         allFanzinesFSSList.append(fss)
 
     # List the fanzines found (a debugging aid)
@@ -321,8 +226,8 @@ def ReadAllYearsFanzines(name):
 
 
 #**************************************************************************************************************
-def ReadFanacFanzines(name):
-    print("\n\n\n\n\nNow read the file of "+theYear+" fanzines issues on fanac.org")
+def ReadFanacFanzines(name: str) -> List[FanzineIssueData]:
+    print("\nNow read the file of "+theYear+" fanzines issues on fanac.org")
     with open(name) as f:
         lines=f.readlines()
     lines=[l.strip() for l in lines]  # Remove whitespace including trailing '\n'
@@ -349,33 +254,17 @@ def ReadFanacFanzines(name):
         # Typically, it will be a <bunch of stuff><whitespace><issue spec>
         # Our strategy will be to break the issueName into tokens on whitespace, and work backwards from the end, concatenating until we fail to recognize an issue spec
         # This lets us use the existing issue spec recognizer.
-
-        tokens=issueName.split()
-        isl=FanzineIssueSpecList() # This is a list of ISLs that we have found.
-        # Try to greedily interpret the trailing text as a FanzineIssueSpec.
-        # We do this by interpreting more and more tokens starting from the end until we have something that is no longer recognizable as a FanzineIssueSpec
-        # The just-previous set of tokens constitutes the full IssueSpec, and the remaining leading tokens are the series name.
-        for index in range(len(tokens)-1, -1, -1):  # Ugly, but I need index to be the indexes of the tokens
-            trailingText=" ".join(tokens[index:])
-            leadingText=" ".join(tokens[:index])
-            print("     index="+str(index)+"   leading='"+leadingText+"'    trailing='"+trailingText+"'")
-            trialIsl, leftover, success=InterpretIssueSpec(trailingText)
-            if not success:       # Failed.  We've gone one too far. Quit trying and use what we found on the previous iteration
-                print("     ...backtracking. ISL="+isl.DebugStr())
-                break
-            isl=trialIsl
-            goodLeadingText=leadingText
-
-        if len(isl) == 0:
+        fisl, therest=FanzineIssueSpecList().GetTrailingSerial(issueName)
+        if fisl is None:
             print("     no issue number found")
             fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec(), Fanac=True)
             fanzinesFIDList.append(fid)
             print(str(fid))
         else:
-            if len(isl) > 1:    # This happens when an ISL is something like "4-7"
-                print("     "+str(len(isl))+" ISLs found")
-            for i in isl:
-                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=goodLeadingText, FanzineIssueSpec=i, Fanac=True)
+            if len(fisl) > 1:    # This happens when an FISL is something like "4-7"
+                print("     "+str(len(fisl))+" FISLs found")
+            for i in fisl:
+                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FanzineIssueSpec=i, Fanac=True)
                 fanzinesFIDList.append(fid)
                 print(str(fid))
 
@@ -383,21 +272,6 @@ def ReadFanacFanzines(name):
 
     return fanzinesFIDList
 
-#..........................................
-def NamesMatch(name1, name2):
-    if name1 is None and name2 is None:
-        return True
-    if name1 is None or name2 is None:
-        return False
-    name1=name1.lower()
-    if name1.startswith("the "):
-        name1=name1[4:]+", the"
-    name2=name2.lower()
-    if name2.startswith("the "):
-        name2=name2[4:]+", the"
-    if name1 == name2:
-        return True
-    return False
 
 
 ##############################################################################
@@ -406,20 +280,20 @@ def NamesMatch(name1, name2):
 ##############################################################################
 
 theYear="1944"
+LogOpen("Log -- Annual Fanzine List.txt", "Log (Errors) -- Annual Fanzine List.txt")
 
 # Read the master list of all the year's fanzines
 print("\nRead "+theYear+"'s master list of all fanzines published\n")
 allYearsFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
-print("\nRead what's on fanac.org for "+theYear+"\n")
 fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 
 # For Fanac fanzines (and for Fanac fanzines only) fill in the series URL in the FSS
 for fz in allYearsFanzinesFSSList:
     seriesName=fz.SeriesName
     for ff in fanacFanzines:
-        if NamesMatch(seriesName, ff.SeriesName):
+        if CompareTitles(seriesName, ff.SeriesName):
             if ff.URL is not None and len(ff.URL) > 0:
                 fz.SeriesURL=path.split(ff.URL)[0]            # Need to remove filename to get just path
 
@@ -434,11 +308,11 @@ allKnownIssuesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.
 # Sort allFanzinesFSSList into alphabetic order.
 # We move A, An and The to the end for sorting purposes.
 # (These two functions are used only in the sort.)
-def inverter(s, prefix):
+def inverter(s, prefix: str) -> str:
     if s.startswith(prefix):
         return s[len(prefix):]+s[:len(prefix)]
     return s
-def sorter(fss):
+def sorter(fss: FanzineSeriesSpec) -> str:
     s=fss.SeriesName.lower()
     s=inverter(s, "a ")
     s=inverter(s, "an ")
@@ -506,7 +380,7 @@ numTitles=len(setoftitles)
 
 # Create the HTML table rows
 # Get a pretty good estimate of the number of lines in the table. This will be used to balance the two columns.
-def EstSize(fz):
+def EstSize(fz: FanzineSeriesSpec) -> int:
     estimatedCountOfLines=1
     if fz.LenFIS() > 0 and len(fz.FanzineIssueSpecList) >= 9:
         estimatedCountOfLines+=len(fz.FanzineIssueSpecList)/9
@@ -560,20 +434,22 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     #   Case 1: We have online copies of one or more the year's issues for this fanzine
     #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
-    issHtml=""
+    fislhtml=""
     if fz.FanzineIssueSpecList is not None:
-        for isl in fz.FanzineIssueSpecList:
-            if len(issHtml) > 0:
-                issHtml+=", &nbsp;&nbsp;&nbsp;"
+        for fis in fz.FanzineIssueSpecList:
+            if len(fislhtml) > 0:
+                fislhtml+=", &nbsp;&nbsp;&nbsp;"
             # Find the entry in all known issues where the seriesName and iss match
-            newHtml=str(isl)
+            newHtml=str(fis)
             for fidInAll in allKnownIssuesFIDList:
-                if NamesMatch(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == isl:
-                    newHtml=FormatLink(fidInAll.URL, str(isl))
+                if CompareTitles(fz.SeriesName, fidInAll.SeriesName):
+                    print("     "+fidInAll.FanzineIssueSpec.DebugStr()+"  == "+fis.DebugStr()+"   -> "+str(fidInAll.FanzineIssueSpec == fis))
+                if CompareTitles(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == fis:
+                    newHtml=FormatLink(fidInAll.URL, str(fis))
                     break
-            issHtml+=newHtml
+            fislhtml+=newHtml
 
-    htm=htm+"<br>"+issHtml
+    htm=htm+"<br>"+fislhtml
 
     # When half the fanzines titles have been processed, insert the column end, new column start HTML
     countOfTitlesInCol+=EstSize(fz)

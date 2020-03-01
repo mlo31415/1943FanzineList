@@ -1,8 +1,8 @@
-
+from typing import TextIO, List, Tuple, Optional, Callable
 
 class FanzineSeriesSpec:
 
-    def __init__(self):
+    def __init__(self)  -> None:
         self.FanzineIssueSpecList=None     # A list of FanzineIssueSpecs
         self._SeriesName=None
         self.Editor=None
@@ -12,25 +12,25 @@ class FanzineSeriesSpec:
 
     # .....................
     @property
-    def SeriesName(self):
+    def SeriesName(self) -> str:
         return self._SeriesName
 
     @SeriesName.setter
-    def SeriesName(self, val):
+    def SeriesName(self, val: Optional[str]) -> None:
         if val is not None:
             val=val.strip()
         self._SeriesName=val
+    #
+    # @SeriesName.getter
+    # def SeriesName(self) -> str:
+    #     return self._SeriesName
 
-    @SeriesName.getter
-    def SeriesName(self):
-        return self._SeriesName
-
-    def LenFIS(self):
+    def LenFIS(self) -> int:
         if self.FanzineIssueSpecList is None:
             return 0
         return len(self.FanzineIssueSpecList)
 
-    def DebugStr(self):  # Convert the FSS into a debugging form
+    def DebugStr(self) -> str:  # Convert the FSS into a debugging form
         isl="-"
         if self.LenFIS() > 0:
             isl=self.FanzineIssueSpecList.DebugStr()
@@ -63,7 +63,7 @@ class FanzineSeriesSpec:
         return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+" URL="+u+")"
 
 
-    def __str__(self):  # Pretty print the FSS
+    def __str__(self) -> str:  # Pretty print the FSS
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName
