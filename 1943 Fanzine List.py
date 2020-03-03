@@ -140,16 +140,16 @@ def ReadExternalLinks(filename: str) -> List[FanzineIssueData]:
             continue
         if line[0] == "#":
             continue            # Skip comment lines
-        print("   line="+line)
+        print("   external="+line)
         t2=[t.strip() for t in line.split(";")]
         if len(t2) != 10:       # There should be exactly ten items in each line
             print("***External fanzine link length error: Length should be 10 but is "+str(len(t2)))
             continue
         # Create the FIS and FID and append it to the external links list
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
-        elFID=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
-        print("   "+str(elFID))
-        externalLinks.append(elFID)
+        fid=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
+        print("   "+str(fid))
+        externalLinks.append(fid)
     print("----Done reading "+filename)
     return externalLinks
 
@@ -431,7 +431,7 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
         htm+='<font color="#FF0000">&nbsp;&nbsp;(Eligible)</font>&nbsp;&nbsp;'
 
     # There are three cases:
-    #   Case 1: We have online copies of one or more the year's issues for this fanzine
+    #   Case 1: We have online copies of one or more of the year's issues for this fanzine
     #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
     fislhtml=""
