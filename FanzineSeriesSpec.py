@@ -1,5 +1,6 @@
 from typing import TextIO, List, Tuple, Optional, Callable
 
+# This is a class used to hold a list of many issues of a single fanzine.
 class FanzineSeriesSpec:
 
     def __init__(self)  -> None:
@@ -20,16 +21,15 @@ class FanzineSeriesSpec:
         if val is not None:
             val=val.strip()
         self._SeriesName=val
-    #
-    # @SeriesName.getter
-    # def SeriesName(self) -> str:
-    #     return self._SeriesName
+
+    # .....................
 
     def LenFIS(self) -> int:
         if self.FanzineIssueSpecList is None:
             return 0
         return len(self.FanzineIssueSpecList)
 
+    # .....................
     def DebugStr(self) -> str:  # Convert the FSS into a debugging form
         isl="-"
         if self.LenFIS() > 0:
@@ -62,7 +62,7 @@ class FanzineSeriesSpec:
 
         return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+" URL="+u+")"
 
-
+    # .....................
     def __str__(self) -> str:  # Pretty print the FSS
         out=""
         if self.SeriesName is not None:

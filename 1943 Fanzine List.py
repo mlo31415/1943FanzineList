@@ -5,7 +5,7 @@ from time import localtime, strftime
 from typing import List, Tuple, Optional
 
 from HelpersPackage import FormatLink
-from HelpersPackage import Match2AndRemove, CompareTitles
+from HelpersPackage import CompareTitles
 
 from Log import LogOpen, Log
 
@@ -211,9 +211,10 @@ def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
         # Decode and store the data.
         fss.SeriesName=m.groups()[0].strip()
         fss.Editor=m.groups()[1].strip()
-        fisl=FanzineIssueSpecList()
-        if fisl.Match(m.groups()[2]):
+        fisl=FanzineIssueSpecList().Match(m.groups()[2])
+        if not fisl.IsEmpty():
             fss.FanzineIssueSpecList=fisl
+
         Log("   " +str(fss))
         allFanzinesFSSList.append(fss)
 
@@ -300,7 +301,7 @@ for fz in allYearsFanzinesFSSList:
 allKnownIssuesFIDList=fanacFanzines
 
 for fid in allKnownIssuesFIDList:
-    print(str(fid))
+    print("allKnownIssuesFIDList: "+str(fid))
 
 # Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
 allKnownIssuesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
