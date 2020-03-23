@@ -9,8 +9,7 @@ from HelpersPackage import CompareTitles
 
 from Log import LogOpen, Log
 
-from FanzineIssueSpecPackage import FanzineSerial, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList
-from FanzineIssueData import FanzineIssueData
+from FanzineIssueSpecPackage import FanzineIssueInfo, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList
 from FanzineSeriesSpec import FanzineSeriesSpec
 
 
@@ -107,7 +106,7 @@ def InterpretIssueSpecList(islText: str, strict: bool=False) -> Tuple[Optional[F
 
 
 #**************************************************************************************************************************************
-def ReadExternalLinks(filename: str) -> List[FanzineIssueData]:
+def ReadExternalLinks(filename: str) -> List[FanzineIssueInfo]:
     externalLinks=[]
     print("\n\n----Begin reading "+filename)
     # Now we read Links1942.txt, which contains links to issues of fanzines *outside* fanac.org.
@@ -147,7 +146,7 @@ def ReadExternalLinks(filename: str) -> List[FanzineIssueData]:
             continue
         # Create the FIS and FID and append it to the external links list
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
-        fid=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FIS=fis)
+        fid=FanzineIssueInfo(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FIS=fis)
         print("   "+str(fid))
         externalLinks.append(fid)
     print("----Done reading "+filename)
@@ -227,7 +226,7 @@ def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
 
 
 #**************************************************************************************************************
-def ReadFanacFanzines(name: str) -> List[FanzineIssueData]:
+def ReadFanacFanzines(name: str) -> List[FanzineIssueInfo]:
     print("\nNow read the file of "+theYear+" fanzines issues on fanac.org")
     with open(name) as f:
         lines=f.readlines()
@@ -258,14 +257,14 @@ def ReadFanacFanzines(name: str) -> List[FanzineIssueData]:
         fisl, therest=FanzineIssueSpecList().GetTrailingSerial(issueName)
         if fisl is None:
             print("     no issue number found")
-            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FIS=FanzineIssueSpec())
+            fid=FanzineIssueInfo(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FIS=FanzineIssueSpec())
             fanzinesFIDList.append(fid)
             print(str(fid))
         else:
             if len(fisl) > 1:    # This happens when an FISL is something like "4-7"
                 print("     "+str(len(fisl))+" FISLs found")
             for i in fisl:
-                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FIS=i)
+                fid=FanzineIssueInfo(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FIS=i)
                 fanzinesFIDList.append(fid)
                 print(str(fid))
 
