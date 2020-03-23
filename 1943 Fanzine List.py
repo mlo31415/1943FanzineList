@@ -147,7 +147,7 @@ def ReadExternalLinks(filename: str) -> List[FanzineIssueData]:
             continue
         # Create the FIS and FID and append it to the external links list
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
-        fid=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FanzineIssueSpec=fis)
+        fid=FanzineIssueData(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FIS=fis)
         print("   "+str(fid))
         externalLinks.append(fid)
     print("----Done reading "+filename)
@@ -258,14 +258,14 @@ def ReadFanacFanzines(name: str) -> List[FanzineIssueData]:
         fisl, therest=FanzineIssueSpecList().GetTrailingSerial(issueName)
         if fisl is None:
             print("     no issue number found")
-            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FanzineIssueSpec=FanzineIssueSpec(), Fanac=True)
+            fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FIS=FanzineIssueSpec())
             fanzinesFIDList.append(fid)
             print(str(fid))
         else:
             if len(fisl) > 1:    # This happens when an FISL is something like "4-7"
                 print("     "+str(len(fisl))+" FISLs found")
             for i in fisl:
-                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FanzineIssueSpec=i, Fanac=True)
+                fid=FanzineIssueData(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FIS=i)
                 fanzinesFIDList.append(fid)
                 print(str(fid))
 
@@ -444,8 +444,8 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
             newHtml=str(fis)
             for fidInAll in allKnownIssuesFIDList:
                 if CompareTitles(fz.SeriesName, fidInAll.SeriesName):
-                    print("     "+fidInAll.FanzineIssueSpec.DebugStr()+"  == "+fis.DebugStr()+"   -> "+str(fidInAll.FanzineIssueSpec == fis))
-                if CompareTitles(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FanzineIssueSpec == fis:
+                    print("     "+fidInAll.FIS.DebugStr()+"  == "+fis.DebugStr()+"   -> "+str(fidInAll.FIS == fis))
+                if CompareTitles(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FIS == fis:
                     newHtml=FormatLink(fidInAll.URL, str(fis))
                     break
             fislhtml+=newHtml

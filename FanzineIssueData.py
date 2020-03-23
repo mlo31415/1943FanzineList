@@ -9,23 +9,25 @@ from FanzineIssueSpecPackage import FanzineIssueSpec
 
 class FanzineIssueData:
 
-    def __init__(self, DisplayName: Optional[str]=None, URL: Optional[str]=None, FanzineIssueSpec: Optional[FanzineIssueSpec]=None, SeriesName: Optional[str]=None, Fanac: bool=False) -> None:
-        self.DisplayName=DisplayName   # Includes issue number/date/whatever
-        self.URL=URL
-        self.FanzineIssueSpec=FanzineIssueSpec
-        self._SeriesName=SeriesName
-        self.Fanac=Fanac
+    def __init__(self, DisplayName: Optional[str]=None, URL: Optional[str]=None, FIS: Optional[FanzineIssueSpec]=None, SeriesName: Optional[str]=None) -> None:
+        self._DisplayName=DisplayName   # Includes issue number/date/whatever
+        # TODO: Need to resolve displayname and seriesname. Does DisplayName include issue #?  Should that come from FIS or override it?
+        self.URL=URL                    # URL of issue
+        self.FIS=FIS                    # FIS of issue
+        self._SeriesName=SeriesName     # Name of fanzine sof hwich this is an issue
+
 
     # .....................
     def __str__(self) -> str:   #TODO: Note that this will wrongly name those issues with special, variant names
         out=""
         if self.SeriesName is not None:
             out=self.SeriesName
-        if self.FanzineIssueSpec is not None and not self.FanzineIssueSpec.IsEmpty():
-            out=out+" "+str(self.FanzineIssueSpec)
+        if self.FIS is not None and not self.FIS.IsEmpty():
+            out=out+" "+str(self.FIS)
         if self.URL is not None:
             out=out+" "+self.URL
         return out.strip()
+
 
     # .....................
     @property
@@ -37,3 +39,28 @@ class FanzineIssueData:
         if val is not None:
             val=val.strip()
         self._SeriesName=val
+
+    # .....................
+    @property
+    def DisplayName(self) -> str:
+        if self._DisplayName is not None:
+            return self._DisplayName
+        if self.FIS is not None:
+            return self._SeriesName+" "+str(self.FIS)
+        return self._SeriesName
+
+    @DisplayName.setter
+    def DisplayName(self, val: Optional[str]) -> None:
+        if val is not None:
+            val=val.strip()
+        self._DisplayName=val
+
+
+    # .....................
+    @property
+    def DirURL(self) -> Optional[str]:
+        return self._DirURL
+
+    @DirURL.setter
+    def DirURL(self, val: Optional[str]) -> None:
+        self._DirURL=val
