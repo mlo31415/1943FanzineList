@@ -1,15 +1,16 @@
 from typing import TextIO, List, Tuple, Optional, Callable
+from FanzineIssueSpecPackage import FanzineIssueSpecList
 
 # This is a class used to hold a list of many issues of a single fanzine.
 class FanzineSeriesSpec:
 
     def __init__(self)  -> None:
-        self.FanzineIssueSpecList=None     # A list of FanzineIssueSpecs
-        self._SeriesName=None
-        self.Editor=None
-        self.Eligible=None
-        self.Notes=None
-        self.SeriesURL=None
+        self._FISL: Optional[FanzineIssueSpecList]=None     # A list of FanzineIssueSpecs
+        self._SeriesName: Optional[str]=None
+        self._Editor: Optional[str]=None
+        self._Eligible: Optional[bool]=None
+        self._Notes: Optional[str]=None
+        self._SeriesURL: Optional[str]=None
 
     # .....................
     @property
@@ -23,29 +24,83 @@ class FanzineSeriesSpec:
         self._SeriesName=val
 
     # .....................
+    @property
+    def Editor(self) -> str:
+        if self._Editor is None:
+            return ""
+        return self._Editor
 
-    def LenFIS(self) -> int:
-        if self.FanzineIssueSpecList is None:
+    @Editor.setter
+    def Editor(self, val: Optional[str]) -> None:
+        self._Editor=val
+
+    # .....................
+    @property
+    def Eligible(self) -> bool:
+        if self._Eligible is None:
+            return False
+        return self._Eligible
+
+    @Eligible.setter
+    def Eligible(self, val: Optional[bool]) -> None:
+        self._Eligible=val
+
+    # .....................
+    @property
+    def FISL(self) -> Optional[FanzineIssueSpecList]:
+        if self._FISL is None:
+            return None
+        return self._FISL
+
+    @FISL.setter
+    def FISL(self, val: Optional[FanzineIssueSpecList]) -> None:
+        self._FISL=val
+
+    # .....................
+    @property
+    def Notes(self) -> str:
+        if self._Notes is None:
+            return ""
+        return self._Notes
+
+    @Notes.setter
+    def Notes(self, val: Optional[str]) -> None:
+        self._Notes=val
+
+    # .....................
+    @property
+    def SeriesURL(self) -> str:
+        if self._SeriesURL is None:
+            return ""
+        return self._SeriesURL
+
+    @SeriesURL.setter
+    def SeriesURL(self, val: Optional[str]) -> None:
+        self._SeriesURL=val
+
+    # .....................
+    def LenFISL(self) -> int:
+        if self._FISL is None:
             return 0
-        return len(self.FanzineIssueSpecList)
+        return len(self._FISL)
 
     # .....................
     def DebugStr(self) -> str:  # Convert the FSS into a debugging form
         isl="-"
-        if self.LenFIS() > 0:
-            isl=self.FanzineIssueSpecList.DebugStr()
+        if self.LenFISL() > 0:
+            isl=self._FISL.DebugStr()
 
         sn="-"
         if self._SeriesName is not None:
             sn=self._SeriesName
 
         ed="-"
-        if self.Editor is not None:
-            ed=self.Editor
+        if self._Editor is not None:
+            ed=self._Editor
 
         nt=""
-        if self.Notes is not None:
-            for note in self.Notes:
+        if self._Notes is not None:
+            for note in self._Notes:
                 if len(nt) > 0:
                     nt+=" "
                 nt+=note
@@ -53,12 +108,12 @@ class FanzineSeriesSpec:
                 nt="-"
 
         el="-"
-        if self.Eligible is not None:
-            el="T" if self.Eligible else "F"
+        if self._Eligible is not None:
+            el="T" if self._Eligible else "F"
 
         u="-"
-        if self.SeriesURL is not None:
-            u=self.SeriesURL
+        if self._SeriesURL is not None:
+            u=self._SeriesURL
 
         return "FSS(SN:"+sn+", ISL:"+isl+", Ed:"+ed+", NT:"+nt+", El:"+el+" URL="+u+")"
 
@@ -68,16 +123,16 @@ class FanzineSeriesSpec:
         if self.SeriesName is not None:
             out=self.SeriesName
 
-        if self.Editor is not None and len(self.Editor) > 0:
-            out=out+"   ("+self.Editor+")"
+        if self._Editor is not None and len(self._Editor) > 0:
+            out=out+"   ("+self._Editor+")"
 
-        if self.Notes is not None and len(self.Notes) > 0:
-            for n in self.Notes:
+        if self._Notes is not None and len(self._Notes) > 0:
+            for n in self._Notes:
                 out=out+"   {"+n+"}"
 
-        if self.LenFIS() > 0:
-            out=out+"  "+str(self.FanzineIssueSpecList)
+        if self.LenFISL() > 0:
+            out=out+"  "+str(self._FISL)
 
-        if self.Eligible:
+        if self._Eligible:
             out=out+"   Eligible!"
         return out
