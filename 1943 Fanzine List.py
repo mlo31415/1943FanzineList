@@ -120,7 +120,7 @@ def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
         fss.Editor=m.groups()[1].strip()
         fisl=FanzineIssueSpecList().Match(m.groups()[2])
         if not fisl.IsEmpty():
-            fss.FanzineIssueSpecList=fisl
+            fss.FISL=fisl
 
         Log("   " +str(fss))
         allFanzinesFSSList.append(fss)
@@ -290,8 +290,8 @@ numTitles=len(setoftitles)
 # Get a pretty good estimate of the number of lines in the table. This will be used to balance the two columns.
 def EstSize(fz: FanzineSeriesSpec) -> int:
     estimatedCountOfLines=1
-    if fz.LenFIS() > 0 and len(fz.FanzineIssueSpecList) >= 9:
-        estimatedCountOfLines+=len(fz.FanzineIssueSpecList)/9
+    if fz.LenFISL() > 0 and len(fz.FISL) >= 9:
+        estimatedCountOfLines+=len(fz.FISL)/9
     return estimatedCountOfLines
 
 estimatedCountOfLines=0
@@ -317,8 +317,8 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     # For now, we're going to ignore it and just let the name link to the index page.
     #TODO: Deal with this, maybe?
     htm="<i>"
-    if fz.LenFIS() > 0:
-        if fz.SeriesURL is not None:
+    if fz.LenFISL() > 0:
+        if fz.SeriesURL is not "":
             htm+=FormatLink(fz.SeriesURL, name)
         else:
             htm+=name
@@ -343,8 +343,8 @@ for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
     fislhtml=""
-    if fz.FanzineIssueSpecList is not None:
-        for fis in fz.FanzineIssueSpecList:
+    if fz.FISL is not None:
+        for fis in fz.FISL:
             if len(fislhtml) > 0:
                 fislhtml+=", &nbsp;&nbsp;&nbsp;"
             # Find the entry in all known issues where the seriesName and iss match
