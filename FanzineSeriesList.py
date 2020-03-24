@@ -2,13 +2,13 @@ from typing import TextIO, List, Tuple, Optional, Callable
 from FanzineIssueSpecPackage import FanzineIssueSpecList
 
 # This is a class used to hold a list of many issues of a single fanzine.
-class FanzineSeriesSpec:
+class FanzineSeriesList:
 
     def __init__(self)  -> None:
         self._FISL: Optional[FanzineIssueSpecList]=None     # A list of FanzineIssueSpecs
         self._SeriesName: Optional[str]=None
         self._Editor: Optional[str]=None
-        self._Eligible: Optional[bool]=None
+        self._Eligible: Optional[bool]=None     # Is this eligible for the Hugos in a year in question?
         self._Notes: Optional[str]=None
         self._SeriesURL: Optional[str]=None
 

@@ -10,7 +10,7 @@ from HelpersPackage import CompareTitles
 from Log import LogOpen, Log
 
 from FanzineIssueSpecPackage import FanzineIssueInfo, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList
-from FanzineSeriesSpec import FanzineSeriesSpec
+from FanzineSeriesList import FanzineSeriesList
 
 
 #**************************************************************************************************************************************
@@ -63,7 +63,7 @@ def ReadExternalLinks(filename: str) -> List[FanzineIssueInfo]:
 
 #**************************************************************************************************************************************
 # Read the master file of all fanzines for the specified year
-def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
+def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesList], str]:
 
     # Read the contents of the file and strip leading and traling whitespace
     with open(name) as f:
@@ -96,16 +96,16 @@ def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
         if len(line.strip()) == 0:
             continue
         print("\n"+line)
-        fss=FanzineSeriesSpec()
+        fsl=FanzineSeriesList()
 
         # The line may have one or more sets of comments one or more curly brackets at the end
         # Begin by recognizing them and removingt hem from the line
         notes=Regex.findall("{(.+?)}", line)  # Find all the comments
         line=Regex.sub("{(.+?)}", "", line)   # Delete all comment text by replacing them with empty strings
         if "ELIGIBLE" in notes:               # "ELIGIBLE" is a special case and means that it's eligible for the Retro Hugo for fanzines.  We store that flag separately.
-            fss.Eligible=True
+            fsl.Eligible=True
             notes.remove("ELIGIBLE")
-        fss.Notes=notes
+        fsl.Notes=notes
 
         # Now there are no comments, so the line's format is <series name> (<editor> [& <editor>...]) <comma-separated list of issuespecs>
         # the series name and editor is mandatory; the issuespecs are not when the fanzine is a one-shot
@@ -116,19 +116,19 @@ def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesSpec], str]:
         print(str(m.groups()))
 
         # Decode and store the data.
-        fss.SeriesName=m.groups()[0].strip()
-        fss.Editor=m.groups()[1].strip()
+        fsl.SeriesName=m.groups()[0].strip()
+        fsl.Editor=m.groups()[1].strip()
         fisl=FanzineIssueSpecList().Match(m.groups()[2])
         if not fisl.IsEmpty():
-            fss.FISL=fisl
+            fsl.FISL=fisl
 
-        Log("   " +str(fss))
-        allFanzinesFSSList.append(fss)
+        Log("   " +str(fsl))
+        allFanzinesFSSList.append(fsl)
 
     # List the fanzines found (a debugging aid)
     print("\n\n\n\n\n\n\nList of all fanzines found in list of all "+theYear+" fanzines")
-    for fss in allFanzinesFSSList:
-        print(str(fss))
+    for fsl in allFanzinesFSSList:
+        print(str(fsl))
 
     return allFanzinesFSSList, topmatter
 
@@ -192,13 +192,13 @@ LogOpen("Log -- Annual Fanzine List.txt", "Log (Errors) -- Annual Fanzine List.t
 
 # Read the master list of all the year's fanzines
 print("\nRead "+theYear+"'s master list of all fanzines published\n")
-allYearsFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
+allYearsFanzinesFSLList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
 fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 
 # For Fanac fanzines (and for Fanac fanzines only) fill in the series URL in the FSS
-for fz in allYearsFanzinesFSSList:
+for fz in allYearsFanzinesFSLList:
     seriesName=fz.SeriesName
     for ff in fanacFanzines:
         if CompareTitles(seriesName, ff.SeriesName):
@@ -220,14 +220,14 @@ def inverter(s, prefix: str) -> str:
     if s.startswith(prefix):
         return s[len(prefix):]+s[:len(prefix)]
     return s
-def sorter(fss: FanzineSeriesSpec) -> str:
-    s=fss.SeriesName.lower()
+def sorter(fsl: FanzineSeriesList) -> str:
+    s=fsl.SeriesName.lower()
     s=inverter(s, "a ")
     s=inverter(s, "an ")
     s=inverter(s, "the ")
     return s
 
-allYearsFanzinesFSSList.sort(key=sorter)
+allYearsFanzinesFSLList.sort(key=sorter)
 
 
 #============================================================================================
@@ -282,25 +282,27 @@ f.write('      <ul>\n')
 # We want to produce a two-column page, with well-balanced columns.
 # Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
 setoftitles=set()
-for fss in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
-    setoftitles.add(fss.SeriesName)
+for fsl in allYearsFanzinesFSLList:  # fz is a FanzineSeriesSpec class object
+    setoftitles.add(fsl.SeriesName)
 numTitles=len(setoftitles)
 
 # Create the HTML table rows
+
+# The table will be in two columns, and we need to balance the columns.  This is difficult, since we don't know how lines will break.
 # Get a pretty good estimate of the number of lines in the table. This will be used to balance the two columns.
-def EstSize(fz: FanzineSeriesSpec) -> int:
+def EstSize(fz: FanzineSeriesList) -> int:
     estimatedCountOfLines=1
     if fz.LenFISL() > 0 and len(fz.FISL) >= 9:
         estimatedCountOfLines+=len(fz.FISL)/9
     return estimatedCountOfLines
 
 estimatedCountOfLines=0
-for fz in allYearsFanzinesFSSList:
+for fz in allYearsFanzinesFSLList:
     estimatedCountOfLines+=EstSize(fz)
 
 # Now generate the table
 countOfTitlesInCol=0    # We want to put the first half of the fanzines in column 1 and the rest in col 2.  We need to know when to switch cols.
-for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
+for fz in allYearsFanzinesFSLList:  # fz is a FanzineSeriesSpec class object
     print("   Writing HTML for: "+fz.DebugStr())
 
     name=fz.SeriesName
