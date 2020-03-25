@@ -9,9 +9,7 @@ from HelpersPackage import CompareTitles
 
 from Log import LogOpen, Log
 
-from FanzineIssueSpecPackage import FanzineIssueInfo, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList
-from FanzineSeriesList import FanzineSeriesList
-
+from FanzineIssueSpecPackage import FanzineIssueInfo, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList, FanzineSeriesList
 
 #**************************************************************************************************************************************
 def ReadExternalLinks(filename: str) -> List[FanzineIssueInfo]:
