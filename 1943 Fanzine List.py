@@ -2,18 +2,17 @@ import os
 import re as Regex
 from os import path
 from time import localtime, strftime
-from typing import List, Tuple, Optional
+from typing import List, Tuple
 
-from HelpersPackage import FormatLink
-from HelpersPackage import CompareTitles
+from HelpersPackage import FormatLink, CompareTitles
 
 from Log import LogOpen, Log
 
-from FanzineIssueSpecPackage import FanzineIssueInfo, FanzineDate, FanzineIssueSpec, FanzineIssueSpecList, FanzineSeriesList
+from FanzineIssueSpecPackage import FanzineIssueInfo, FanzineIssueSpec, FanzineIssueSpecList, FanzineSeriesList
 
 #**************************************************************************************************************************************
 def ReadExternalLinks(filename: str) -> List[FanzineIssueInfo]:
-    externalLinks=[]
+    externalLinksFIILIst=[]
     print("\n\n----Begin reading "+filename)
     # Now we read Links1942.txt, which contains links to issues of fanzines *outside* fanac.org.
     # It is organized as a table, with the first row a ';'-delimited list of column headers
@@ -52,11 +51,11 @@ def ReadExternalLinks(filename: str) -> List[FanzineIssueInfo]:
             continue
         # Create the FIS and FID and append it to the external links list
         fis=FanzineIssueSpec(Num=t2[cNum], Vol=t2[cVol], Whole=t2[cWhole])
-        fid=FanzineIssueInfo(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FIS=fis)
-        print("   "+str(fid))
-        externalLinks.append(fid)
+        fii=FanzineIssueInfo(URL=t2[cURL], SeriesName=t2[cName], DisplayName=t2[cDisplayName], FIS=fis)
+        print("   "+str(fii))
+        externalLinksFIILIst.append(fii)
     print("----Done reading "+filename)
-    return externalLinks
+    return externalLinksFIILIst
 
 
 #**************************************************************************************************************************************
@@ -116,12 +115,14 @@ def ReadAllYearsFanzines(name: str) -> Tuple[List[FanzineSeriesList], str]:
         # Decode and store the data.
         fsl.SeriesName=m.groups()[0].strip()
         fsl.Editor=m.groups()[1].strip()
+        print("   group[2]: "+m.groups()[2])
         fisl=FanzineIssueSpecList().Match(m.groups()[2])
         if not fisl.IsEmpty():
             fsl.FISL=fisl
 
-        Log("   " +str(fsl))
+        Log("   FSL: " +str(fsl))
         allFanzinesFSSList.append(fsl)
+
 
     # List the fanzines found (a debugging aid)
     print("\n\n\n\n\n\n\nList of all fanzines found in list of all "+theYear+" fanzines")
@@ -143,7 +144,7 @@ def ReadFanacFanzines(name: str) -> List[FanzineIssueInfo]:
     # Issue date
     # Containing directory URL
     # Issue index file name
-    fanzinesFIDList=[]
+    fanzinesFIIList=[]
     for line in lines:
         line=line.strip()[2:-2]  # Strip off outside whitespace and outside "||"
         if len(line) == 0:  # Skip whitespace lines
@@ -155,6 +156,7 @@ def ReadFanacFanzines(name: str) -> List[FanzineIssueInfo]:
         # We need to separate out the issue number.  It is usually the last token, but sometimes the last two tokens (e.g., V3 #4)
         issueName=cols[0]
 
+
         # Now figure out the FanzineIssueSpec.
         # We (try to) do this by splitting the issue spec off from the series name which it normally follows
         # Typically, it will be a <bunch of stuff><whitespace><issue spec>
@@ -163,20 +165,20 @@ def ReadFanacFanzines(name: str) -> List[FanzineIssueInfo]:
         fisl, therest=FanzineIssueSpecList().GetTrailingSerial(issueName)
         if fisl is None:
             print("     no issue number found")
-            fid=FanzineIssueInfo(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FIS=FanzineIssueSpec())
-            fanzinesFIDList.append(fid)
-            print(str(fid))
+            fii=FanzineIssueInfo(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=issueName, FIS=FanzineIssueSpec())
+            fanzinesFIIList.append(fii)
+            print(str(fii))
         else:
             if len(fisl) > 1:    # This happens when an FISL is something like "4-7"
                 print("     "+str(len(fisl))+" FISLs found")
             for i in fisl:
-                fid=FanzineIssueInfo(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FIS=i)
-                fanzinesFIDList.append(fid)
-                print(str(fid))
+                fii=FanzineIssueInfo(DisplayName=issueName, URL=cols[2]+"/"+cols[3], SeriesName=therest, FIS=i)
+                fanzinesFIIList.append(fii)
+                print(str(fii))
 
         print("")
 
-    return fanzinesFIDList
+    return fanzinesFIIList
 
 
 
@@ -190,28 +192,26 @@ LogOpen("Log -- Annual Fanzine List.txt", "Log (Errors) -- Annual Fanzine List.t
 
 # Read the master list of all the year's fanzines
 print("\nRead "+theYear+"'s master list of all fanzines published\n")
-allYearsFanzinesFSLList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
+allYearsFanzinesFSSList, topmatter=ReadAllYearsFanzines(theYear+" All Fanzines list.txt")
 
 # Read what's on fanac.org
-fanacFanzines=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
+allKnownIssuesFIIList=ReadFanacFanzines(theYear+" Fanac.org Fanzines.txt")
 
 # For Fanac fanzines (and for Fanac fanzines only) fill in the series URL in the FSS
-for fz in allYearsFanzinesFSLList:
+for fz in allYearsFanzinesFSSList:
     seriesName=fz.SeriesName
-    for ff in fanacFanzines:
+    for ff in allKnownIssuesFIIList:
         if CompareTitles(seriesName, ff.SeriesName):
             if ff.URL is not None and len(ff.URL) > 0:
                 fz.SeriesURL=path.split(ff.URL)[0]            # Need to remove filename to get just path
 
-allKnownIssuesFIDList=fanacFanzines
-
-for fid in allKnownIssuesFIDList:
+for fid in allKnownIssuesFIIList:
     print("allKnownIssuesFIDList: "+str(fid))
 
 # Next, we read in the list of "foreign" fanzine links and append it to the list from fanac.org
-allKnownIssuesFIDList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
+allKnownIssuesFIIList.extend(ReadExternalLinks(theYear+" External Fanzine Links.txt"))
 
-# Sort allFanzinesFSSList into alphabetic order.
+# Sort allFanzinesFSSList into alphabetic order by series title.
 # We move A, An and The to the end for sorting purposes.
 # (These two functions are used only in the sort.)
 def inverter(s, prefix: str) -> str:
@@ -225,7 +225,7 @@ def sorter(fsl: FanzineSeriesList) -> str:
     s=inverter(s, "the ")
     return s
 
-allYearsFanzinesFSLList.sort(key=sorter)
+allYearsFanzinesFSSList.sort(key=sorter)
 
 
 #============================================================================================
@@ -280,7 +280,7 @@ f.write('      <ul>\n')
 # We want to produce a two-column page, with well-balanced columns.
 # Count the number of distinct title (not issues) in allFanzines1942 so we can put half in each column
 setoftitles=set()
-for fsl in allYearsFanzinesFSLList:  # fz is a FanzineSeriesSpec class object
+for fsl in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
     setoftitles.add(fsl.SeriesName)
 numTitles=len(setoftitles)
 
@@ -290,18 +290,21 @@ numTitles=len(setoftitles)
 # Get a pretty good estimate of the number of lines in the table. This will be used to balance the two columns.
 def EstSize(fz: FanzineSeriesList) -> int:
     estimatedCountOfLines=1
+    estimatedCountOfLinesFIIL=1
     if fz.LenFISL() > 0 and len(fz.FISL) >= 9:
         estimatedCountOfLines+=len(fz.FISL)/9
+    if len(fz.FIIL) > 0 and len(fz.FIIL) >= 9:
+        estimatedCountOfLinesFIIL+=len(fz.FIIL)/9
     return estimatedCountOfLines
 
 estimatedCountOfLines=0
-for fz in allYearsFanzinesFSLList:
+for fz in allYearsFanzinesFSSList:
     estimatedCountOfLines+=EstSize(fz)
 
 # Now generate the table
 countOfTitlesInCol=0    # We want to put the first half of the fanzines in column 1 and the rest in col 2.  We need to know when to switch cols.
-for fz in allYearsFanzinesFSLList:  # fz is a FanzineSeriesSpec class object
-    print("   Writing HTML for: "+fz.DebugStr())
+for fz in allYearsFanzinesFSSList:  # fz is a FanzineSeriesSpec class object
+    print("   Writing HTML for: "+repr(fz))
 
     name=fz.SeriesName
     editors=fz.Editor
@@ -343,18 +346,18 @@ for fz in allYearsFanzinesFSLList:  # fz is a FanzineSeriesSpec class object
     #   Case 2: We don't have any of the year's issue online, but we do have issues from other years
     #   Case 3: We have no issues at all from this fanzine
     fislhtml=""
-    if fz.FISL is not None:
-        for fis in fz.FISL:
+    if fz.FIIL is not None:
+        for fii in fz.FIIL:
             if len(fislhtml) > 0:
                 fislhtml+=", &nbsp;&nbsp;&nbsp;"
             # Find the entry in all known issues where the seriesName and iss match
-            newHtml=str(fis)
-            for fidInAll in allKnownIssuesFIDList:
+            newHtml=str(fii.FIS)
+            for fidInAll in allKnownIssuesFIIList:
                 if CompareTitles(fz.SeriesName, fidInAll.SeriesName):
-                    print("     "+fidInAll.FIS.DebugStr()+"  == "+fis.DebugStr()+"   -> "+str(fidInAll.FIS == fis))
-                if CompareTitles(fz.SeriesName, fidInAll.SeriesName) and fidInAll.FIS == fis:
-                    newHtml=FormatLink(fidInAll.URL, str(fis))
-                    break
+                    print("     "+repr(fidInAll)+"  == "+repr(fii)+"   -> "+str(fidInAll.FIS == fii.FIS))
+                    if fidInAll.FIS == fii.FIS:
+                        newHtml=FormatLink(fidInAll.URL, str(fii.FIS))
+                        break
             fislhtml+=newHtml
 
     htm=htm+"<br>"+fislhtml
